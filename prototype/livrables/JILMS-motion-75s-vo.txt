@@ -1,0 +1,257 @@
+JIL-MS — MOTION 48 S (V5) — VOIX OFF ELEVENLABS
+==================================================
+
+FICHIER PRÊT À COLLER DANS ELEVENLABS
+Version tags audio : Eleven v4 (recommandé) ou Eleven v3.
+Ne pas utiliser ce fichier tel quel avec Multilingual v2 : il lirait les tags.
+La version sans tags est fournie à la fin.
+
+MISE À JOUR V5 — ANIMATIC 48 S, DÉBIT NORMAL
+--------------------------------------------
+- La V5 est le cut courant : 48 s, 8 chapitres / 9 séquences, aucun blanc
+  entre les visuels et la voix. La prise Kevin brute (47,804 s) est utilisée
+  TELLE QUELLE, sans étirement ni ralentissement ; le film dure 48,00 s.
+- Cues : « Pas » 3,46 · « Le cahier » 5,68 · « Les reçus » 6,66 ·
+  « Les post-it » 7,84 · « WhatsApp » 8,78 · « Les ventes » 11,28 ·
+  « Le stock » 12,38 · « La compta » 14,48 · « Et le soir » 17,52 ·
+  « Un clic » 20,08 · « Et tout se range » 20,90 ·
+  « Les ventes deviennent » 22,40 · « Le stock devient » 24,28 ·
+  « La comptabilité » 26,04 · « Une seule base » 28,14 ·
+  « Zéro » 29,50 · « Conforme » 30,72 · « Mobile Money » 33,34 ·
+  « Pensé » 34,34 · « Regardez » 36,08 · « Vous validez » 36,62 ·
+  « Le stock » 37,82 · « Les écritures » 39,10 · « Le tableau » 40,44 ·
+  « C'est ça » 41,60 · « JIL-MS » 44,02 · « bilan » 47,20.
+- Mix scratch V5 : JILMS-motion-48s-vo-mix-v5.wav
+  (voix + habillage + clic produit discret). Voix seule :
+  JILMS-motion-48s-vo-v5.wav. Niveaux : −16,09 LUFS intégré,
+  pic −1,30 dBFS ; voix seule −17,41 LUFS.
+- Pour un master de 60–90 s : générer 12–42 s de narration supplémentaire
+  et une nouvelle voix au débit normal, puis remonter les scènes. Ne pas
+  étirer la V5 pour atteindre 60 s.
+- V4 72 s (voix étirée ×1,506) est une archive rejetée : ne plus l'utiliser
+  comme référence de débit.
+
+MISE À JOUR V3 — ANIMATIC (ARCHIVE)
+-----------------------------------
+- Le texte à l'écran est maintenant calé sur la voix, scène par scène :
+  les mots de la scène 2 arrivent un par un ; le constat de la scène 3 se lit
+  en trois lignes ; « Et le soir, il faut tout retrouver » passe dans la scène 4
+  et accompagne le clic ; le rangement de la scène 5 se dit en trois temps ;
+  « Zéro ressaisie » arrive sur la voix ; les preuves de l'ancrage se posent
+  sur les phrases.
+- Bloc 3 à 14,00 s (fin 22,70 s). Bloc 4 « Un clic » à 22,82 s, sur le clic
+  visuel, les ondes et le mot. Bloc 5 à 26,00 s.
+- Scène 8 : validation produit à 50,75 s ; flux à 50,85 / 51,95 / 53,25 s ;
+  tableau de bord à 54,60 s ; toast à 55,80 s.
+- Mix scratch V3 : JILMS-motion-75s-vo-mix-v3.wav (voix + habillage + clic
+  produit discret). Voix seule : JILMS-motion-75s-vo-scratch.wav.
+- La prise Kevin reste une prise de travail : les 9 prises finales sont à produire.
+
+RÉGLAGES CONSEILLÉS — ELEVEN V4
+-------------------------------
+Modèle          : Eleven v4 (eleven_v4)
+Stability       : 50 (plage de travail 45–55)
+Similarity      : 75–80
+Style           : non disponible sur Eleven v4
+Speed           : non disponible sur Eleven v4
+Speaker Boost   : non disponible sur Eleven v4
+Sortie          : WAV/PCM 44,1 kHz, 16 bits (ou l'option la plus élevée proposée)
+                  Convertir en 48 kHz / 24 bits au montage si le projet l'exige.
+
+À retenir : Eleven v4 n’expose que deux réglages de voix, Stability et Similarity.
+- Stability plus bas : jeu plus expressif et plus variable.
+- Stability plus haut : jeu plus stable, plus proche d’une ligne fixe.
+- Similarity plus haut : plus proche de la voix de référence, parfois moins naturel.
+Pour un débit plus posé sur v4, travailler la ponctuation et les phrases courtes :
+c’est le texte qui donne le rythme, pas un curseur Speed.
+
+RÉGLAGES DE REPLI — ELEVEN V3
+-----------------------------
+Modèle          : Eleven v3 (eleven_v3)
+Stability       : 50
+Style           : 0 si l’interface le propose
+Similarity      : non disponible sur v3
+Speed           : non disponible sur v3
+Speaker Boost   : non disponible sur v3
+
+RÈGLES DE TAGS — CE QUI FONCTIONNE
+----------------------------------
+1. Un tag est une instruction courte entre crochets : [warm, low voice].
+2. Il se place juste avant le passage qu’il doit modifier.
+3. Il n’est pas lu à voix haute : c’est une indication de jeu.
+4. Un seul groupe de tags par scène suffit. Trop de tags rendent le jeu moins naturel.
+5. Les tags restent en anglais, même si le texte est en français : c’est le format
+   des exemples officiels et le plus stable.
+6. Les tags décrivent la voix : émotion, intention, rythme, timbre, réaction.
+7. Ne pas utiliser de tags visuels ou de mise en scène : [standing], [smiling],
+   [regardant le cahier], [camera moves] n’ont pas de sens pour le modèle.
+8. Ne pas mettre de musique ou d’effet sonore dans la voix off. Les effets se
+   fabriquent séparément, au montage.
+9. Eleven v4 et v3 ne lisent pas les balises SSML <break>. Pour les pauses,
+   utiliser la ponctuation : points, virgules, points de suspension, tirets,
+   retours à la ligne.
+10. Écrire les nombres, sigles et symboles en toutes lettres quand la prononciation
+    doit être certaine. Les noms de marque peuvent rester tels quels, avec un guide
+    de prononciation.
+
+TAGS UTILISÉS DANS CE SCRIPT
+----------------------------
+[warm, low voice]                 confidence intime, timbre chaud
+[conversational, matter-of-fact]  quotidien, sans drame
+[softly, measured]                doux, posé, on laisse respirer
+[bright, confident]               retournement net, sans fanfare
+[warm, satisfied, building energy] plaisir du rangement qui monte
+[simple, confident]               phrase clé, sans emphase
+[proud, grounded]                 fierté locale, ancrée
+[clear, quietly excited]          produit montré avec précision
+[warmly, slowing down]            signature, on ralentit
+
+VOICE DESIGN — FEMME (RECOMMANDÉ)
+---------------------------------
+Native French, French of West Africa (Benin). Female, 30–38. Excellent quality.
+Persona: warm neighborhood storyteller and business owner.
+Emotion: knowing, warm, quietly confident.
+Warm, smooth timbre with a subtle smile, natural conversational pacing, close-mic
+proximity, light Beninese accent, clear articulation. She speaks like she is telling
+a true story to a friend, with small pauses and gentle emphasis on concrete words —
+not corporate, not salesy, not overly enthusiastic.
+
+Guidance scale : 35 %
+Texte de prévisualisation :
+Ça, c'est le vrai siège de beaucoup d'entreprises. Pas le bureau. La table de la cuisine.
+Le cahier de comptes. Les reçus froissés. Les post-it. Et les messages WhatsApp qui arrivent à minuit.
+
+VOICE DESIGN — HOMME (ALTERNATIVE)
+----------------------------------
+Native French, French of West Africa (Benin). Male, 35–45. Excellent quality.
+Persona: artisan-storyteller who has seen a lot of businesses.
+Emotion: grounded, reassuring, quietly amused.
+Deep, smooth timbre, natural conversational pacing, close-mic proximity, light
+Beninese accent, clear articulation. He speaks like a trusted advisor, not a radio
+announcer — no corporate brightness, no salesy energy.
+
+Guidance scale : 35 %
+Texte de prévisualisation : le même que ci-dessus.
+
+
+SCRIPT PRÊT À COLLER — VERSION AVEC TAGS
+========================================
+Générer scène par scène. Copier uniquement le tag et le texte de la prise.
+Ne pas coller les titres de scène dans ElevenLabs.
+V5 : la piste de travail est continue de 0:00 à 0:47,5. Les fenêtres ci-dessous
+sont les blocs du script ; pour une nouvelle génération, les prises peuvent
+respirer différemment, mais les cues visuels de la V5 doivent rester la référence.
+Timing V5 : prise 3 11,28–17,52 s ; prise 4 17,52–20,90 s ; prise 5 20,90–28,14 s.
+Timing V3 (archive) : prise 3 14,00–22,70 s ; prise 4 à 22,82 s ; prise 5 à 26,00 s.
+
+PRISE 1 — LE CAHIER — 0:00–0:05
+[warm, low voice]
+Ça, c'est le vrai siège de beaucoup d'entreprises.
+Pas le bureau. La table de la cuisine.
+
+PRISE 2 — LE DÉSORDRE — 0:05–0:11
+[conversational, matter-of-fact]
+Le cahier de comptes. Les reçus froissés. Les post-it.
+Et les messages WhatsApp qui arrivent à minuit.
+
+PRISE 3 — LE CONSTAT — 0:11–0:17
+[softly, measured]
+Les ventes sont là.
+Le stock, dans la tête du magasinier.
+La compta... dans trois fichiers différents.
+Et le soir, il faut tout retrouver.
+
+PRISE 4 — LE CLIC — 0:17–0:20
+[bright, confident]
+Un clic.
+
+PRISE 5 — LE RANGEMENT — 0:20–0:28
+[warm, satisfied, building energy]
+Et tout se range.
+Les ventes deviennent des factures.
+Le stock devient un tableau clair.
+La comptabilité se remplit sans ressaisie.
+
+PRISE 6 — LA DONNÉE — 0:28–0:30
+[simple, confident]
+Une seule base de données. Zéro ressaisie.
+
+PRISE 7 — L'ANCRAGE — 0:30–0:35
+[proud, grounded]
+Conforme e-MeCEF et SYSCOHADA.
+Mobile Money rapproché.
+Pensé pour l'Afrique de l'Ouest.
+
+PRISE 8 — LE PRODUIT — 0:35–0:44
+[clear, quietly excited]
+Regardez. Vous validez une facture.
+Le stock se met à jour. Les écritures se génèrent.
+Le tableau de bord suit.
+C'est ça, un ERP intégré.
+
+PRISE 9 — LA SIGNATURE — 0:44–0:48
+[warmly, slowing down]
+JIL-MS. Toute votre gestion,
+d'une seule facture à votre bilan.
+
+
+SCRIPT SANS TAGS — POUR MULTILINGUAL V2
+=======================================
+Ne pas utiliser avec Eleven v4/v3 si vous voulez les tags : cette version est
+prévue pour un modèle qui ne comprend pas les indications entre crochets.
+
+Ça, c'est le vrai siège de beaucoup d'entreprises. Pas le bureau. La table de la cuisine.
+
+Le cahier de comptes. Les reçus froissés. Les post-it. Et les messages WhatsApp qui arrivent à minuit.
+
+Les ventes sont là. Le stock, dans la tête du magasinier. La compta... dans trois fichiers différents. Et le soir, il faut tout retrouver.
+
+Un clic.
+
+Et tout se range. Les ventes deviennent des factures. Le stock devient un tableau clair. La comptabilité se remplit sans ressaisie.
+
+Une seule base de données. Zéro ressaisie.
+
+Conforme e-MeCEF et SYSCOHADA. Mobile Money rapproché. Pensé pour l'Afrique de l'Ouest.
+
+Regardez. Vous validez une facture. Le stock se met à jour. Les écritures se génèrent. Le tableau de bord suit. C'est ça, un ERP intégré.
+
+JIL-MS. Toute votre gestion, d'une seule facture à votre bilan.
+
+
+PRONONCIATION — À TESTER AVANT GÉNÉRATION
+=========================================
+JIL-MS        → « ji-el-em-ess » (lettres françaises). À confirmer : « jilms » possible.
+e-MeCEF       → « euh-me-sef »
+SYSCOHADA     → « sis-ko-a-da »
+SYCEBNL       → « si-seb-nel »
+CNSS          → « cé-en-ess-ess »
+IPR           → « i-pé-er »
+IRPP          → « i-er-pé-pé »
+ARMP          → « a-er-em-pé »
+FCFA          → « ef-cé-ef-a »
+WhatsApp      → « ouats-app » (à tester)
+Mobile Money  → « mo-bil mo-ni »
+Cotonou       → « ko-to-nou »
+Bénin         → « bé-nin »
+Jilmonde      → « jil-mond »
+
+NOTES DE JEU
+------------
+- Générer chaque prise séparément pour caler la voix sur l'image.
+- Garder 0,5 s de silence au début et à la fin de chaque prise.
+- Si une prise est trop rapide, ajouter un point ou un retour à la ligne ; ne pas
+  chercher à corriger uniquement avec Stability.
+- Si une prise est trop théâtrale, retirer un adjectif du tag avant de baisser Stability.
+- Normaliser ensuite à −16 LUFS (web) ou −14 LUFS (social).
+- La voix doit rester naturelle : pas de compression forte, pas d'effet radio.
+
+RÉFÉRENCES OFFICIELLES CONSULTÉES
+---------------------------------
+- Eleven v4 : https://elevenlabs.io/docs/overview/capabilities/text-to-speech/eleven-v4
+- Prompting / bonnes pratiques :
+  https://elevenlabs.io/docs/overview/capabilities/text-to-speech/best-practices
+- Fonctionnement des tags audio (v3/v4) :
+  https://elevenlabs.io/docs/help-center/product/core-capabilities/text-to-speech/how-do-audio-tags-work-with-eleven-v3-and-v4
+- Modèles et limites :
+  https://elevenlabs.io/docs/overview/models

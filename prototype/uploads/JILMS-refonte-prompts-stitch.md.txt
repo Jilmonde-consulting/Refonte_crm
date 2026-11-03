@@ -1,0 +1,539 @@
+# Refonte jilms.bj — Analyse & prompts Google Stitch
+
+---
+
+## 1. Ce que j'ai pu analyser, et ce que je n'ai pas pu
+
+**Point important à lire avant tout le reste.**
+
+`jilms.bj` est une **SPA rendue côté client** (le HTML servi ne contient que le `<head>` et un conteneur vide). Mes outils de récupération de page n'exécutent pas le JavaScript, et l'extension navigateur n'était pas connectée pendant cette session. Je n'ai donc **pas pu voir les pages rendues** : ni le contenu réel, ni les visuels, ni la navigation.
+
+Ce que j'ai reconstitué vient de sources vérifiables :
+
+| Source | Ce que j'en tire |
+|---|---|
+| `<head>` de jilms.bj | Positionnement, mots-clés, couleur de marque, éditeur |
+| `jilmonde.jilms.bj`, `sigonip.jilms.bj` | Architecture multi-tenant par sous-domaine |
+| Pages Jilmonde Consulting indexées | Descriptions des modules produit |
+| Profils techniques de l'équipe | Stack : Angular + Java Spring Boot microservices |
+| monday.com (récupéré intégralement) | Structure, sections, assets, patterns d'animation |
+
+**Conséquence pratique :** la direction créative et les prompts ci-dessous sont solides et exploitables tels quels, mais l'inventaire exact de vos pages actuelles est une reconstruction. Envoyez-moi des captures d'écran de vos pages (ou activez l'extension Chrome) et j'ajuste en une passe.
+
+---
+
+## 2. JILMS — état des lieux
+
+### Identité extraite
+
+| Élément | Valeur |
+|---|---|
+| Titre | JILMS — Solution ERP pour la gestion d'entreprise |
+| Promesse | CRM, ventes, stocks, comptabilité, RH « sur une seule plateforme » |
+| Éditeur | Jilmonde Consulting SARL |
+| Couleur de marque | **`#E84820`** (`theme-color`) — un vermillon orangé |
+| Siège / filiale | Abomey-Calavi (Bénin) · Dakar (Sénégal) |
+| Contact | contact@jilmondeconsulting.com · +229 95575151 |
+| Architecture | Multi-tenant, `{client}.jilms.bj` |
+| Manifest | `web-app-manifest-512x512.png` → déjà pensé PWA |
+
+### Modules identifiés
+
+Comptabilité multi-devises (adaptée à la forme juridique, plan SYSCOHADA), Gestion commerciale & facturation, Achats & stocks, CRM, Gestion de projets (tâches, budgets, avancement), Ressources humaines & paie, Gestion budgétaire & contrôle interne, Passation des marchés publics, GED, Recrutement.
+
+### Références réelles
+
+`SIGONIP` — système intégré pour l'**ONIP** (Office national d'imprimerie et de presse du Bénin) : portail web, gestion administrative, marchés publics, finance/compta, RH & paie, budget, commercial, parc informatique. **C'est votre meilleur atout de crédibilité et il n'est visible nulle part sur le site actuel.**
+
+### Trois problèmes structurels à corriger dans la refonte
+
+1. **SEO à zéro.** Une SPA sans rendu serveur = les crawlers voient une page vide. Vous n'êtes indexé sur aucun de vos propres mots-clés. La refonte doit imposer du SSR/SSG (Angular Universal, ou un site vitrine découplé en Astro/Next).
+2. **Aucune preuve.** Pas de références clients, pas de chiffres, pas d'études de cas visibles. Sur un marché où l'ERP est un achat à risque, c'est le premier frein.
+3. **Aucun ancrage local.** Le vrai argument de JILMS face à Odoo, Sage ou Dolibarr, c'est la conformité UEMOA : **e-MeCEF, SYSCOHADA/SYCEBNL, FCFA, Mobile Money, multi-site**. Rien de tout cela n'est mis en avant.
+
+---
+
+## 3. monday.com — inventaire des animations
+
+Site construit sous **Webflow** (`cdn.prod.website-files.com`), animations via Webflow Interactions + vidéos `.webm` auto-jouées hébergées sur Cloudinary. Voici ce que j'ai relevé section par section.
+
+### Les 13 patterns de motion
+
+| # | Section | Mécanique |
+|---|---|---|
+| 1 | Hero | Vidéo `.webm` en boucle, muette, autoplay — **avec une version mobile distincte** (`hero_mb-v5.webm`). Direction artistique du mouvement adaptée au format. |
+| 2 | Hero, sous-titre | Liste de rôles qui défile (Marketing, Operations, IT, Product, Sales, HR, PMO) avec pastille de validation |
+| 3 | Hero, cartes | Bulle de message → avatar → badge de résultat (« 27 vendors added »). Révélation en cascade, décalée |
+| 4 | Bandeau logos | Marquee horizontal infini, décliné en version claire et version blanche selon le fond de section |
+| 5 | Showcase produit | Onglets qui s'auto-avancent, chacun échangeant une vidéo ou une image plein cadre |
+| 6 | Sliders de cartes | Chaque groupe de 3 cartes est **dupliqué à l'identique dans le DOM** → boucle infinie sans couture |
+| 7 | Grille d'agents | Cartes avec grappe d'icônes d'intégrations qui apparaissent au survol |
+| 8 | « Work in context » | Section épinglée au scroll, bascule `before` → `after`, jetons de contexte en orbite |
+| 9 | « Let work flow » | Nœuds SVG d'un workflow qui s'assemblent au scroll (ticket → condition → branches → agents). **Image statique en mobile** |
+| 10 | « Full control » | Accordéon 6 entrées |
+| 11 | Témoignages | Carrousel à flèches + compteurs qui s'incrémentent (25%, 40%, 105K, 517%, 346% ROI) |
+| 12 | Clôture | Bandeau texte défilant « Built for people / and agents » répété |
+| 13 | Header | Sticky + méga-menus multi-colonnes |
+
+### Système visuel
+
+- **Couleurs** : `#6161FF` (primaire), `#181B34` (fond sombre), palette de statuts `#00C875` vert / `#FDAB3D` jaune / `#E2445C` rouge
+- **Typo** : Poppins pour le marketing, Figtree dans le produit
+- **Formes** : rayons de bordure très larges, beaucoup de blanc, illustrations 3D de personnages
+
+### Les principes de motion à retenir (et ceux à ne pas copier)
+
+**À retenir :**
+- Le mouvement **montre le produit en train de travailler**, il ne décore pas. Chaque animation démontre une capacité.
+- **Durées courtes** : 200–600 ms. Entrées en `ease-out`, décalage de 60–120 ms entre éléments d'un même groupe.
+- **Rien ne bloque la lecture.** Aucune animation n'exige d'attendre pour comprendre.
+- **Dégradation mobile assumée** : les séquences lourdes deviennent des images fixes.
+
+**À ne pas copier :** monday.com anime *presque tout*. Sur un site à fort trafic mobile et bande passante limitée comme le vôtre, c'est le mauvais choix — techniquement et esthétiquement. Répliquer 13 patterns donnera un site lourd et bruyant. **Gardez-en 4**, ceux qui portent une information, et exécutez-les impeccablement. La sobriété autour d'un seul moment fort lit mieux que l'agitation générale.
+
+---
+
+## 4. Direction créative proposée
+
+Avant les prompts, voici le système que j'y ai encodé, et pourquoi.
+
+### Palette
+
+`#E84820` est votre couleur. Le piège : vermillon sur fond quasi-noir est devenu le réflexe par défaut de tous les générateurs d'interface. Pour l'éviter, je l'ancre sur un **encre bleu-nuit** (pas un noir teinté) et un **papier froid** (pas le crème chaud qu'on voit partout).
+
+| Rôle | Hex | Usage |
+|---|---|---|
+| Vermillon | `#E84820` | Action primaire uniquement. Rare, donc fort. |
+| Braise | `#B8320F` | États survol / pressé |
+| Encre | `#16233A` | Texte principal, sections sombres |
+| Ardoise | `#5A6B84` | Texte secondaire, légendes |
+| Papier | `#F4F6F9` | Fonds de section |
+| Blanc | `#FFFFFF` | Cartes, surfaces produit |
+| Vert | `#1F9D6B` | Statut validé / payé |
+| Ocre | `#E5A22B` | Statut en attente |
+| Indigo | `#3B5BDB` | Information, liens |
+
+### Typographie
+
+- **Bricolage Grotesque** pour les titres — variable, un peu anguleuse, technique sans être froide. Elle a du caractère là où Inter et Poppins n'en ont plus.
+- **IBM Plex Sans** pour le texte courant — excellent support des diacritiques françaises, ADN d'ingénierie qui colle à un ERP.
+- **IBM Plex Mono**, uniquement pour les montants et données tabulaires dans les maquettes de tableaux de bord. Justifié fonctionnellement : les montants en FCFA doivent s'aligner à la décimale.
+
+### Concept de mise en page — « Le registre »
+
+Grille à forte ligne de base, alignement à gauche. Les filets horizontaux séparent les modules et **portent une information** (ils marquent les frontières fonctionnelles), ils ne décorent pas.
+
+### Le moment fort, en un seul endroit
+
+Le hero. Une composition produit surdimensionnée qui montre **une seule transaction traversant trois modules** : une facture normalisée est émise → le stock se décrémente → l'écriture comptable se génère. Trois cartes, une donnée qui circule entre elles. C'est votre démonstration en trois secondes, et c'est la seule animation ambitieuse du site. Tout le reste reste calme.
+
+---
+
+## 5. Les prompts Google Stitch
+
+### Comment les utiliser
+
+Stitch plafonne à **6 écrans par génération**. Les prompts sont donc découpés en lots. Ordre d'utilisation :
+
+1. Ouvrez Stitch en **mode Experimental** (meilleure qualité, entrée image, export code)
+2. Collez le **Prompt 0** seul, laissez-le générer
+3. Puis collez les lots A → E, un par un, dans le même projet
+
+Les prompts sont **en anglais** : Stitch tourne sur Gemini et l'adhérence aux instructions y est nettement meilleure. **Tous les textes d'interface sont en français, entre guillemets** — Stitch les reprend littéralement. Dites-moi si vous préférez une version entièrement française, je la convertis.
+
+---
+
+### PROMPT 0 — Fondations (à coller en premier, seul)
+
+```
+You are designing a complete website redesign for JILMS, an ERP SaaS platform
+built by Jilmonde Consulting for companies and public institutions in Benin,
+Senegal and the wider West African UEMOA zone.
+
+Do not generate screens yet. First, establish and lock this design system.
+
+CONTEXT
+JILMS replaces spreadsheets and disconnected tools with one platform covering
+sales, invoicing, purchasing, stock, accounting, HR, payroll, projects and
+public procurement. Its real advantage over Odoo, Sage and Dolibarr is local
+compliance: e-MeCEF certified invoicing, SYSCOHADA/SYCEBNL accounting, FCFA
+and multi-currency, Mobile Money, multi-site operations. Audience: SME owners,
+finance directors, HR managers, and public sector administrators. They are
+cautious buyers. They need proof, not hype.
+
+COLOR TOKENS — use these exact values, no others
+--vermillon: #E84820   primary actions only, used sparingly
+--braise:    #B8320F   hover and pressed states
+--encre:     #16233A   body text and dark sections
+--ardoise:   #5A6B84   secondary text and captions
+--papier:    #F4F6F9   section backgrounds
+--blanc:     #FFFFFF   cards and product surfaces
+--vert:      #1F9D6B   status: validated, paid
+--ocre:      #E5A22B   status: pending
+--indigo:    #3B5BDB   informational, links
+
+TYPOGRAPHY
+Headings: Bricolage Grotesque, weights 600 and 700, tight tracking (-0.02em)
+Body: IBM Plex Sans, weights 400 and 500, line-height 1.6
+Numeric data in dashboard mockups only: IBM Plex Mono, tabular figures
+Type scale: 64 / 44 / 32 / 24 / 18 / 16 / 14 px
+Body line length must stay under 75 characters.
+
+LAYOUT
+12-column grid, 1280px max content width, 96px gutters on desktop.
+Strong left alignment. Do not center body text.
+Vertical rhythm on an 8px baseline.
+Horizontal rules separate functional sections and carry meaning — they mark
+module boundaries. Do not use them decoratively.
+Border radius: 4px on inputs and buttons, 12px on cards, 20px on large
+product panels. Do not apply one uniform radius everywhere.
+
+HARD CONSTRAINTS — these are rejections, not preferences
+- No all-caps eyebrow labels above headings.
+- No headline where a single word is colored or italicized for emphasis.
+- No numbered markers (01 / 02 / 03) unless the content is genuinely a sequence.
+- No gradient washes used as decoration.
+- No identical soft grey drop shadow under every card. Elevation must
+  correspond to real hierarchy.
+- No arrow glyph appended to button or link text.
+- No stock-photo business handshakes or generic office imagery.
+- Do not chop every section into identical rounded cards.
+
+VOICE
+French, sentence case, plain verbs, active voice. Buttons name exactly what
+happens. Specific over clever. Currency is always written "FCFA" after the
+amount, with a non-breaking space and thousands separated by spaces:
+"1 250 000 FCFA".
+
+Confirm you have registered this system, then wait for screen instructions.
+```
+
+---
+
+### LOT A — Page d'accueil (5 écrans)
+
+```
+Using the locked design system, generate these 5 screens.
+
+SCREEN 1 — Homepage, desktop, 1440px wide, full page
+
+Sticky header on --blanc with a 1px --papier bottom border:
+JILMS wordmark left. Nav: "Plateforme", "Modules", "Solutions", "Tarifs",
+"Références", "Ressources". Right: "Se connecter" as a text link, and
+"Demander une démo" as a solid --vermillon button.
+
+HERO — this is the single boldest moment of the entire site. Give it room.
+Left column, 6 of 12 columns:
+  H1, 64px: "Toute votre gestion, d'une seule facture à votre bilan."
+  Sub, 18px --ardoise, max 3 lines: "JILMS relie vos ventes, vos stocks, votre
+  comptabilité et votre paie. Facturation normalisée e-MeCEF, plan SYSCOHADA,
+  multi-devises, multi-sites. Conçu au Bénin pour les entreprises d'Afrique
+  de l'Ouest."
+  Two buttons: "Demander une démo" (--vermillon, solid) and "Voir les modules"
+  (--encre, outlined).
+  Below, one line of --ardoise 14px text: "Déjà déployé à l'ONIP et dans des
+  PME au Bénin et au Sénégal."
+
+Right column, 6 of 12 columns — the hero composition:
+  Three overlapping product panels on --papier, staggered diagonally, showing
+  ONE transaction moving through three modules. Render them as real UI, not
+  abstract shapes:
+  Panel 1, front: an invoice screen. Header "Facture FA-2026-0412". Client
+  "SOBEMAP SARL". Three line items with quantities and unit prices. Total
+  "1 250 000 FCFA" in IBM Plex Mono. A --vert pill reading "Certifiée e-MeCEF".
+  Panel 2, middle: a stock movement table. Column headers "Article",
+  "Dépôt", "Sortie", "Reste". Three rows. One row highlighted in --ocre.
+  Panel 3, back: a journal entry. Two columns "Débit" and "Crédit", balanced,
+  amounts in IBM Plex Mono. Label "Écriture générée automatiquement".
+  Draw a thin --vermillon connector line from panel 1 to 2 to 3.
+
+PROOF STRIP — full width, --papier background, 64px vertical padding:
+Left, 32px heading: "Ils gèrent déjà avec JILMS". Right, a horizontal row of
+6 monochrome --ardoise client logo placeholders at 40px height.
+
+MODULES — --blanc background:
+H2, 44px: "Neuf modules, une seule base de données."
+Body, --ardoise: "Activez ce dont vous avez besoin. Les données circulent
+entre les modules sans ressaisie."
+A 3-column grid of 9 module entries. Each entry is NOT a card — it is a text
+block separated from its neighbours by a 1px --papier rule. Each has: a 24px
+line icon in --encre, a 24px bold title, two lines of --ardoise description,
+and a "En savoir plus" link in --indigo.
+The nine: "Ventes et facturation", "Achats et fournisseurs", "Stocks et
+dépôts", "Comptabilité et finance", "Ressources humaines et paie", "Projets
+et budgets", "Marchés publics", "CRM et prospection", "Tableaux de bord".
+
+CONFORMITÉ — --encre dark section, white text, 120px vertical padding:
+H2, 44px: "Conforme, par construction."
+A 4-column row. Each column: a large label in Bricolage Grotesque 32px, then
+two lines of explanation at 16px in a lighter tint of white.
+Columns: "e-MeCEF" / "Facturation normalisée transmise à la DGI en temps réel."
+— "SYSCOHADA" / "Plan comptable adapté à votre forme juridique." —
+"FCFA et devises" / "Comptabilité multi-devises par projet ou programme." —
+"Mobile Money" / "Encaissements MTN et Moov rapprochés automatiquement."
+
+ÉTUDE DE CAS — --blanc, two columns:
+Left: a large product screenshot placeholder, 20px radius.
+Right: 32px heading "L'ONIP pilote huit directions dans un seul système."
+Three short paragraphs. Three metrics in a row, numbers at 44px in
+Bricolage Grotesque --vermillon, labels at 14px --ardoise. Link:
+"Lire l'étude de cas".
+
+CLOSING — --papier:
+H2 centered, 44px: "Parlons de votre gestion."
+One line of --ardoise text. Button "Demander une démo".
+
+FOOTER — --encre, white text, 4 columns plus a bottom bar:
+Columns: Produit / Solutions / Entreprise / Contact.
+Bottom bar: "Jilmonde Consulting SARL — Abomey-Calavi, Bénin · Dakar,
+Sénégal", legal links, language switch "FR / EN", social icons.
+
+SCREEN 2 — Homepage, mobile, 390px wide, full page
+Same content and order, single column. Hero composition becomes a vertical
+stack of the three panels with generous overlap. Module grid becomes a single
+column list with rules between entries. The 4-column conformité section
+becomes a 2x2 grid. Nav collapses to a hamburger.
+
+SCREEN 3 — Header with the "Modules" mega-menu open, desktop
+Full-width dropdown on --blanc with a subtle downward shadow. Three columns of
+module links, each with icon, name and one line of description. A fourth
+column on --papier holds a promoted block: "Nouveau : rapprochement Mobile
+Money" with a small thumbnail and a link.
+
+SCREEN 4 — Mobile navigation drawer, open, 390px
+Full-screen overlay on --blanc. Close icon top right. Large 24px nav entries
+with generous spacing and rules between them. "Modules" and "Solutions" show
+a chevron indicating expansion. At the bottom, two full-width buttons:
+"Demander une démo" and "Se connecter".
+
+SCREEN 5 — Component and state sheet, desktop
+Not a page. A specimen board on --papier showing, in a labelled grid:
+buttons in all four states (default, hover, focus with a visible ring,
+disabled) for primary, secondary and text variants; text input in default,
+focused, filled and error states with a French error message; a select; a
+checkbox; a status pill in --vert, --ocre and --indigo; a data table row;
+a pagination control; a toast; and the type scale specimen with French
+accented characters.
+```
+
+---
+
+### LOT B — Modules et tarifs (4 écrans)
+
+```
+Generate 4 more screens in the same system.
+
+SCREEN 6 — Modules hub, desktop
+Short page header: H1 "Neuf modules qui parlent la même langue." One paragraph.
+Then a left sidebar of module filters and a main area listing all nine modules
+as generous horizontal entries: icon, name, three-line description, a row of
+3 to 4 small feature chips, and a link. Separated by rules, not cards.
+
+SCREEN 7 — Module detail: "Comptabilité et finance", desktop
+Breadcrumb "Modules / Comptabilité et finance".
+H1 44px, one paragraph of intro, "Demander une démo" button.
+A large product screenshot panel showing a French-language accounting
+interface: a chart of accounts tree on the left, a journal entry table on the
+right with "Débit" and "Crédit" columns, amounts in IBM Plex Mono, a balanced
+total row.
+Below: a two-column feature list, 8 entries, each an 18px bold title and two
+lines of --ardoise text. Include "Plan SYSCOHADA et SYCEBNL", "Comptabilité
+multi-devises", "Rapprochement bancaire et Mobile Money", "États financiers
+normalisés", "Clôture assistée", "Immobilisations et amortissements",
+"Comptabilité analytique par projet", "Export vers votre expert-comptable".
+Then a --papier band: "Ce module fonctionne avec" and 4 linked module names.
+Then a short FAQ accordion, 5 questions, first one open.
+
+SCREEN 8 — Tarifs, desktop
+H1 "Un tarif par taille d'entreprise, pas par surprise."
+Three plan columns on --blanc with 12px radius. The middle one is
+recommended: --vermillon 2px border and a small --vermillon label reading
+"Le plus choisi". Do not make it larger or scaled up.
+Plans: "Essentiel" for "TPE et jeunes structures", "Croissance" for "PME
+multi-sites", "Institution" for "Grandes entreprises et secteur public".
+Each: price in FCFA per month in Bricolage Grotesque 44px, a per-user line,
+a button, and a checked feature list of 8 items. Third plan shows
+"Sur devis" instead of a figure.
+Below: a full comparison table, 4 columns, about 20 rows grouped by module,
+with a sticky header row. Use check marks and dashes, and --vert for included.
+Then a 6-question FAQ accordion.
+
+SCREEN 9 — Tarifs, mobile, 390px
+Plans stack vertically, recommended plan first. The comparison table becomes
+a per-plan accordion.
+```
+
+---
+
+### LOT C — Preuve et confiance (4 écrans)
+
+```
+Generate 4 more screens.
+
+SCREEN 10 — Solutions: "Secteur public", desktop
+H1 "Piloter un établissement public dans un seul système."
+Hero with a product screenshot showing a public procurement pipeline.
+A section on regulatory needs: procurement, budget execution, internal
+control, payroll for public agents.
+A prominent ONIP case block.
+A "Comment se passe un déploiement" section: 5 genuinely sequential steps —
+here numbered markers are justified — "Cadrage", "Paramétrage",
+"Reprise des données", "Formation", "Mise en production", each with a
+duration estimate.
+
+SCREEN 11 — Case study: ONIP / SIGONIP, desktop
+Article layout, single column, 680px measure, left aligned.
+H1 "L'ONIP a réuni huit directions dans un seul système."
+A metadata rule: sector, size, modules deployed, year.
+Three metrics in a row near the top.
+Body text with two pull quotes and two full-width product screenshots.
+A right-hand sticky summary card listing the modules deployed.
+Ends with a related case studies row and a demo CTA.
+
+SCREEN 12 — Références, desktop
+A filterable grid of case study cards: sector filters as chips at the top,
+then a 3-column grid. Each card: a screenshot thumbnail, sector label,
+client name, one-line result, and a metric. This is a genuine card context,
+so cards are correct here.
+
+SCREEN 13 — Demander une démo, desktop
+Two columns. Left, 5 of 12: H1 "Voyons JILMS sur vos propres données.",
+a short paragraph, then a checklist of what happens: "Un échange de 30 minutes",
+"Une démonstration sur votre secteur", "Une estimation chiffrée", "Aucun
+engagement". Below, a small testimonial with an avatar.
+Right, 7 of 12: a form on --blanc with 12px radius: "Nom et prénom",
+"Entreprise", "Email professionnel", "Téléphone" with a country prefix
+selector defaulting to +229, "Nombre d'employés" as a select, "Modules qui
+vous intéressent" as multi-select chips, "Votre besoin en quelques mots" as a
+textarea. Submit button reads "Demander une démo". Below the button, one
+--ardoise line about data handling.
+```
+
+---
+
+### LOT D — Entrée produit et support (4 écrans)
+
+```
+Generate 4 more screens.
+
+SCREEN 14 — Se connecter, desktop
+Split screen. Left half --encre with the JILMS wordmark, one line of
+positioning, and a subtle abstract pattern derived from the module grid — not
+a gradient. Right half --blanc, centered form, 420px wide: H2 "Accéder à
+votre espace", a field labelled "Adresse de votre espace" showing a suffix
+".jilms.bj" inside the input, then "Identifiant" and "Mot de passe", a
+"Mot de passe oublié" link, and a "Se connecter" button.
+
+SCREEN 15 — Ressources hub, desktop
+A featured article block, then a filterable grid of resources with type chips:
+"Guide", "Webinaire", "Modèle", "Article". Cards show type, title, reading
+time. Include a newsletter sign-up band on --papier.
+
+SCREEN 16 — Centre d'aide, desktop
+A prominent search field at the top on --papier: "Rechercher dans l'aide".
+Below, a 3-column grid of help categories, each with an icon, a category
+name, and 4 linked article titles beneath it. A contact-support band at the
+bottom with two options: "Écrire au support" and "Appeler +229 95575151".
+
+SCREEN 17 — À propos, desktop
+H1 "Nous construisons des logiciels de gestion depuis Abomey-Calavi."
+A narrative section, a timeline of the company, a team grid of 8 portraits
+with names and roles, and an offices block showing Abomey-Calavi and Dakar
+with addresses and phone numbers.
+```
+
+---
+
+### LOT E — États et variantes (4 écrans)
+
+```
+Generate 4 final screens.
+
+SCREEN 18 — Homepage hero, hover and active states annotated, desktop
+Same hero as Screen 1, but showing: the primary button in hover state
+(--braise, lifted 2px), a nav item in hover state with an underline, and the
+first hero panel raised in elevation. Add small annotation labels in --indigo
+pointing to each changed element, describing the state.
+
+SCREEN 19 — Modules hub, tablet, 834px
+Two-column layout, filters collapsed into a dropdown above the list.
+
+SCREEN 20 — Empty and error states, desktop
+A specimen board with four blocks: an empty search result in the help centre
+with a suggestion to rephrase; a form submission error listing two invalid
+fields; a 404 page with the JILMS wordmark, "Cette page n'existe pas." and
+two links; and an offline banner reading "Connexion perdue. Vos données sont
+conservées." Errors state what happened and what to do. They do not apologise.
+
+SCREEN 21 — Dark section variants, desktop
+A specimen board showing the --encre dark treatment applied to three
+different section types: the conformité band, a testimonial band, and the
+footer — so the dark palette is verifiably consistent across contexts.
+```
+
+---
+
+## 6. Annexe motion — à donner au développeur, pas à Stitch
+
+**Stitch ne génère pas d'animations.** C'est sa limite la plus citée. Il produit des écrans statiques (export Figma en mode Standard, HTML/CSS en mode Experimental). Le motion se code après.
+
+Voici les **4 animations à garder** — pas 13.
+
+### 1. Hero : la transaction qui circule (le moment fort)
+
+Au chargement, les trois panneaux entrent en cascade, décalés de 120 ms, translation Y de 32 px, `cubic-bezier(0.16, 1, 0.3, 1)`, 600 ms. Puis la ligne de connexion vermillon se dessine du panneau 1 vers le 3 (`stroke-dashoffset`, 900 ms). Puis, en boucle lente toutes les 6 secondes : la pastille « Certifiée e-MeCEF » pulse, la ligne du tableau de stock passe en surbrillance ocre, l'écriture comptable s'incrémente. Le cycle se répète, discrètement.
+
+Sur mobile : suppression de la ligne animée, entrée en fondu simple.
+
+### 2. Bandeau logos : marquee infini
+
+Duplication du groupe de logos dans le DOM, `transform: translateX` en boucle CSS, 40 s, linéaire. Pause au survol. C'est le pattern exact de monday.com et il est bon.
+
+### 3. Compteurs de métriques
+
+Incrémentation de 0 à la valeur cible sur 1200 ms en `ease-out`, déclenchée à l'entrée dans le viewport via `IntersectionObserver`, une seule fois. Uniquement dans les études de cas et le bloc ONIP.
+
+### 4. Réponses aux actions
+
+Accordéons, onglets, menus, ouverture de modales : 200 ms, `ease-out`. Survol des boutons : 150 ms. Ce sont les animations les plus importantes du site parce qu'elles répondent à un geste de l'utilisateur.
+
+### Ce que je vous conseille de ne pas reprendre de monday.com
+
+Les sections épinglées au scroll, le workflow SVG qui s'assemble, les onglets auto-avançants, les grappes d'icônes au survol, le bandeau texte défilant de clôture. Chacun ajoute du poids et du bruit pour un gain d'information nul dans votre contexte.
+
+### Règles non négociables
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+Aucune animation ne doit retarder l'affichage du contenu. Aucune vidéo `.webm` en hero au-dessus de 800 Ko — préférez une séquence CSS/SVG. Sur connexion lente ou `Save-Data: on`, servez la version statique.
+
+---
+
+## 7. Méthode d'itération avec Stitch
+
+1. **Mode Experimental**, pas Standard. Meilleure qualité, entrée image, export code. Quota plus serré, donc ne gaspillez pas les générations.
+2. **Un lot à la fois.** Attendez le résultat, vérifiez, puis enchaînez. Le système de design se propage entre générations dans un même projet.
+3. **Vérifiez trois choses à chaque écran** : les couleurs exactes, la présence de tous les composants demandés, et l'absence des interdits du Prompt 0 (eyebrow en capitales, mot surligné dans un titre, ombres uniformes).
+4. **Corrigez par instruction ciblée**, pas en regénérant tout : « Remove the all-caps label above the H2 in the modules section. » Une correction, une phrase.
+5. **Injectez des captures.** Le mode Experimental accepte les images. Donnez-lui de vraies captures de votre ERP pour que les panneaux produit ressemblent au vrai JILMS et pas à une invention.
+6. **Export.** Standard → Figma. Experimental → HTML/CSS. Attendez-vous à retravailler l'auto-layout dans Figma, c'est le point faible connu de l'export.
+
+---
+
+## 8. Deux choses à trancher avant de lancer
+
+**Le SEO.** La refonte visuelle ne sert à rien si le site reste une SPA non indexable. Décidez maintenant : site vitrine découplé en Astro ou Next avec génération statique, ou Angular Universal. C'est plus déterminant pour votre acquisition que n'importe quelle animation.
+
+**Les preuves.** Il vous faut, avant de coder : les logos de 6 clients avec autorisation, l'étude de cas ONIP rédigée avec 3 métriques chiffrées, et 2 témoignages nommés. Sans ça, les maquettes resteront des placeholders et le site ne convertira pas mieux que l'actuel.
+
+---
+
+*Envoyez-moi des captures de vos pages actuelles et j'ajuste les prompts sur le contenu réel.*

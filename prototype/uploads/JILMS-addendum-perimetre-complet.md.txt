@@ -1,0 +1,205 @@
+# Addendum — Périmètre complet du site
+
+*À utiliser avec le document v2. Ajoute la déclaration de périmètre au Prompt 0, puis les lots E et F.*
+
+---
+
+## 1. Le problème
+
+Les lots A à D couvrent 19 écrans, mais ils laissent hors périmètre plusieurs pages qui figurent dans votre navigation ou votre pied de page — dont **Communauté**, qui est l'une des cinq entrées du menu principal.
+
+Sans déclaration de périmètre explicite, Stitch traite chaque lot comme une demande isolée. Il ne sait pas qu'il conçoit un site entier, et il ne signale pas les manques. Il faut le lui dire.
+
+**Total après addendum : 29 écrans.**
+
+---
+
+## 2. Bloc à ajouter au PROMPT 0
+
+Insérez ce bloc **juste après la section CONTEXT**, avant COLOR TOKENS.
+
+```
+SCOPE — this is a complete site redesign, not a set of isolated screens
+
+Every page of jilms.bj is being redesigned. Nothing from the current site is
+kept. You will receive the screens in batches, but they belong to one coherent
+site with one navigation, one footer, one component library and one voice.
+
+The complete site map is:
+
+  Accueil
+  Modules — hub, plus 12 module detail pages
+  Communauté — hub, Tutoriels, Documentation, Forum
+  Tarification
+  Aide — help hub, contact, demo request
+  Références — case study index, plus case study pages
+  À propos — Notre cabinet, Nos produits, Évènements, Partenaires
+  Services — Assistances, Études, Formations, Conseils, Conception de logiciels
+  Se connecter
+  Legal — Confidentialité, Sécurité, Mentions légales
+
+Header and footer are identical on every page and must never vary between
+batches. Reuse components across pages rather than inventing new ones: a card
+on the Communauté page uses the same anatomy as a card on Références.
+
+TEMPLATES — do not generate 12 near-identical module pages
+Some pages share one structure and differ only in content. Design the template
+once, at full quality, and state which pages reuse it:
+  - "Module detail" template → the 12 module pages
+  - "Legal document" template → Confidentialité, Sécurité, Mentions légales
+  - "Case study" template → every customer story
+  - "Service detail" template → the 5 Jilmonde Consulting services
+When you generate a template, label it as such and list the pages it covers.
+```
+
+---
+
+## 3. LOT E — Communauté et accès (5 écrans)
+
+```
+Generate 5 screens, same locked system.
+
+SCREEN 20 — Communauté, hub, desktop
+This page is in the main navigation and currently does not exist. Build it.
+H1 44px "Apprendre, chercher, demander." Underline stroke beneath "demander" —
+the only one on this page.
+Sub --ardoise: "La documentation, les tutoriels et le forum JIL-MS, en français."
+
+A prominent search field on --papier: "Rechercher dans la documentation".
+
+Three destination blocks in one row, each with a line icon, a 24px title, two
+--ardoise lines, a live count, and a link:
+  "Documentation" / "Le fonctionnement de chaque module, écran par écran." /
+  "128 articles" / "Ouvrir la documentation"
+  "Tutoriels" / "Des pas-à-pas courts pour les tâches fréquentes." /
+  "42 tutoriels" / "Voir les tutoriels"
+  "Forum" / "Posez vos questions, répondez à celles des autres." /
+  "310 discussions" / "Rejoindre le forum"
+
+Then "Les plus consultés" — a list of 6 article entries separated by rules,
+each with a category chip, a title, and a reading time.
+
+Then a --encre dark band: "Vous formez vos équipes ?" with two lines and a
+"Voir les formations" button.
+
+SCREEN 21 — Documentation, article page, desktop
+Three columns.
+Left 3 of 12: a sticky navigation tree, module families collapsible, current
+article highlighted in --vermillon.
+Centre 6 of 12: breadcrumb, H1 32px "Saisir une facture normalisée e-MeCEF",
+a last-updated line, then article body at 680px measure with H2 sections,
+numbered steps — genuinely sequential here, so numbering is justified —
+annotated screenshots, and a --papier callout box.
+Right 3 of 12: a sticky table of contents, then "Cet article vous a-t-il
+aidé ?" with two buttons.
+Bottom: previous and next article links.
+
+SCREEN 22 — Forum, desktop
+A category sidebar, a main list of discussions. Each row: title, author
+avatar and name, category chip, reply count, last-activity time, and a --vert
+"Résolu" pill on two of them. A "Poser une question" --vermillon button top
+right. Pagination at the bottom.
+
+SCREEN 23 — Se connecter, desktop
+Split screen. Left half --encre with the JIL-MS wordmark, one positioning
+line, and a geometric pattern derived from the five module families — not a
+gradient, not a photograph.
+Right half --blanc, centred form 420px wide: H2 "Accéder à votre espace", a
+field labelled "Adresse de votre espace" showing the suffix ".jilms.bj"
+inside the input on the right, then "Identifiant" and "Mot de passe" with a
+show/hide control, a "Mot de passe oublié" link, and a "Se connecter"
+--vermillon button. Below: "Pas encore d'espace ? Demander une démo."
+
+SCREEN 24 — Partenaires, desktop
+H1 "Déployez JIL-MS dans votre pays."
+A three-step programme — genuinely sequential, so numbering is justified:
+"Candidature", "Certification", "Premier déploiement", each with a duration.
+Then a benefits list in two columns.
+Then a partner directory: a country filter row, then a grid of partner cards
+with logo placeholder, name, country, and certification level as a --vert or
+--ocre pill.
+Closing form: "Devenir partenaire".
+```
+
+---
+
+## 4. LOT F — Institution et gabarits (5 écrans)
+
+```
+Generate 5 final screens.
+
+SCREEN 25 — À propos / Notre cabinet, desktop
+H1 "Nous construisons des logiciels de gestion depuis Abomey-Calavi."
+A narrative section on Jilmonde Consulting, two paragraphs.
+A timeline of the company, horizontal on desktop.
+A team grid of 8 portraits with name and role.
+An offices block, three columns, matching the Aide page data exactly:
+  "Bénin — Abomey-Calavi, Agla", "Burkina Faso — Ouagadougou, Cissin",
+  "Sénégal — Dakar, Ngor Lot 125", each with address and two phone numbers.
+Do not print employee counts beside phone numbers.
+
+SCREEN 26 — Services, hub, desktop
+The five Jilmonde Consulting services as horizontal entries separated by
+rules, each with a line icon, a 24px title, three --ardoise lines and a link:
+  "Assistances", "Études", "Formations", "Conseils et solutions",
+  "Conception de logiciels".
+Then a --papier band explaining the relationship: "JIL-MS est le progiciel.
+Jilmonde Consulting est le cabinet qui le conçoit et vous accompagne."
+This distinction is currently unclear to visitors and must be explicit.
+
+SCREEN 27 — Service detail template: "Formations", desktop
+Label this screen clearly as the template for the other four services.
+H1, an intro paragraph, a "Ce que vous obtenez" list of 6 items, a session
+calendar table with columns "Date", "Lieu", "Module", "Durée", "Places", a
+pricing note in FCFA, and a request form at the bottom.
+
+SCREEN 28 — Évènements, desktop
+An upcoming events list, each row with a date block on the left in Bricolage
+Grotesque, then title, city, format chip (Présentiel or En ligne), and an
+"S'inscrire" link. Then a past-events grid with recordings.
+
+SCREEN 29 — Legal document template: "Politique de confidentialité", desktop
+Label this screen as the template for Sécurité and Mentions légales.
+Single column, 680px measure, left aligned. A last-updated line under the H1.
+A sticky table of contents on the left. Numbered sections — a legal document
+is sequential, so numbering is justified. Plain French, short paragraphs, no
+walls of capitals. A contact block at the end with the Abomey-Calavi address
+and a data-protection e-mail.
+```
+
+---
+
+## 5. Récapitulatif du périmètre
+
+| Lot | Écrans | Contenu |
+|---|---|---|
+| A | 1–5 | Accueil desktop et mobile, méga-menu, tiroir mobile, composants |
+| B | 6–10 | Tarification desktop et mobile, hub modules, 2 pages module |
+| C | 11–15 | Aide desktop et mobile, Références, étude de cas ONIP, démo |
+| D | 16–19 | États survol, tablette, états vides et erreurs, cohérence sombre |
+| **E** | **20–24** | **Communauté, documentation, forum, connexion, partenaires** |
+| **F** | **25–29** | **À propos, services, gabarit service, évènements, gabarit légal** |
+
+**29 écrans générés**, qui couvrent par gabarit l'intégralité du site :
+
+- 12 pages module → gabarit de l'écran 9, décliné une fois sur l'écran 10
+- 5 pages service → gabarit de l'écran 27
+- 3 pages légales → gabarit de l'écran 29
+- Toutes les études de cas → gabarit de l'écran 14
+- Tous les articles de documentation → gabarit de l'écran 21
+
+Soit environ **55 pages réelles** couvertes par 29 générations. C'est important : le mode Experimental est plafonné à une cinquantaine de générations par mois. Générer douze pages module quasi identiques épuiserait votre quota pour un résultat moins cohérent qu'un gabarit unique bien fait.
+
+---
+
+## 6. Ordre de génération conseillé
+
+Ne suivez pas l'ordre alphabétique des lots. Suivez celui-ci :
+
+1. **Prompt 0** — le système, seul
+2. **Lot A** — l'accueil fixe l'identité visuelle. Tout le reste en hérite. Ne passez à la suite que quand il vous convient vraiment.
+3. **Lot D, écran 5 uniquement** — la planche de composants. La générer tôt vous donne une référence stable pour juger les lots suivants.
+4. **Lot B**, puis **C**, puis **E**, puis **F**
+5. **Le reste du lot D** en dernier : les états de survol et d'erreur n'ont de sens qu'une fois les écrans arrêtés.
+
+Si votre quota se réduit, l'ordre de sacrifice est : lot F d'abord, puis les écrans mobiles (dérivables à la main depuis le desktop), puis le lot D. Ne sacrifiez jamais le lot A ni l'écran 20 — Communauté est dans votre menu principal et son absence se verrait immédiatement.

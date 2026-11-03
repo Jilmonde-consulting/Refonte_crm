@@ -1,0 +1,1616 @@
+{
+  "text": " ça c'est le vrai siège de beaucoup d'entreprises. Pas le bureau. La table de la cuisine. Le cas y est de compte. Les ressuffroissés. Les postites. Et les messages WhatsApp qui arrivent à minuit. Les ventes sont là. Le stock, dans la tête du magazine, la compta dans trois fichiers différents. Ah, et le soir, il faut toujours trouver. Un clic. Et là, tout se range. Les ventes deviennent des factures. Le stock devient un table au clair. La comptabilité se remplit sans recésie. Une seule base de données, zéro-recésie. Conforme, iméceph et Cisco-Ada. Mobilemonais rapprochait. Pensez pour l'Afrique de l'Ouest. Regardez. Vous validez une facture. Le stock se metta jour. Les crétures se génèrent. Le tableau de bord suit. C'est ça. Un ERP intégré. GILMS. Tout de votre gestion. Dune seule facture à votre bilan.",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,
+      "end": 3.06,
+      "text": " ça c'est le vrai siège de beaucoup d'entreprises.",
+      "tokens": [
+        50364,
+        2788,
+        269,
+        6,
+        377,
+        476,
+        17815,
+        31302,
+        432,
+        368,
+        8796,
+        274,
+        6,
+        24570,
+        19547,
+        13,
+        50512
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " ça",
+          "start": 0.0,
+          "end": 0.38,
+          "probability": 0.23698405921459198
+        },
+        {
+          "word": " c",
+          "start": 0.38,
+          "end": 0.96,
+          "probability": 0.5124794244766235
+        },
+        {
+          "word": "'est",
+          "start": 0.96,
+          "end": 0.96,
+          "probability": 0.9968630969524384
+        },
+        {
+          "word": " le",
+          "start": 0.96,
+          "end": 1.2,
+          "probability": 0.9944624304771423
+        },
+        {
+          "word": " vrai",
+          "start": 1.2,
+          "end": 1.44,
+          "probability": 0.6312987208366394
+        },
+        {
+          "word": " siège",
+          "start": 1.44,
+          "end": 1.66,
+          "probability": 0.9413329660892487
+        },
+        {
+          "word": " de",
+          "start": 1.66,
+          "end": 2.0,
+          "probability": 0.9935449361801147
+        },
+        {
+          "word": " beaucoup",
+          "start": 2.0,
+          "end": 2.18,
+          "probability": 0.9840264320373535
+        },
+        {
+          "word": " d",
+          "start": 2.18,
+          "end": 2.4,
+          "probability": 0.9810173511505127
+        },
+        {
+          "word": "'entreprises.",
+          "start": 2.4,
+          "end": 3.06,
+          "probability": 0.9528493881225586
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 3.46,
+      "end": 3.94,
+      "text": " Pas le bureau.",
+      "tokens": [
+        50512,
+        14199,
+        476,
+        35343,
+        13,
+        50562
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Pas",
+          "start": 3.46,
+          "end": 3.48,
+          "probability": 0.41101011633872986
+        },
+        {
+          "word": " le",
+          "start": 3.48,
+          "end": 3.62,
+          "probability": 0.8603158593177795
+        },
+        {
+          "word": " bureau.",
+          "start": 3.62,
+          "end": 3.94,
+          "probability": 0.9022982120513916
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 4.4,
+      "end": 5.16,
+      "text": " La table de la cuisine.",
+      "tokens": [
+        50562,
+        2369,
+        3199,
+        368,
+        635,
+        25257,
+        13,
+        50630
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " La",
+          "start": 4.4,
+          "end": 4.42,
+          "probability": 0.7952805161476135
+        },
+        {
+          "word": " table",
+          "start": 4.42,
+          "end": 4.6,
+          "probability": 0.7826775312423706
+        },
+        {
+          "word": " de",
+          "start": 4.6,
+          "end": 4.76,
+          "probability": 0.9960724115371704
+        },
+        {
+          "word": " la",
+          "start": 4.76,
+          "end": 4.88,
+          "probability": 0.9402756690979004
+        },
+        {
+          "word": " cuisine.",
+          "start": 4.88,
+          "end": 5.16,
+          "probability": 0.9023014307022095
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 5.68,
+      "end": 6.46,
+      "text": " Le cas y est de compte.",
+      "tokens": [
+        50630,
+        1456,
+        3058,
+        288,
+        871,
+        368,
+        19424,
+        13,
+        50684
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Le",
+          "start": 5.68,
+          "end": 5.68,
+          "probability": 0.8873780369758606
+        },
+        {
+          "word": " cas",
+          "start": 5.68,
+          "end": 5.8,
+          "probability": 0.1261914223432541
+        },
+        {
+          "word": " y",
+          "start": 5.8,
+          "end": 5.9,
+          "probability": 0.6856247186660767
+        },
+        {
+          "word": " est",
+          "start": 5.9,
+          "end": 6.0,
+          "probability": 0.7863965034484863
+        },
+        {
+          "word": " de",
+          "start": 6.0,
+          "end": 6.22,
+          "probability": 0.6018544435501099
+        },
+        {
+          "word": " compte.",
+          "start": 6.22,
+          "end": 6.46,
+          "probability": 0.9096708297729492
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "seek": 0,
+      "start": 6.66,
+      "end": 7.42,
+      "text": " Les ressuffroissés.",
+      "tokens": [
+        50684,
+        6965,
+        24689,
+        1245,
+        340,
+        891,
+        2191,
+        13,
+        50742
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Les",
+          "start": 6.66,
+          "end": 6.76,
+          "probability": 0.854267418384552
+        },
+        {
+          "word": " ressuffroissés.",
+          "start": 6.76,
+          "end": 7.42,
+          "probability": 0.5766956448554993
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "seek": 0,
+      "start": 7.84,
+      "end": 8.48,
+      "text": " Les postites.",
+      "tokens": [
+        50742,
+        6965,
+        2183,
+        3324,
+        13,
+        50792
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Les",
+          "start": 7.84,
+          "end": 7.9,
+          "probability": 0.9082945585250854
+        },
+        {
+          "word": " postites.",
+          "start": 7.9,
+          "end": 8.48,
+          "probability": 0.5832899659872055
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "seek": 0,
+      "start": 8.78,
+      "end": 10.98,
+      "text": " Et les messages WhatsApp qui arrivent à minuit.",
+      "tokens": [
+        50792,
+        3790,
+        1512,
+        7897,
+        30513,
+        1956,
+        3399,
+        2475,
+        1531,
+        923,
+        1983,
+        13,
+        50912
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Et",
+          "start": 8.78,
+          "end": 8.84,
+          "probability": 0.5566676259040833
+        },
+        {
+          "word": " les",
+          "start": 8.84,
+          "end": 8.98,
+          "probability": 0.9590337872505188
+        },
+        {
+          "word": " messages",
+          "start": 8.98,
+          "end": 9.12,
+          "probability": 0.9614028334617615
+        },
+        {
+          "word": " WhatsApp",
+          "start": 9.12,
+          "end": 9.52,
+          "probability": 0.44733116030693054
+        },
+        {
+          "word": " qui",
+          "start": 9.52,
+          "end": 9.78,
+          "probability": 0.9704720377922058
+        },
+        {
+          "word": " arrivent",
+          "start": 9.78,
+          "end": 10.24,
+          "probability": 0.9435920119285583
+        },
+        {
+          "word": " à",
+          "start": 10.24,
+          "end": 10.54,
+          "probability": 0.9219791293144226
+        },
+        {
+          "word": " minuit.",
+          "start": 10.54,
+          "end": 10.98,
+          "probability": 0.6683618724346161
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "seek": 0,
+      "start": 11.28,
+      "end": 12.18,
+      "text": " Les ventes sont là.",
+      "tokens": [
+        50912,
+        6965,
+        6931,
+        279,
+        4900,
+        3684,
+        13,
+        50972
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Les",
+          "start": 11.28,
+          "end": 11.36,
+          "probability": 0.8293055295944214
+        },
+        {
+          "word": " ventes",
+          "start": 11.36,
+          "end": 11.6,
+          "probability": 0.9317494630813599
+        },
+        {
+          "word": " sont",
+          "start": 11.6,
+          "end": 11.8,
+          "probability": 0.9857903718948364
+        },
+        {
+          "word": " là.",
+          "start": 11.8,
+          "end": 12.18,
+          "probability": 0.9770474433898926
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "seek": 0,
+      "start": 12.38,
+      "end": 14.06,
+      "text": " Le stock, dans la tête du magazine,",
+      "tokens": [
+        50972,
+        1456,
+        4127,
+        11,
+        2680,
+        635,
+        24661,
+        1581,
+        11332,
+        11,
+        51080
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Le",
+          "start": 12.38,
+          "end": 12.56,
+          "probability": 0.9494301080703735
+        },
+        {
+          "word": " stock,",
+          "start": 12.56,
+          "end": 12.82,
+          "probability": 0.8900729417800903
+        },
+        {
+          "word": " dans",
+          "start": 13.26,
+          "end": 13.32,
+          "probability": 0.9930930137634277
+        },
+        {
+          "word": " la",
+          "start": 13.32,
+          "end": 13.46,
+          "probability": 0.9876028895378113
+        },
+        {
+          "word": " tête",
+          "start": 13.46,
+          "end": 13.58,
+          "probability": 0.9931064248085022
+        },
+        {
+          "word": " du",
+          "start": 13.58,
+          "end": 13.76,
+          "probability": 0.9922770261764526
+        },
+        {
+          "word": " magazine,",
+          "start": 13.76,
+          "end": 14.06,
+          "probability": 0.5484368801116943
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "seek": 0,
+      "start": 14.48,
+      "end": 16.74,
+      "text": " la compta dans trois fichiers différents.",
+      "tokens": [
+        51080,
+        635,
+        15660,
+        64,
+        2680,
+        19758,
+        283,
+        480,
+        4890,
+        33948,
+        13,
+        51198
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " la",
+          "start": 14.48,
+          "end": 14.64,
+          "probability": 0.824691116809845
+        },
+        {
+          "word": " compta",
+          "start": 14.64,
+          "end": 15.06,
+          "probability": 0.6947063058614731
+        },
+        {
+          "word": " dans",
+          "start": 15.06,
+          "end": 15.5,
+          "probability": 0.752693235874176
+        },
+        {
+          "word": " trois",
+          "start": 15.5,
+          "end": 15.82,
+          "probability": 0.905535876750946
+        },
+        {
+          "word": " fichiers",
+          "start": 15.82,
+          "end": 16.08,
+          "probability": 0.8955604235331217
+        },
+        {
+          "word": " différents.",
+          "start": 16.08,
+          "end": 16.74,
+          "probability": 0.9440606832504272
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "seek": 0,
+      "start": 17.52,
+      "end": 19.58,
+      "text": " Ah, et le soir, il faut toujours trouver.",
+      "tokens": [
+        51198,
+        2438,
+        11,
+        1030,
+        476,
+        27105,
+        11,
+        1930,
+        8487,
+        11936,
+        23546,
+        13,
+        51348
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Ah,",
+          "start": 17.52,
+          "end": 17.52,
+          "probability": 0.019884182140231133
+        },
+        {
+          "word": " et",
+          "start": 17.52,
+          "end": 17.6,
+          "probability": 0.5326786041259766
+        },
+        {
+          "word": " le",
+          "start": 17.6,
+          "end": 17.76,
+          "probability": 0.987663209438324
+        },
+        {
+          "word": " soir,",
+          "start": 17.76,
+          "end": 18.1,
+          "probability": 0.933525800704956
+        },
+        {
+          "word": " il",
+          "start": 18.62,
+          "end": 18.68,
+          "probability": 0.9669608473777771
+        },
+        {
+          "word": " faut",
+          "start": 18.68,
+          "end": 18.84,
+          "probability": 0.9814267754554749
+        },
+        {
+          "word": " toujours",
+          "start": 18.84,
+          "end": 19.2,
+          "probability": 0.3454853296279907
+        },
+        {
+          "word": " trouver.",
+          "start": 19.2,
+          "end": 19.58,
+          "probability": 0.9340346455574036
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "seek": 0,
+      "start": 20.08,
+      "end": 20.48,
+      "text": " Un clic.",
+      "tokens": [
+        51348,
+        1156,
+        33661,
+        13,
+        51398
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Un",
+          "start": 20.08,
+          "end": 20.2,
+          "probability": 0.32942497730255127
+        },
+        {
+          "word": " clic.",
+          "start": 20.2,
+          "end": 20.48,
+          "probability": 0.5930173993110657
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "seek": 0,
+      "start": 20.9,
+      "end": 22.18,
+      "text": " Et là, tout se range.",
+      "tokens": [
+        51398,
+        3790,
+        3684,
+        11,
+        3486,
+        369,
+        3613,
+        13,
+        51474
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Et",
+          "start": 20.9,
+          "end": 20.98,
+          "probability": 0.953240156173706
+        },
+        {
+          "word": " là,",
+          "start": 20.98,
+          "end": 21.32,
+          "probability": 0.9924896359443665
+        },
+        {
+          "word": " tout",
+          "start": 21.5,
+          "end": 21.7,
+          "probability": 0.8302894830703735
+        },
+        {
+          "word": " se",
+          "start": 21.7,
+          "end": 21.84,
+          "probability": 0.6015616655349731
+        },
+        {
+          "word": " range.",
+          "start": 21.84,
+          "end": 22.18,
+          "probability": 0.729496955871582
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "seek": 0,
+      "start": 22.4,
+      "end": 23.92,
+      "text": " Les ventes deviennent des factures.",
+      "tokens": [
+        51474,
+        6965,
+        6931,
+        279,
+        1905,
+        28977,
+        730,
+        1186,
+        1303,
+        13,
+        51562
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Les",
+          "start": 22.4,
+          "end": 22.56,
+          "probability": 0.8824412822723389
+        },
+        {
+          "word": " ventes",
+          "start": 22.56,
+          "end": 22.96,
+          "probability": 0.9518316388130188
+        },
+        {
+          "word": " deviennent",
+          "start": 22.96,
+          "end": 23.24,
+          "probability": 0.881578803062439
+        },
+        {
+          "word": " des",
+          "start": 23.24,
+          "end": 23.52,
+          "probability": 0.8551509976387024
+        },
+        {
+          "word": " factures.",
+          "start": 23.52,
+          "end": 23.92,
+          "probability": 0.862517774105072
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "seek": 0,
+      "start": 24.28,
+      "end": 25.74,
+      "text": " Le stock devient un table au clair.",
+      "tokens": [
+        51562,
+        1456,
+        4127,
+        42100,
+        517,
+        3199,
+        1609,
+        41375,
+        13,
+        51654
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " Le",
+          "start": 24.28,
+          "end": 24.28,
+          "probability": 0.9867959022521973
+        },
+        {
+          "word": " stock",
+          "start": 24.28,
+          "end": 24.56,
+          "probability": 0.987628698348999
+        },
+        {
+          "word": " devient",
+          "start": 24.56,
+          "end": 24.98,
+          "probability": 0.7278338074684143
+        },
+        {
+          "word": " un",
+          "start": 24.98,
+          "end": 25.14,
+          "probability": 0.47043272852897644
+        },
+        {
+          "word": " table",
+          "start": 25.14,
+          "end": 25.3,
+          "probability": 0.7999200224876404
+        },
+        {
+          "word": " au",
+          "start": 25.3,
+          "end": 25.46,
+          "probability": 0.5821481943130493
+        },
+        {
+          "word": " clair.",
+          "start": 25.46,
+          "end": 25.74,
+          "probability": 0.4117753207683563
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "seek": 0,
+      "start": 26.04,
+      "end": 28.14,
+      "text": " La comptabilité se remplit sans recésie.",
+      "tokens": [
+        51654,
+        2369,
+        15660,
+        5177,
+        5066,
+        369,
+        36576,
+        270,
+        12177,
+        850,
+        2191,
+        414,
+        13,
+        51772
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4110292305975604,
+      "compression_ratio": 1.6158940397350994,
+      "no_speech_prob": 0.05369007959961891,
+      "words": [
+        {
+          "word": " La",
+          "start": 26.04,
+          "end": 26.04,
+          "probability": 0.9771844744682312
+        },
+        {
+          "word": " comptabilité",
+          "start": 26.04,
+          "end": 26.68,
+          "probability": 0.9923264185587565
+        },
+        {
+          "word": " se",
+          "start": 26.68,
+          "end": 26.84,
+          "probability": 0.895993173122406
+        },
+        {
+          "word": " remplit",
+          "start": 26.84,
+          "end": 27.32,
+          "probability": 0.7354941368103027
+        },
+        {
+          "word": " sans",
+          "start": 27.32,
+          "end": 27.66,
+          "probability": 0.8270457983016968
+        },
+        {
+          "word": " recésie.",
+          "start": 27.66,
+          "end": 28.14,
+          "probability": 0.5779769917329153
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "seek": 2814,
+      "start": 28.14,
+      "end": 30.64,
+      "text": " Une seule base de données, zéro-recésie.",
+      "tokens": [
+        50364,
+        16701,
+        18800,
+        3096,
+        368,
+        40101,
+        11,
+        710,
+        26913,
+        12,
+        13867,
+        2191,
+        414,
+        13,
+        50488
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Une",
+          "start": 28.14,
+          "end": 28.56,
+          "probability": 0.5776565074920654
+        },
+        {
+          "word": " seule",
+          "start": 28.56,
+          "end": 28.78,
+          "probability": 0.9684550762176514
+        },
+        {
+          "word": " base",
+          "start": 28.78,
+          "end": 28.98,
+          "probability": 0.9689175486564636
+        },
+        {
+          "word": " de",
+          "start": 28.98,
+          "end": 29.14,
+          "probability": 0.9917683601379395
+        },
+        {
+          "word": " données,",
+          "start": 29.14,
+          "end": 29.48,
+          "probability": 0.9122372269630432
+        },
+        {
+          "word": " zéro",
+          "start": 29.5,
+          "end": 30.08,
+          "probability": 0.7429318130016327
+        },
+        {
+          "word": "-recésie.",
+          "start": 30.08,
+          "end": 30.64,
+          "probability": 0.5355392768979073
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "seek": 2814,
+      "start": 30.72,
+      "end": 32.72,
+      "text": " Conforme, iméceph et Cisco-Ada.",
+      "tokens": [
+        50488,
+        2656,
+        44562,
+        11,
+        566,
+        526,
+        384,
+        950,
+        1030,
+        38528,
+        12,
+        32,
+        2675,
+        13,
+        50592
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Conforme,",
+          "start": 30.72,
+          "end": 31.16,
+          "probability": 0.5809432417154312
+        },
+        {
+          "word": " iméceph",
+          "start": 31.3,
+          "end": 31.76,
+          "probability": 0.442644901573658
+        },
+        {
+          "word": " et",
+          "start": 31.76,
+          "end": 32.0,
+          "probability": 0.3781989514827728
+        },
+        {
+          "word": " Cisco",
+          "start": 32.0,
+          "end": 32.3,
+          "probability": 0.3451862037181854
+        },
+        {
+          "word": "-Ada.",
+          "start": 32.3,
+          "end": 32.72,
+          "probability": 0.5257367491722107
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "seek": 2814,
+      "start": 33.34,
+      "end": 34.22,
+      "text": " Mobilemonais rapprochait.",
+      "tokens": [
+        50592,
+        22625,
+        3317,
+        1527,
+        8125,
+        340,
+        339,
+        1001,
+        13,
+        50668
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Mobilemonais",
+          "start": 33.34,
+          "end": 33.78,
+          "probability": 0.47632379829883575
+        },
+        {
+          "word": " rapprochait.",
+          "start": 33.78,
+          "end": 34.22,
+          "probability": 0.724217139184475
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "seek": 2814,
+      "start": 34.34,
+      "end": 35.74,
+      "text": " Pensez pour l'Afrique de l'Ouest.",
+      "tokens": [
+        50668,
+        430,
+        1288,
+        89,
+        2016,
+        287,
+        6,
+        32104,
+        22343,
+        368,
+        287,
+        6,
+        46,
+        11493,
+        13,
+        50748
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Pensez",
+          "start": 34.34,
+          "end": 34.78,
+          "probability": 0.791048010190328
+        },
+        {
+          "word": " pour",
+          "start": 34.78,
+          "end": 34.96,
+          "probability": 0.8843322992324829
+        },
+        {
+          "word": " l",
+          "start": 34.96,
+          "end": 35.06,
+          "probability": 0.8423401713371277
+        },
+        {
+          "word": "'Afrique",
+          "start": 35.06,
+          "end": 35.26,
+          "probability": 0.937836488087972
+        },
+        {
+          "word": " de",
+          "start": 35.26,
+          "end": 35.38,
+          "probability": 0.9750162363052368
+        },
+        {
+          "word": " l",
+          "start": 35.38,
+          "end": 35.48,
+          "probability": 0.42873507738113403
+        },
+        {
+          "word": "'Ouest.",
+          "start": 35.48,
+          "end": 35.74,
+          "probability": 0.8730208476384481
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "seek": 2814,
+      "start": 36.08,
+      "end": 36.52,
+      "text": " Regardez.",
+      "tokens": [
+        50748,
+        16613,
+        4371,
+        13,
+        50782
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Regardez.",
+          "start": 36.08,
+          "end": 36.52,
+          "probability": 0.9695826470851898
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "seek": 2814,
+      "start": 36.62,
+      "end": 37.64,
+      "text": " Vous validez une facture.",
+      "tokens": [
+        50782,
+        10802,
+        1323,
+        45170,
+        2251,
+        1186,
+        540,
+        13,
+        50844
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Vous",
+          "start": 36.62,
+          "end": 36.76,
+          "probability": 0.9516618251800537
+        },
+        {
+          "word": " validez",
+          "start": 36.76,
+          "end": 37.04,
+          "probability": 0.553629532456398
+        },
+        {
+          "word": " une",
+          "start": 37.04,
+          "end": 37.2,
+          "probability": 0.9758607149124146
+        },
+        {
+          "word": " facture.",
+          "start": 37.2,
+          "end": 37.64,
+          "probability": 0.8710406720638275
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "seek": 2814,
+      "start": 37.82,
+      "end": 38.88,
+      "text": " Le stock se metta jour.",
+      "tokens": [
+        50844,
+        1456,
+        4127,
+        369,
+        1131,
+        1328,
+        2827,
+        13,
+        50902
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Le",
+          "start": 37.82,
+          "end": 38.0,
+          "probability": 0.9707688689231873
+        },
+        {
+          "word": " stock",
+          "start": 38.0,
+          "end": 38.18,
+          "probability": 0.8884112238883972
+        },
+        {
+          "word": " se",
+          "start": 38.18,
+          "end": 38.38,
+          "probability": 0.9806045293807983
+        },
+        {
+          "word": " metta",
+          "start": 38.38,
+          "end": 38.64,
+          "probability": 0.6596964597702026
+        },
+        {
+          "word": " jour.",
+          "start": 38.64,
+          "end": 38.88,
+          "probability": 0.6419528722763062
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "seek": 2814,
+      "start": 39.1,
+      "end": 40.18,
+      "text": " Les crétures se génèrent.",
+      "tokens": [
+        50902,
+        6965,
+        941,
+        4051,
+        1303,
+        369,
+        14575,
+        1462,
+        1753,
+        13,
+        50966
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Les",
+          "start": 39.1,
+          "end": 39.18,
+          "probability": 0.42879003286361694
+        },
+        {
+          "word": " crétures",
+          "start": 39.18,
+          "end": 39.58,
+          "probability": 0.6707262496153513
+        },
+        {
+          "word": " se",
+          "start": 39.58,
+          "end": 39.72,
+          "probability": 0.9309584498405457
+        },
+        {
+          "word": " génèrent.",
+          "start": 39.72,
+          "end": 40.18,
+          "probability": 0.8747056325276693
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "seek": 2814,
+      "start": 40.44,
+      "end": 41.42,
+      "text": " Le tableau de bord suit.",
+      "tokens": [
+        50966,
+        1456,
+        3199,
+        1459,
+        368,
+        25872,
+        5722,
+        13,
+        51030
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Le",
+          "start": 40.44,
+          "end": 40.48,
+          "probability": 0.9358663558959961
+        },
+        {
+          "word": " tableau",
+          "start": 40.48,
+          "end": 40.72,
+          "probability": 0.6624593287706375
+        },
+        {
+          "word": " de",
+          "start": 40.72,
+          "end": 40.82,
+          "probability": 0.9841613173484802
+        },
+        {
+          "word": " bord",
+          "start": 40.82,
+          "end": 41.1,
+          "probability": 0.776578426361084
+        },
+        {
+          "word": " suit.",
+          "start": 41.1,
+          "end": 41.42,
+          "probability": 0.5128318071365356
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "seek": 2814,
+      "start": 41.6,
+      "end": 42.04,
+      "text": " C'est ça.",
+      "tokens": [
+        51030,
+        383,
+        6,
+        377,
+        2788,
+        13,
+        51066
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " C",
+          "start": 41.6,
+          "end": 41.78,
+          "probability": 0.9402649998664856
+        },
+        {
+          "word": "'est",
+          "start": 41.78,
+          "end": 41.84,
+          "probability": 0.9910629987716675
+        },
+        {
+          "word": " ça.",
+          "start": 41.84,
+          "end": 42.04,
+          "probability": 0.9855889678001404
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "seek": 2814,
+      "start": 42.34,
+      "end": 43.62,
+      "text": " Un ERP intégré.",
+      "tokens": [
+        51066,
+        1156,
+        14929,
+        47,
+        18555,
+        861,
+        526,
+        13,
+        51132
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Un",
+          "start": 42.34,
+          "end": 42.44,
+          "probability": 0.9305755496025085
+        },
+        {
+          "word": " ERP",
+          "start": 42.44,
+          "end": 42.96,
+          "probability": 0.682942733168602
+        },
+        {
+          "word": " intégré.",
+          "start": 42.96,
+          "end": 43.62,
+          "probability": 0.71064293384552
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "seek": 2814,
+      "start": 44.02,
+      "end": 44.46,
+      "text": " GILMS.",
+      "tokens": [
+        51132,
+        460,
+        4620,
+        10288,
+        13,
+        51188
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " GILMS.",
+          "start": 44.02,
+          "end": 44.46,
+          "probability": 0.5034979184468588
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "seek": 2814,
+      "start": 44.74,
+      "end": 45.68,
+      "text": " Tout de votre gestion.",
+      "tokens": [
+        51188,
+        20453,
+        368,
+        10087,
+        7219,
+        313,
+        13,
+        51246
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Tout",
+          "start": 44.74,
+          "end": 44.88,
+          "probability": 0.8780401945114136
+        },
+        {
+          "word": " de",
+          "start": 44.88,
+          "end": 45.02,
+          "probability": 0.3556969463825226
+        },
+        {
+          "word": " votre",
+          "start": 45.02,
+          "end": 45.14,
+          "probability": 0.9495943188667297
+        },
+        {
+          "word": " gestion.",
+          "start": 45.14,
+          "end": 45.68,
+          "probability": 0.9535097181797028
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "seek": 2814,
+      "start": 45.92,
+      "end": 47.5,
+      "text": " Dune seule facture à votre bilan.",
+      "tokens": [
+        51246,
+        413,
+        2613,
+        18800,
+        1186,
+        540,
+        1531,
+        10087,
+        8588,
+        282,
+        13,
+        51338
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.4131423789010921,
+      "compression_ratio": 1.3650793650793651,
+      "no_speech_prob": 0.020014498382806778,
+      "words": [
+        {
+          "word": " Dune",
+          "start": 45.92,
+          "end": 46.1,
+          "probability": 0.7686126828193665
+        },
+        {
+          "word": " seule",
+          "start": 46.1,
+          "end": 46.28,
+          "probability": 0.9863172173500061
+        },
+        {
+          "word": " facture",
+          "start": 46.28,
+          "end": 46.8,
+          "probability": 0.9760434031486511
+        },
+        {
+          "word": " à",
+          "start": 46.8,
+          "end": 46.98,
+          "probability": 0.5783500075340271
+        },
+        {
+          "word": " votre",
+          "start": 46.98,
+          "end": 47.2,
+          "probability": 0.9972330927848816
+        },
+        {
+          "word": " bilan.",
+          "start": 47.2,
+          "end": 47.5,
+          "probability": 0.8778624534606934
+        }
+      ]
+    }
+  ],
+  "language": "fr"
+}

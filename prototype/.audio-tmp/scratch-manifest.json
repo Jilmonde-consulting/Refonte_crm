@@ -1,0 +1,62 @@
+{
+  "source": "ElevenLabs_2026-10-26T19_07_31_Kevin - Content creation_pvc_sp94_s68_sb68_v4.mp3",
+  "source_duration_s": 47.804,
+  "cut_method": "Whisper tiny transcript timestamps, snapped to pauses; approximate, not final.",
+  "cuts_s": [
+    5.42,
+    11.13,
+    19.83,
+    20.69,
+    28.15,
+    30.68,
+    35.91,
+    43.82
+  ],
+  "segment_durations_s": [
+    5.42,
+    5.71,
+    8.7,
+    0.86,
+    7.46,
+    2.53,
+    5.23,
+    7.91,
+    3.984
+  ],
+  "desired_scene_starts_s": [
+    0,
+    6,
+    12.58,
+    20,
+    26,
+    38,
+    44,
+    50,
+    68
+  ],
+  "actual_starts_s": [
+    0,
+    6,
+    12.58,
+    21.43,
+    26,
+    38,
+    44,
+    50,
+    68
+  ],
+  "shift_s": [
+    0,
+    0,
+    0.0,
+    1.43,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "integrated_lufs": -21.27,
+  "peak_dbfs": -0.96,
+  "notes": "Bloc 3 = 8,70 s pour une scène de 6 s. Décalage symétrique: bloc 3 avancé de 1,42 s, bloc 4 retardé de 1,43 s. Signature conservée à 68 s. Piste scratch, niveau brut non final."
+}

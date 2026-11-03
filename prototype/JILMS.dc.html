@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jil-MS — Progiciel de gestion intégré</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: "IBM Plex Sans", system-ui, sans-serif; color: #10306F; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", "IBM Plex Sans", sans-serif; letter-spacing: -0.028em; margin: 0; }
+  p { margin: 0; text-wrap: pretty; }
+  a { color: #3B5BDB; text-decoration: none; }
+  a:hover { color: #10306F; text-decoration: underline; }
+  button { font: inherit; cursor: pointer; }
+  ::selection { background: #EF4600; color: #FFFFFF; }
+  :focus-visible { outline: 2px solid #EF4600; outline-offset: 3px; border-radius: 4px; }
+
+  @keyframes jUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+  @keyframes jRise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  @keyframes jFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes jSlide { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+  @keyframes jDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes jPulse { 0%, 72%, 100% { box-shadow: 0 0 0 0 rgba(31,157,107,0); } 80% { box-shadow: 0 0 0 6px rgba(31,157,107,0.18); } 88% { box-shadow: 0 0 0 0 rgba(31,157,107,0); } }
+  @keyframes jRow { 0%, 30%, 100% { background: #FFFFFF; } 42%, 62% { background: rgba(229,162,43,0.16); } }
+  @keyframes jFlash { 0%, 55%, 100% { color: #10306F; } 68%, 82% { color: #EF4600; } }
+  @keyframes jMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes jFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes jDrift { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 33% { transform: translate3d(5%,-7%,0) scale(1.12); } 66% { transform: translate3d(-6%,5%,0) scale(0.94); } }
+  @keyframes jSheen { from { transform: translateX(-130%) skewX(-18deg); } to { transform: translateX(260%) skewX(-18deg); } }
+  @keyframes jLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes jPop { 0% { opacity: 0; transform: scale(0.92); } 60% { transform: scale(1.025); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes jGlow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+  @keyframes jCheck { from { stroke-dashoffset: 52; } to { stroke-dashoffset: 0; } }
+  @keyframes jSpin { to { transform: rotate(360deg); } }
+
+  /* ---- scroll reveal (JS marks [data-io]; content stays visible if JS never runs) ---- */
+  [data-io="1"] { opacity: 0; will-change: opacity, transform; }
+  [data-io="1"][data-seen] { animation: jRise 680ms cubic-bezier(0.16,1,0.3,1) forwards; }
+  [data-io="1"][data-seen][data-anim="slide"] { animation-name: jSlide; }
+  [data-io="1"][data-seen][data-anim="pop"] { animation-name: jPop; }
+  [data-io="1"][data-seen][data-anim="fade"] { animation-name: jFade; }
+
+  :root {
+    --section-gap: clamp(40px, 5vw, 72px);
+    --section-pad: clamp(24px, 3vw, 40px);
+  }
+
+  /* ---- section rhythm: padding intérieur + marges haut/bas ---- */
+  section {
+    margin: var(--section-gap) 5% !important;
+    padding-top: var(--section-pad) !important;
+    padding-bottom: var(--section-pad) !important;
+  }
+  section:first-of-type { margin-top: 0 !important; }
+  [style*="2800px"] { max-width: 90% !important; }
+
+  /* ---- témoignages : bloc centré ---- */
+  [data-quote-shell] {
+    max-width: min(1120px, 90%) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  [data-quote-card] {
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)) !important;
+  }
+
+  /* ---- blocs de page hors section : même padding vertical ---- */
+  [data-pagepad] {
+    padding-top: var(--section-pad) !important;
+    padding-bottom: var(--section-pad) !important;
+  }
+
+  /* ---- FAQ et tableau "Ce qui est inclus" : marges explicites ---- */
+  [data-faq-block],
+  [data-included-block] {
+    margin-top: clamp(32px, 4vw, 48px) !important;
+    margin-bottom: clamp(32px, 4vw, 48px) !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+  [data-faq-block] > h2,
+  [data-included-block] > h2 {
+    margin-top: 0 !important;
+  }
+
+  /* ---- bandes animées : pleine largeur, même rythme vertical ---- */
+  section[data-band],
+  section[data-marquee-mask],
+  section[data-dark],
+  section:has([data-stream-mask]),
+  section:has([data-bigmq]),
+  section:has([data-quote-card]) {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  section[data-video] {
+    margin: var(--section-gap) 5% !important;
+    max-width: 90% !important;
+    width: auto !important;
+  }
+
+  /* ---- vidéo + texte côte à côte ---- */
+  [data-video-row] {
+    display: flex !important;
+    flex-direction: column !important;
+    margin: var(--section-gap) 5% !important;
+    padding-top: var(--section-pad) !important;
+    padding-bottom: var(--section-pad) !important;
+  }
+  [data-video-head] { margin-bottom: clamp(18px, 2vw, 28px); }
+  [data-video-cols] {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch;
+    gap: clamp(32px, 4vw, 56px);
+    margin-top: clamp(8px, 1.2vw, 14px);
+    margin-bottom: clamp(8px, 1.2vw, 14px);
+  }
+  [data-video-cols] > section,
+  [data-video-cols] > section[data-video] {
+    margin: 0 !important;
+    max-width: none !important;
+    width: auto !important;
+    padding: 0 !important;
+    min-width: 0;
+  }
+  [data-video-cols] > section[data-video] {
+    flex: 1.25 1 0;
+    aspect-ratio: 16 / 9;
+  }
+  [data-video-cols] > section[data-video] > div[data-reveal] { height: 100%; }
+  [data-video-cols] [data-video-frame] { height: 100% !important; }
+  [data-video-cols] [data-video-frame] video { height: 100%; }
+  [data-video-cols] > section[data-why-col] {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+  }
+  [data-video-cols] [data-why-grid] { flex: 1 1 auto; }
+  @media (max-width: 900px) {
+    [data-video-cols] { flex-direction: column !important; align-items: stretch; }
+  }
+
+  /* ---- explorateur de modules : liste à hauteur fixe ---- */
+  [data-module-list] {
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #C3CBD8 transparent;
+  }
+  [data-module-list]::-webkit-scrollbar { width: 6px; }
+  [data-module-list]::-webkit-scrollbar-thumb { background: #C3CBD8; border-radius: 999px; }
+  [data-module-gallery] {
+    height: 580px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    align-content: start;
+    scrollbar-width: thin;
+    scrollbar-color: #C3CBD8 transparent;
+  }
+  [data-module-gallery]::-webkit-scrollbar { width: 6px; }
+  [data-module-gallery]::-webkit-scrollbar-thumb { background: #C3CBD8; border-radius: 999px; }
+  [data-module-family] {
+    border: 1px solid #E4E8EF;
+    background: #FFFFFF;
+    color: #5A6B84;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out;
+  }
+  [data-module-family="1"] {
+    background: #10306F;
+    border-color: #10306F;
+    color: #FFFFFF;
+  }
+
+  section[data-marquee-mask],
+  section:has([data-bigmq]) {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+
+  /* ---- header ---- */
+  [data-header] { transition: box-shadow 260ms ease-out, background 260ms ease-out; }
+  [data-header][data-scrolled="1"] { box-shadow: 0 1px 0 rgba(16,48,111,0.06), 0 16px 34px -28px rgba(16,48,111,0.5); background: rgba(255,255,255,0.86); backdrop-filter: saturate(1.6) blur(14px); }
+  @media (max-width: 820px) {
+    [data-header] > div { flex-wrap: wrap; height: auto !important; padding: 10px 16px 0 !important; gap: 10px 12px !important; }
+    [data-header] > div > nav { order: 3; flex: 1 0 100%; justify-content: center; margin-left: 0 !important; padding-bottom: 8px; gap: 2px !important; }
+    [data-header] > div > div { margin-left: auto !important; }
+  }
+  @media (max-width: 560px) {
+    [data-header] > div { padding-left: 14px !important; padding-right: 14px !important; }
+    [data-header] > div > nav button { padding: 7px 8px 9px !important; font-size: 13px !important; }
+    [data-header] > div > div button { padding: 9px 12px !important; font-size: 13px !important; }
+  }
+  [data-progress] { transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+  [data-nav] { position: relative; }
+  [data-nav]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 2px; background: #EF4600; border-radius: 2px; transform: scaleX(0); transform-origin: 0 50%; transition: transform 260ms cubic-bezier(0.16,1,0.3,1); }
+  [data-nav]:hover::after, [data-nav][data-active="1"]::after { transform: scaleX(1); }
+  [data-nav][data-active="1"] { color: #10306F; font-weight: 500; }
+
+  /* ---- buttons ---- */
+  [data-cta] { position: relative; overflow: hidden; isolation: isolate; transition: transform 180ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease-out, background 160ms ease-out; }
+  [data-cta]:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -14px rgba(239,70,0,0.6); }
+  [data-cta]:active { transform: translateY(0) scale(0.985); }
+  [data-cta]::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 42%; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0) 100%); transform: translateX(-130%) skewX(-18deg); pointer-events: none; }
+  [data-cta]:hover::after { animation: jSheen 820ms ease-out; }
+  [data-ghost] { transition: transform 180ms cubic-bezier(0.16,1,0.3,1), background 160ms ease-out, border-color 160ms ease-out; }
+  [data-ghost]:hover { transform: translateY(-2px); background: #F4F6F9; border-color: #EF4600; }
+  [data-ghost]:active { transform: translateY(0) scale(0.985); }
+
+  /* ---- hero ---- */
+  [data-aura] { position: absolute; border-radius: 999px; filter: blur(64px); pointer-events: none; animation: jDrift 20s ease-in-out infinite; }
+  [data-shot] { animation: jFloat 9s ease-in-out infinite; transition: transform 420ms cubic-bezier(0.16,1,0.3,1); }
+  [data-shot-wrap]:hover [data-shot] { animation-play-state: paused; transform: translateY(-6px) scale(1.012); }
+
+  /* ---- logo marquee ---- */
+  [data-marquee-mask] { -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  [data-marquee-mask]:hover [data-marquee] { animation-play-state: paused; }
+  [data-marquee] img { height: 52px; width: auto; max-width: 160px; object-fit: contain; filter: none; opacity: 1; transition: filter 240ms ease-out, opacity 240ms ease-out, transform 240ms cubic-bezier(0.16,1,0.3,1); }
+  [data-marquee] img:hover { filter: none; opacity: 1; transform: scale(1.07); }
+
+  /* ---- cards ---- */
+  [data-card] { position: relative; overflow: hidden; transition: transform 260ms cubic-bezier(0.16,1,0.3,1), box-shadow 260ms ease-out, border-color 220ms ease-out; }
+  [data-card]:hover, [data-card]:focus-visible { transform: translateY(-6px); border-color: #EF4600; box-shadow: 0 1px 2px rgba(16,48,111,0.04), 0 22px 40px -24px rgba(16,48,111,0.45); }
+  [data-card]:active { transform: translateY(-2px) scale(0.995); }
+  [data-card]::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 46%; background: linear-gradient(90deg, rgba(239,70,0,0) 0%, rgba(239,70,0,0.07) 50%, rgba(239,70,0,0) 100%); transform: translateX(-130%) skewX(-18deg); pointer-events: none; }
+  [data-card]:hover::before { animation: jSheen 900ms ease-out; }
+  [data-card]:focus-visible { outline: 2px solid #EF4600; outline-offset: 2px; }
+  [data-mark] { transition: background 260ms cubic-bezier(0.16,1,0.3,1), color 220ms ease-out, transform 320ms cubic-bezier(0.16,1,0.3,1); }
+  [data-card]:hover [data-mark], [data-card]:focus-visible [data-mark] { background: #EF4600; color: #FFFFFF; transform: rotate(-6deg) scale(1.08); }
+  [data-hover-reveal] { opacity: 0; transform: translateY(10px); transition: opacity 240ms ease-out, transform 280ms cubic-bezier(0.16,1,0.3,1); }
+  [data-card]:hover [data-hover-reveal], [data-card]:focus-visible [data-hover-reveal], [data-card]:focus-within [data-hover-reveal] { opacity: 1; transform: none; }
+  [data-card]:hover [data-hover-hide], [data-card]:focus-visible [data-hover-hide], [data-card]:focus-within [data-hover-hide] { opacity: 0; transition: opacity 180ms ease-out; }
+  @media (hover: none) {
+    [data-hover-reveal] { opacity: 1; transform: none; position: static !important; }
+    [data-hover-hide] { opacity: 1 !important; }
+    [data-card] span[data-hover-hide] { display: none; }
+  }
+
+  /* ---- rows, tabs, lines ---- */
+  [data-arrow] { transition: transform 240ms cubic-bezier(0.16,1,0.3,1); }
+  [data-row]:hover [data-arrow] { transform: translateX(6px); }
+  [data-modrow] { transition: background 220ms ease-out, padding 220ms ease-out; }
+  [data-modrow]:hover { background: #FAFBFD; }
+  [data-modrow] > *:last-child { justify-self: end; align-self: center; }
+  @media (max-width: 760px) { [data-modrow] { grid-template-columns: minmax(0,1fr) !important; } [data-modrow] > *:last-child { justify-self: start; } }
+  [data-tab] { transition: background 220ms ease-out, color 200ms ease-out, border-color 200ms ease-out, transform 160ms cubic-bezier(0.16,1,0.3,1); }
+  [data-tab]:active { transform: scale(0.96); }
+  [data-tab="1"] { background: #10306F !important; border-color: #10306F !important; color: #FFFFFF !important; }
+  [data-tab="1"] span { color: #FFFFFF !important; }
+  [data-rule] { display: block; height: 1px; background: #EF4600; transform-origin: 0 50%; transform: scaleX(0); }
+  [data-seen] [data-rule], [data-rule][data-seen] { animation: jLine 760ms cubic-bezier(0.16,1,0.3,1) 120ms forwards; }
+
+  /* ---- dark section ---- */
+  [data-dark] { position: relative; overflow: hidden; }
+  [data-dark] [data-aura] { opacity: 0.5; }
+  [data-pill] { transition: transform 240ms cubic-bezier(0.16,1,0.3,1), background 220ms ease-out; }
+  [data-pill]:hover { transform: translateY(-4px); background: rgba(255,255,255,0.07); }
+
+  /* ---- testimonials ---- */
+  [data-nav-round] { transition: transform 200ms cubic-bezier(0.16,1,0.3,1), background 180ms ease-out, color 180ms ease-out; }
+  [data-nav-round]:hover { transform: scale(1.08); background: #10306F; color: #FFFFFF; }
+  [data-nav-round]:active { transform: scale(0.95); }
+  [data-dot] { transition: width 320ms cubic-bezier(0.16,1,0.3,1), background 240ms ease-out; }
+  [data-dot="1"] { background: #EF4600 !important; width: 44px !important; }
+
+  /* ---- pricing ---- */
+  [data-rec="1"] { border: 2px solid #EF4600 !important; padding: 25px !important; box-shadow: 0 1px 2px rgba(16,48,111,0.04), 0 26px 50px -30px rgba(239,70,0,0.55); }
+  [data-plan] { display: flex; flex-direction: column; height: 100%; transition: transform 260ms cubic-bezier(0.16,1,0.3,1), box-shadow 260ms ease-out; }
+  [data-plan]:hover { transform: translateY(-6px); box-shadow: 0 1px 2px rgba(16,48,111,0.04), 0 26px 46px -28px rgba(16,48,111,0.45); }
+  [data-plangrid] { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); grid-auto-rows: 1fr; gap: 24px; column-gap: 5%; align-items: stretch; }
+  @media (max-width: 1439px) { [data-plangrid] { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 700px) { [data-plangrid] { grid-template-columns: minmax(0,1fr); } }
+  @keyframes jSlideB { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+  @keyframes jPopB { 0% { opacity: 0; transform: scale(0.92); } 60% { transform: scale(1.025); } 100% { opacity: 1; transform: scale(1); } }
+  [data-swap="0"] { animation: jSlide 420ms cubic-bezier(0.16,1,0.3,1); }
+  [data-swap="1"] { animation: jSlideB 420ms cubic-bezier(0.16,1,0.3,1); }
+  [data-late="1"] { animation-delay: 90ms; animation-fill-mode: backwards; }
+  [data-pop="0"] { animation: jPop 520ms cubic-bezier(0.16,1,0.3,1) 160ms backwards; }
+  [data-pop="1"] { animation: jPopB 520ms cubic-bezier(0.16,1,0.3,1) 160ms backwards; }
+  [data-price="0"] { animation: jPop 420ms cubic-bezier(0.16,1,0.3,1); }
+  [data-price="1"] { animation: jPopB 420ms cubic-bezier(0.16,1,0.3,1); }
+  [data-trow] { transition: background 180ms ease-out; }
+  [data-trow]:hover { background: #F4F6F9; }
+
+  /* ---- forms ---- */
+  [data-field] { transition: border-color 180ms ease-out, box-shadow 220ms ease-out, transform 180ms ease-out; }
+  [data-field]:focus { border-color: #EF4600; box-shadow: 0 0 0 4px rgba(239,70,0,0.14); outline: none; }
+  [data-chip] { transition: transform 180ms cubic-bezier(0.16,1,0.3,1), border-color 180ms ease-out, background 180ms ease-out; }
+  [data-chip]:hover { transform: translateY(-2px); border-color: #10306F; }
+  [data-chip]:active { transform: scale(0.95); }
+  [data-chip="1"] { border-color: #EF4600 !important; background: rgba(239,70,0,0.07) !important; }
+  [data-faq] { transition: color 180ms ease-out; }
+  [data-faq]:hover { color: #EF4600; }
+  [data-sign] { display: inline-block; transition: transform 300ms cubic-bezier(0.16,1,0.3,1); }
+  [data-faq][data-open="1"] [data-sign] { transform: rotate(135deg); }
+  [data-check] path { stroke-dasharray: 52; animation: jCheck 620ms cubic-bezier(0.16,1,0.3,1) 120ms forwards; }
+
+  /* ---- footer ---- */
+  [data-flink] { position: relative; transition: color 180ms ease-out, transform 200ms cubic-bezier(0.16,1,0.3,1); }
+  [data-flink]:hover { color: #EF4600; transform: translateX(3px); }
+
+  /* ===== heavy motion layer ===== */
+  @keyframes jWord { from { opacity: 0; transform: translateY(0.85em) rotate(2deg); } to { opacity: 1; transform: none; } }
+  @keyframes jGrid { from { transform: translateY(0); } to { transform: translateY(44px); } }
+  @keyframes jOrbit { from { transform: rotate(0deg) translateX(var(--r,180px)) rotate(0deg); } to { transform: rotate(360deg) translateX(var(--r,180px)) rotate(-360deg); } }
+  @keyframes jRing { from { stroke-dashoffset: 126; } to { stroke-dashoffset: 0; } }
+  @keyframes jBeam { 0% { transform: translateY(-100%); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(260%); opacity: 0; } }
+  @keyframes jTick { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes jBlink { 0%, 44% { opacity: 1; } 50%, 94% { opacity: 0.25; } }
+  @keyframes jStream { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+  @keyframes jZoomIn { from { opacity: 0; transform: translateY(46px) scale(0.9) rotate(-1.4deg); } to { opacity: 1; transform: none; } }
+  @keyframes jFlipIn { from { opacity: 0; transform: perspective(900px) rotateX(-14deg) translateY(40px); } to { opacity: 1; transform: none; } }
+  @keyframes jUnroll { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes jShimmer { from { background-position: 0% 50%; } to { background-position: 220% 50%; } }
+
+  [data-word] { display: inline-block; animation: jWord 760ms cubic-bezier(0.16,1,0.3,1) backwards; }
+  [data-grid-bg] { position: absolute; inset: -44px 0 0 0; background-image: linear-gradient(rgba(16,48,111,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(16,48,111,0.055) 1px, transparent 1px); background-size: 44px 44px; -webkit-mask-image: radial-gradient(70% 60% at 60% 35%, #000, transparent); mask-image: radial-gradient(70% 60% at 60% 35%, #000, transparent); animation: jGrid 7s linear infinite; pointer-events: none; }
+  [data-parallax] { transition: transform 420ms cubic-bezier(0.16,1,0.3,1); will-change: transform; }
+  [data-orbit] { position: absolute; top: 50%; left: 50%; width: 0; height: 0; pointer-events: none; --r: clamp(64px, 17vw, 118px); }
+  [data-orbit] > span { position: absolute; display: block; animation: jOrbit 26s linear infinite; }
+  [data-orbit] > span > span { display: block; white-space: nowrap; background: #FFFFFF; border: 1px solid #E4E8EF; box-shadow: 0 10px 26px -18px rgba(16,48,111,0.6); border-radius: 999px; padding: 7px 13px; font-size: 12.5px; color: #10306F; }
+  [data-shot-wrap]:hover [data-orbit] > span { animation-play-state: paused; }
+  @media (max-width: 900px) { [data-orbit] { --r: clamp(54px, 14vw, 96px); } [data-orbit] > span > span { font-size: 11px; padding: 5px 9px; } }
+  [data-tilt] { transform-style: preserve-3d; transition: transform 320ms cubic-bezier(0.16,1,0.3,1); }
+  [data-tilt] > * { transform: translateZ(26px); }
+  [data-beam] { position: absolute; left: 0; right: 0; top: 0; height: 36%; background: linear-gradient(180deg, rgba(239,70,0,0) 0%, rgba(239,70,0,0.5) 55%, rgba(239,70,0,0) 100%); animation: jBeam 4.4s ease-in-out infinite; pointer-events: none; }
+  [data-stream] { animation: jStream 22s linear infinite; }
+  [data-stream-mask] { -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent); }
+  [data-io="1"][data-seen][data-anim="zoom"] { animation-name: jZoomIn; animation-duration: 820ms; }
+  [data-io="1"][data-seen][data-anim="flip"] { animation-name: jFlipIn; animation-duration: 820ms; }
+  [data-io="1"][data-seen][data-anim="unroll"] { animation-name: jUnroll; animation-duration: 900ms; opacity: 1; }
+  [data-count] { font-variant-numeric: tabular-nums; }
+  [data-ringwrap] { position: relative; display: inline-flex; }
+  [data-ring] circle { fill: none; stroke-width: 2; }
+  [data-ring] .t { stroke: #EF4600; stroke-dasharray: 126; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+  [data-ring="0"] .t { animation: jRing 7s linear infinite; }
+  [data-ring="1"] .t { animation: jRing 7s linear infinite reverse; }
+  [data-quote-card]:hover [data-ring] .t { animation-play-state: paused; }
+  [data-magnet] { transition: transform 260ms cubic-bezier(0.16,1,0.3,1); }
+  [data-shimmer] { background: linear-gradient(100deg, #10306F 0%, #10306F 38%, #EF4600 50%, #10306F 62%, #10306F 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: jShimmer 6.5s linear infinite; }
+  [data-live] { animation: jBlink 2.2s ease-in-out infinite; }
+  [data-float-card] { animation: jTick 6s ease-in-out infinite; }
+  @keyframes jProg { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes jProgB { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes jPanelIn { from { opacity: 0; transform: translateY(26px) scale(0.985); } to { opacity: 1; transform: none; } }
+  @keyframes jPanelInB { from { opacity: 0; transform: translateY(26px) scale(0.985); } to { opacity: 1; transform: none; } }
+  @keyframes jMarqueeBig { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes jRowIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+  [data-stab] { position: relative; min-width: 0; text-align: left; background: none; border: 0; padding: 14px 6px 16px; font-size: 14.5px; color: #5A6B84; transition: color 220ms ease-out; }
+  [data-stab]:hover { color: #10306F; }
+  [data-stab="1"] { color: #10306F; font-weight: 600; }
+  [data-stab] > i { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #E4E8EF; border-radius: 3px; display: block; overflow: hidden; }
+  [data-stab] > i > b { position: absolute; inset: 0; background: #EF4600; border-radius: 3px; transform-origin: 0 50%; transform: scaleX(0); display: block; }
+  [data-stab="1"][data-prog="0"] > i > b { animation: jProg 7s linear forwards; }
+  [data-stab="1"][data-prog="1"] > i > b { animation: jProgB 7s linear forwards; }
+  [data-showcase]:hover [data-stab] > i > b { animation-play-state: paused; }
+  [data-panel="0"] { animation: jPanelIn 620ms cubic-bezier(0.16,1,0.3,1); }
+  [data-panel="1"] { animation: jPanelInB 620ms cubic-bezier(0.16,1,0.3,1); }
+  [data-panel] [data-prow] { animation: jRowIn 460ms cubic-bezier(0.16,1,0.3,1) backwards; }
+  [data-bigmq] { display: flex; width: max-content; animation: jMarqueeBig 38s linear infinite; }
+  [data-bigmq] span { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(42px,6.4vw,92px); font-weight: 700; letter-spacing: -0.03em; white-space: nowrap; padding-right: 36px; color: transparent; -webkit-text-stroke: 1.4px rgba(255,255,255,0.46); }
+  [data-bigmq] span em { font-style: normal; color: #FFFFFF; -webkit-text-stroke: 0; }
+  [data-chiprow] span { transition: transform 200ms cubic-bezier(0.16,1,0.3,1), border-color 200ms ease-out; }
+  [data-chiprow] span:hover { transform: translateY(-3px); border-color: #EF4600; }
+  @keyframes jPageIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  @keyframes jPageInB { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  @keyframes jRailL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes jRailR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @keyframes jBarGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes jStickUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: none; } }
+  [data-page="0"] { animation: jPageIn 520ms cubic-bezier(0.16,1,0.3,1); }
+  [data-page="1"] { animation: jPageInB 520ms cubic-bezier(0.16,1,0.3,1); }
+  [data-pxy] { will-change: transform; }
+  [data-rail-mask] { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+  [data-rail] { display: flex; width: max-content; gap: 16px; animation: jRailL 46s linear infinite; }
+  [data-rail="r"] { animation-name: jRailR; }
+  [data-rail-mask]:hover [data-rail] { animation-play-state: paused; }
+  [data-railcard] { width: 268px; flex: 0 0 268px; background: #FFFFFF; border: 1px solid #E4E8EF; border-radius: 14px; padding: 18px; transition: transform 260ms cubic-bezier(0.16,1,0.3,1), box-shadow 260ms ease-out, border-color 200ms ease-out; }
+  [data-railcard]:hover { transform: translateY(-6px); border-color: #EF4600; box-shadow: 0 22px 40px -26px rgba(16,48,111,0.5); }
+  [data-spot] { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.1), transparent 62%); opacity: 0; transition: opacity 300ms ease-out; }
+  [data-dark]:hover [data-spot] { opacity: 1; }
+  [data-bar] { transform-origin: 50% 100%; animation: jBarGrow 900ms cubic-bezier(0.16,1,0.3,1) backwards; }
+  [data-sticky-cta] { animation: jStickUp 420ms cubic-bezier(0.16,1,0.3,1); }
+  @keyframes jProgV { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes jProgVB { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes jLineV { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  [data-band] { position: relative; overflow: hidden; background: #F4F6F9; border-bottom: 1px solid #E4E8EF; }
+  [data-vtab] { position: relative; display: block; width: 100%; text-align: left; background: none; border: 0; padding: 16px 18px 16px 22px; border-radius: 10px; transition: background 240ms ease-out, transform 220ms cubic-bezier(0.16,1,0.3,1); }
+  [data-vtab]:hover { background: #F4F6F9; transform: translateX(3px); }
+  [data-vtab="1"] { background: #F4F6F9; }
+  [data-vtab] > i { position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: #E4E8EF; border-radius: 3px; display: block; overflow: hidden; }
+  [data-vtab] > i > b { position: absolute; inset: 0; background: #EF4600; border-radius: 3px; transform-origin: 50% 0; transform: scaleY(0); display: block; }
+  [data-vtab="1"][data-prog="0"] > i > b { animation: jProgV 7s linear forwards; }
+  [data-vtab="1"][data-prog="1"] > i > b { animation: jProgVB 7s linear forwards; }
+  [data-showcase]:hover [data-vtab] > i > b { animation-play-state: paused; }
+  [data-acc] { overflow: hidden; border-bottom: 1px solid #E4E8EF; }
+  [data-acc-btn] { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; background: none; border: 0; padding: 20px 4px; text-align: left; font-size: 17px; font-weight: 500; color: #10306F; transition: color 200ms ease-out, padding 240ms ease-out; }
+  [data-acc-btn]:hover { color: #EF4600; padding-left: 10px; }
+  [data-tl] { position: relative; padding-left: 40px; }
+  [data-tl] > i { position: absolute; left: 11px; top: 6px; bottom: 6px; width: 2px; background: #EF4600; transform-origin: 50% 0; display: block; animation: jLineV 900ms cubic-bezier(0.16,1,0.3,1) 160ms backwards; }
+  [data-tlstep] { position: relative; padding: 14px 0; }
+  [data-tlstep] > i { position: absolute; left: -36px; top: 16px; width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; border: 2px solid #EF4600; display: block; }
+  [data-sticky] { position: sticky; bottom: 0; z-index: 30; }
+  [data-motion="off"] [data-shot], [data-motion="off"] [data-aura] { animation: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    [data-io="1"] { opacity: 1 !important; }
+    [data-bigmq], [data-rail], [data-vtab] > i > b, [data-tl] > i, [data-stab] > i > b, [data-word], [data-orbit] > span, [data-orbit] > span > span, [data-grid-bg], [data-beam], [data-stream], [data-ring] .t { animation: none !important; }
+    [data-io="1"][data-seen][data-anim="unroll"] { clip-path: none !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="ic-commerciale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z M14 3v4h4 M8.5 12h7 M8.5 16h4.5"></path></symbol>
+    <symbol id="ic-comptable" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M8 7h8 M8 12h2 M12 12h2 M16 12h.01 M8 16h2 M12 16h2 M16 16h.01"></path></symbol>
+    <symbol id="ic-budget" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4 M4 20h16 M8 17v-5 M12 17V8 M16 17v-8"></path></symbol>
+    <symbol id="ic-ged" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v12H3z M3 7l9 6 9-6"></path></symbol>
+    <symbol id="ic-rh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20 M9.5 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7 M17 4.8a3 3 0 0 1 0 5.9 M21 20v-1.2a4 4 0 0 0-3-3.7"></path></symbol>
+    <symbol id="ic-stocks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5v8l-9 5-9-5z M3 8l9 5 9-5 M12 13v8"></path></symbol>
+    <symbol id="ic-juridique" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16 M9 4h6 M7 20h10 M5 8h14 M7.5 8l-3 5.5a3.2 3.2 0 0 0 6 0z M16.5 8l-3 5.5a3.2 3.2 0 0 0 6 0z"></path></symbol>
+    <symbol id="ic-elearning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9L12 4.5 21.5 9 12 13.5z M6.5 11v4.6c0 1.6 2.5 2.9 5.5 2.9s5.5-1.3 5.5-2.9V11 M21.5 9v5"></path></symbol>
+  </svg>
+
+  <header data-header="1" style="position:sticky;top:0;z-index:50;background:#FFFFFF;border-bottom:1px solid #E4E8EF">
+    <span data-progress="1" style="position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#EF4600,#FF8A3D);display:block"></span>
+    <div style="max-width:2800px;margin:0 auto;padding:0px 24px;height:68px;display:flex;align-items:center;gap:32px">
+      <button onClick="{{ goHome }}" style="display:flex;align-items:center;background:none;border:0;padding:0">
+        <img src="jilms-logo.png" alt="Jil-MS" width="127" height="44" style="display:block;height:34px;width:auto">
+      </button>
+      <nav style="display:flex;align-items:center;gap:4px;margin-left:8px;flex-wrap:wrap">
+        <button onClick="{{ goHome }}" data-nav="1" data-active="{{ navHome }}" style="background:none;border:0;padding:8px 12px 10px;font-size:15px;color:#5A6B84;border-radius:6px">Accueil</button>
+        <button onClick="{{ goModules }}" data-nav="1" data-active="{{ navModules }}" style="background:none;border:0;padding:8px 12px 10px;font-size:15px;color:#5A6B84;border-radius:6px">Modules</button>
+        <button onClick="{{ goPricing }}" data-nav="1" data-active="{{ navPricing }}" style="background:none;border:0;padding:8px 12px 10px;font-size:15px;color:#5A6B84;border-radius:6px">Tarification</button>
+        <button onClick="{{ goHelp }}" data-nav="1" data-active="{{ navHelp }}" style="background:none;border:0;padding:8px 12px 10px;font-size:15px;color:#5A6B84;border-radius:6px">Aide</button>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <button onClick="{{ goDemo }}" data-cta="1" style="background:#EF4600;color:#FFFFFF;border:0;border-radius:8px;padding:11px 18px;font-size:15px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#C43600">Demander une démo</button>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex:1">
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div data-page="{{ pageAlt }}">
+    <section data-motion="{{ motionAttr }}" style="position:relative;overflow-x:clip;max-width:2800px;margin:0 auto;padding:12.8px 24px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:44px;column-gap:5%;align-items:center">
+      <span data-grid-bg="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:420px;height:420px;background:rgba(239,70,0,0.12);top:-60px;right:6%;z-index:0"></span>
+      <span data-aura="1" aria-hidden="true" style="width:380px;height:380px;background:rgba(16,48,111,0.1);bottom:-80px;right:30%;animation-delay:-7s;z-index:0"></span>
+      <div style="position:relative;z-index:1">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:#F4F6F9;border:1px solid #E4E8EF;border-radius:999px;padding:6px 13px;font-size:13px;color:#5A6B84;animation:jRise 560ms cubic-bezier(0.16,1,0.3,1)"><span style="width:7px;height:7px;border-radius:999px;background:#1F9D6B;display:block;animation:jGlow 2.4s ease-in-out infinite"></span>Conforme e‑MeCEF et SYSCOHADA</span>
+        <h1 style="margin-top:14px;font-size:clamp(38px,4.4vw,60px);font-weight:700;line-height:1.04;max-width:15ch"><span data-word="1" style="animation-delay:120ms">Toute</span> <span data-word="1" style="animation-delay:190ms">votre</span> <span data-word="1" style="animation-delay:260ms">gestion,</span> <span data-word="1" style="animation-delay:330ms">d'une</span> <span data-word="1" style="animation-delay:400ms">facture</span> <span data-word="1" style="animation-delay:470ms">à</span> <span data-word="1" style="animation-delay:540ms">votre</span> <span data-word="1" data-shimmer="1" style="animation-delay:610ms,0ms;animation-name:jWord,jShimmer;animation-duration:760ms,6.5s;animation-timing-function:cubic-bezier(0.16,1,0.3,1),linear;animation-iteration-count:1,infinite;animation-fill-mode:backwards,none">bilan.</span></h1>
+        <p style="margin-top:14px;font-size:18px;line-height:1.6;color:#5A6B84;max-width:52ch;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 180ms backwards">Huit modules, une seule base de données. Facturation normalisée e‑MeCEF, plan SYSCOHADA, multi‑devises, multi‑sites.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 280ms backwards">
+          <button onClick="{{ goDemo }}" data-cta="1" style="background:#EF4600;color:#FFFFFF;border:0;border-radius:8px;padding:14px 22px;font-size:16px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#C43600">Demander une démo</button>
+          <button onClick="{{ goModules }}" data-ghost="1" style="background:#FFFFFF;color:#10306F;border:1px solid #10306F;border-radius:8px;padding:14px 22px;font-size:16px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#F4F6F9">Voir les modules</button>
+        </div>
+        <div data-chiprow="1" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 340ms backwards">
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Ventes</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Comptabilité</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Stocks</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>RH et paie</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Budget</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Juridique</span>
+        </div>
+        <p style="margin-top:12px;font-size:14px;color:#5A6B84;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 400ms backwards">Utilisé par des PME et des institutions au Bénin, au Burkina Faso et au Sénégal.</p>
+      </div>
+
+      <div data-shot-wrap="1" data-parallax="1" data-pxy="0.06" style="position:relative;z-index:1;animation:jRise 760ms cubic-bezier(0.16,1,0.3,1) 200ms backwards">
+        <img data-shot="1" src="img/schema-jilms.png" alt="Les modules Jil-MS reliés à un socle commun" width="651" height="392" style="display:block;width:100%;max-width:651px;height:auto;border-radius:14px">
+        <div data-orbit="1" aria-hidden="true">
+          <span style=""><span>e‑MeCEF</span></span>
+          <span style="animation-delay:-6.5s"><span>SYSCOHADA</span></span>
+          <span style="animation-delay:-13s"><span>Stocks</span></span>
+          <span style="animation-delay:-19.5s"><span>Paie</span></span>
+        </div>
+        <div data-float-card="1" style="position:absolute;right:10px;bottom:14px;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;box-shadow:0 20px 44px -28px rgba(16,48,111,0.7);padding:13px 16px;min-width:178px">
+          <span style="display:flex;align-items:center;gap:7px;font-size:12px;color:#5A6B84"><span data-live="1" style="width:7px;height:7px;border-radius:999px;background:#1F9D6B;display:block"></span>Écritures générées</span>
+          <span data-count="1" data-to="1248" style="display:block;margin-top:1.33px;font-family:'Bricolage Grotesque',sans-serif;font-size:26px;font-weight:700;color:#10306F">0</span>
+        </div>
+      </div>
+    </section>
+
+    <sc-if value="{{ showProof }}" hint-placeholder-val="{{ true }}">
+    <section data-marquee-mask="1" style="background:#F4F6F9;border-top:1px solid #E4E8EF;border-bottom:1px solid #E4E8EF;padding:5.2px 0px;overflow:hidden">
+      <div style="max-width:2800px;margin:0 auto;padding:0px 24px 9.33px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6B84">Ils nous font confiance</span>
+      </div>
+      <div data-marquee="1" style="display:flex;width:200%;animation:jMarquee 44s linear infinite">
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-benin.png" alt="Comité National Olympique du Bénin"></div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-bnb.png" alt="Bibliothèque nationale du Bénin"></div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-bac.png" alt="Office du Baccalauréat"></div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-cvo.png" alt="Cellule des Voyages Officiels"></div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-onip.png" alt="ONIP"></div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-cdcb.png" alt="Caisse des Dépôts et Consignations du Bénin"></div>
+        <div aria-hidden="true" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-benin.png" alt=""></div>
+        <div aria-hidden="true" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-bnb.png" alt=""></div>
+        <div aria-hidden="true" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-bac.png" alt=""></div>
+        <div aria-hidden="true" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-cvo.png" alt=""></div>
+        <div aria-hidden="true" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-onip.png" alt=""></div>
+        <div aria-hidden="true" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px"><img src="img/logo-cdcb.png" alt=""></div>
+      </div>
+    </section>
+    </sc-if>
+
+    <div data-video-row="1">
+      <div data-video-head="1">
+        <h2 data-reveal="1" style="font-size:clamp(30px,3.2vw,44px);font-weight:600;max-width:30ch">Ce que Jil-MS change au quotidien.</h2>
+        <p data-reveal="1" style="margin-top:5.33px;font-size:18px;color:#5A6B84;max-width:62ch">Conseil en organisation puis logiciel : nous partons de vos processus, pas d'un standard.</p>
+      </div>
+      <div data-video-cols="1">
+        <section data-video="1" style="max-width:2800px;margin:0 auto;padding:0">
+          <div data-reveal="1" data-anim="zoom">
+            <div data-video-frame="1" style="position:relative;overflow:hidden;border-radius:18px;background:#06152f;border:1px solid #E4E8EF;box-shadow:0 1px 2px rgba(16,48,111,0.04),0 34px 60px -44px rgba(16,48,111,0.7)">
+              <video data-presentation="1" controls autoplay muted loop playsinline preload="auto" poster="media/presentation-poster.jpg" title="Vidéo de présentation Jil-MS" style="display:block;width:100%;height:100%;border:0;background:#06152f;object-fit:contain"><source src="media/presentation.mp4" type="video/mp4">Votre navigateur ne prend pas en charge la vidéo.</video>
+            </div>
+          </div>
+        </section>
+
+        <section data-why-col="1" style="max-width:2800px;margin:0 auto;padding:0">
+          <div data-why-grid="1" style="display:flex;flex-direction:column;gap:0;height:100%">
+            <sc-for list="{{ why }}" as="w" hint-placeholder-count="3">
+              <div data-reveal="1" data-row="1" style="position:relative;padding:16px 0 18px;display:flex;flex-direction:column;flex:1 0 auto"><span data-rule="1" style="margin-bottom:6px;height:2px;background:#10306F"></span><span style="display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:13px;letter-spacing:0.1em;color:#EF4600;margin-bottom:2.67px">{{ w.num }}</span>
+                <h3 style="font-size:18px;font-weight:600;line-height:1.22">{{ w.title }}</h3>
+                <p style="margin-top:3.33px;font-size:14.5px;line-height:1.5;color:#5A6B84">{{ w.text }}</p>
+                <button onClick="{{ goDemo }}" data-row="1" style="margin-top:auto;padding-top:5px;background:none;border:0;color:#EF4600;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:6px">{{ w.cta }} <span data-arrow="1">→</span></button>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <section data-dark="1" style="background:#10306F;color:#FFFFFF;padding:19.2px 0px">
+      <span data-spot="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:520px;height:520px;background:rgba(239,70,0,0.26);top:-140px;left:-60px"></span>
+      <span data-aura="1" aria-hidden="true" style="width:440px;height:440px;background:rgba(59,91,219,0.3);bottom:-180px;right:-40px;animation-delay:-9s"></span>
+      <div data-stream-mask="1" aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;opacity:0.2;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#FFFFFF">
+        <div data-stream="1" style="display:grid;gap:10px;padding:20px 24px;width:100%">
+          <span>411 Clients · 1 250 000 · e‑MeCEF OK</span><span>701 Ventes · 1 059 322 · journal VE</span><span>4431 TVA · 190 678 · DGI</span><span>Stock Agla · −40 ramettes · CMUP</span><span>Paie mars · 180 bulletins · CNSS</span><span>Budget DAF · disponible 4 350 000</span><span>MoMo · +85 000 · rapproché</span><span>GED · CE‑2026‑0231 · imputé</span>
+          <span>411 Clients · 1 250 000 · e‑MeCEF OK</span><span>701 Ventes · 1 059 322 · journal VE</span><span>4431 TVA · 190 678 · DGI</span><span>Stock Agla · −40 ramettes · CMUP</span><span>Paie mars · 180 bulletins · CNSS</span><span>Budget DAF · disponible 4 350 000</span><span>MoMo · +85 000 · rapproché</span><span>GED · CE‑2026‑0231 · imputé</span>
+        </div>
+      </div>
+      <div style="position:relative;max-width:2800px;margin:0 auto;padding:0px 24px">
+        <h2 data-reveal="1" data-anim="unroll" style="font-size:clamp(30px,3.2vw,44px);font-weight:600;color:#FFFFFF">Conforme, par construction.</h2>
+        <div style="margin-top:17.33px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px;column-gap:5%">
+          <div data-reveal="1" data-anim="flip" data-pill="1" style="position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,0.22);padding-top:18px;padding-left:14px;padding-bottom:14px;margin-left:-14px;border-radius:0 0 12px 0">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,2.2vw,30px);font-weight:600">e‑MeCEF natif</span>
+            <p style="margin-top:3.33px;font-size:16px;line-height:1.6;color:#C9D2E0">Factures normalisées transmises à la DGI en temps réel, sans développement spécifique — là où Odoo, Sage ou Dolibarr en exigent un.</p>
+          </div>
+          <div data-reveal="1" data-anim="flip" data-pill="1" style="position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,0.22);padding-top:18px;padding-left:14px;padding-bottom:14px;margin-left:-14px;border-radius:0 0 12px 0">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,2.2vw,30px);font-weight:600">SYSCOHADA d'origine</span>
+            <p style="margin-top:3.33px;font-size:16px;line-height:1.6;color:#C9D2E0">Plan comptable UEMOA livré paramétré, pas adapté après coup. Comptabilité multi‑devises (FCFA et devises) par projet.</p>
+          </div>
+          <div data-reveal="1" data-anim="flip" data-pill="1" style="position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,0.22);padding-top:18px;padding-left:14px;padding-bottom:14px;margin-left:-14px;border-radius:0 0 12px 0">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,2.2vw,30px);font-weight:600">Mobile Money rapproché</span>
+            <p style="margin-top:3.33px;font-size:16px;line-height:1.6;color:#C9D2E0">Encaissements MTN et Moov traités comme un moyen de paiement à part entière.</p>
+          </div>
+          <div data-reveal="1" data-anim="flip" data-pill="1" style="position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,0.22);padding-top:18px;padding-left:14px;padding-bottom:14px;margin-left:-14px;border-radius:0 0 12px 0">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,2.2vw,30px);font-weight:600">Équipe sur place</span>
+            <p style="margin-top:3.33px;font-size:16px;line-height:1.6;color:#C9D2E0">Abomey‑Calavi, Ouagadougou, Dakar : formation et support en présentiel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:2800px;margin:0 auto;padding:17.6px 24px">
+      <h2 data-reveal="1" style="font-size:clamp(30px,3.2vw,44px);font-weight:600;max-width:22ch">Un module pour chaque fonction.</h2>
+      <p data-reveal="1" style="margin-top:5.33px;font-size:18px;color:#5A6B84;max-width:60ch">Activez ce dont vous avez besoin. Les données circulent sans ressaisie.</p>
+      <div style="margin-top:9.33px;display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ families }}" as="t" hint-placeholder-count="3">
+          <button onClick="{{ t.select }}" data-tab="{{ t.active }}" style="border:1px solid #E4E8EF;background:#FFFFFF;color:#10306F;border-radius:999px;padding:9px 16px;font-size:14px;transition:all 180ms ease-out" style-hover="border-color:#10306F">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:20px;column-gap:5%">
+        <sc-for list="{{ visibleModules }}" as="m" hint-placeholder-count="8">
+          <button onClick="{{ m.open }}" data-card="1" data-tilt="1" data-reveal="1" data-anim="zoom" style="position:relative;text-align:left;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:22px;min-height:238px;display:flex;flex-direction:column;width:100%;font:inherit;color:inherit">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span data-mark="1" style="width:40px;height:40px;border-radius:10px;background:#F4F6F9;color:#EF4600;display:flex;align-items:center;justify-content:center">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ic-{{ m.slug }}"></use></svg>
+              </span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8E9CB4">{{ m.tag }}</span>
+            </div>
+            <h3 style="margin-top:5.33px;font-size:19px;font-weight:600;line-height:1.25">{{ m.title }}</h3>
+            <p data-hover-hide="1" style="margin-top:2.67px;font-size:15px;line-height:1.55;color:#5A6B84">{{ m.short }}</p>
+            <div style="margin-top:auto;padding-top:16px;position:relative;min-height:38px">
+              <span data-hover-hide="1" style="position:absolute;inset:auto 0 0 0;font-size:13px;color:#5A6B84">{{ m.family }}</span>
+
+              <div data-hover-reveal="1" style="position:absolute;inset:auto 0 0 0">
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ m.chips }}" as="c" hint-placeholder-count="3">
+                    <span style="font-size:12px;color:#10306F;background:#F4F6F9;border-radius:999px;padding:4px 9px">{{ c.label }}</span>
+                  </sc-for>
+                </div>
+                <span data-row="1" style="margin-top:3.33px;color:#EF4600;font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px">Ouvrir la fiche <span data-arrow="1">→</span></span>
+              </div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="background:#F4F6F9;border-top:1px solid #E4E8EF;border-bottom:1px solid #E4E8EF;padding:16px 0px">
+      <div data-quote-shell="1" style="max-width:2800px;margin:0 auto;padding:0px 24px">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:end">
+          <h2 data-reveal="1" style="font-size:clamp(28px,3vw,40px);font-weight:600;max-width:20ch">Quelques témoignages.</h2>
+          <div style="display:flex;gap:10px">
+            <button onClick="{{ prevQuote }}" aria-label="Témoignage précédent" data-nav-round="1" style="width:44px;height:44px;border-radius:999px;border:1px solid #10306F;background:#FFFFFF;color:#10306F;font-size:17px">←</button>
+            <span data-ringwrap="1"><svg data-ring="{{ quote.alt }}" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none"><circle class="t" cx="22" cy="22" r="20"></circle></svg><button onClick="{{ nextQuote }}" aria-label="Témoignage suivant" data-nav-round="1" style="width:44px;height:44px;border-radius:999px;border:1px solid #10306F;background:#FFFFFF;color:#10306F;font-size:17px">→</button></span>
+          </div>
+        </div>
+        <div data-reveal="1" data-anim="flip" data-quote-card="1" onMouseEnter="{{ pauseQuotes }}" onMouseLeave="{{ resumeQuotes }}" style="position:relative;overflow:hidden;margin-top:12px;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:20px;padding:36px;box-shadow:0 1px 2px rgba(16,48,111,0.04),0 30px 60px -40px rgba(16,48,111,0.5);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:36px;column-gap:5%;align-items:center">
+          <span data-beam="1" aria-hidden="true" style="width:2px;left:0;right:auto;top:0;height:40%;background:linear-gradient(180deg,rgba(239,70,0,0),rgba(239,70,0,0.8),rgba(239,70,0,0))"></span>
+          <div data-swap="{{ quote.alt }}" style="">
+            <p style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(22px,2.2vw,28px);font-weight:600;line-height:1.3">{{ quote.text }}</p>
+            <div style="margin-top:8px;display:flex;align-items:center;gap:12px">
+              <span style="width:44px;height:44px;border-radius:999px;background:#F4F6F9;border:1px dashed #C3CBD8;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5A6B84">{{ quote.initials }}</span>
+              <span style="font-size:15px;line-height:1.4">{{ quote.author }}<br><span style="color:#5A6B84">{{ quote.role }}</span></span>
+            </div>
+          </div>
+          <div data-swap="{{ quote.alt }}" data-late="1" style="">
+            <div data-pop="{{ quote.alt }}" style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(40px,4vw,52px);font-weight:700;color:#EF4600">{{ quote.metric }}</div>
+            <p style="margin-top:2px;font-size:15px;color:#5A6B84;max-width:30ch">{{ quote.metricLabel }}</p>
+            <div style="margin-top:7.33px;display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ quote.modules }}" as="m" hint-placeholder-count="3">
+                <span style="font-size:12px;color:#10306F;background:#F4F6F9;border-radius:999px;padding:5px 10px">{{ m.label }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:6.67px;display:flex;gap:8px;align-items:center">
+          <sc-for list="{{ quoteDots }}" as="d" hint-placeholder-count="3">
+            <button onClick="{{ d.select }}" data-dot="{{ d.active }}" aria-label="Témoignage" style="width:28px;height:6px;border-radius:999px;border:0;background:#C3CBD8;padding:0"></button>
+          </sc-for>
+          <span style="margin-left:12px;font-size:13px;color:#5A6B84">Témoignages fictifs, à remplacer par vos clients.</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:0px 0px 17.6px">
+      <div style="max-width:2800px;margin:0 auto;padding:0px 24px 16px">
+        <h2 data-reveal="1" style="font-size:clamp(28px,3vw,40px);font-weight:600;max-width:22ch">Ce que vos équipes arrêtent de faire à la main.</h2>
+      </div>
+      <div data-rail-mask="1">
+        <div data-rail="l">
+          <sc-for list="{{ railA }}" as="r" hint-placeholder-count="12">
+            <div data-railcard="1"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#EF4600">{{ r.tag }}</span><h3 style="margin-top:2.67px;font-size:17px;font-weight:600;line-height:1.25">{{ r.title }}</h3><p style="margin-top:2.33px;font-size:14.5px;line-height:1.5;color:#5A6B84">{{ r.text }}</p></div>
+          </sc-for>
+        </div>
+      </div>
+      <div data-rail-mask="1" style="margin-top:5.33px">
+        <div data-rail="r">
+          <sc-for list="{{ railB }}" as="r" hint-placeholder-count="12">
+            <div data-railcard="1"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#EF4600">{{ r.tag }}</span><h3 style="margin-top:2.67px;font-size:17px;font-weight:600;line-height:1.25">{{ r.title }}</h3><p style="margin-top:2.33px;font-size:14.5px;line-height:1.5;color:#5A6B84">{{ r.text }}</p></div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section aria-hidden="true" style="background:#10306F;padding:6px 0px;overflow:hidden">
+      <div data-bigmq="1">
+        <span>Facturer <em>·</em> Encaisser <em>·</em> Comptabiliser <em>·</em> Piloter <em>·</em></span>
+        <span>Facturer <em>·</em> Encaisser <em>·</em> Comptabiliser <em>·</em> Piloter <em>·</em></span>
+      </div>
+    </section>
+
+    <section data-dark="1" style="background:#F4F6F9;border-top:1px solid #E4E8EF;padding:17.6px 24px">
+      <span data-aura="1" aria-hidden="true" style="width:460px;height:460px;background:rgba(239,70,0,0.16);top:-160px;left:50%;margin-left:-230px"></span>
+      <div data-reveal="1" data-anim="zoom" style="position:relative;max-width:1280px;margin:0 auto;text-align:center">
+        <h2 style="font-size:clamp(28px,3vw,40px);font-weight:600">Parlons de votre gestion.</h2>
+        <p style="margin-top:4.67px;font-size:17px;color:#5A6B84">30 minutes, sur vos propres données, sans engagement.</p>
+        <button onClick="{{ goDemo }}" data-cta="1" data-magnet="1" style="margin-top:8.67px;background:#EF4600;color:#FFFFFF;border:0;border-radius:8px;padding:14px 24px;font-size:16px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#C43600">Demander une démo</button>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isModules }}" hint-placeholder-val="{{ false }}">
+  <div data-page="{{ pageAlt }}">
+    <section data-band="1" style="padding:12.8px 0px 11.2px">
+      <span data-grid-bg="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:380px;height:380px;background:rgba(239,70,0,0.14);top:-120px;right:8%"></span>
+      <div style="position:relative;max-width:2800px;margin:0 auto;padding:0px 24px">
+        <h1 style="font-size:clamp(32px,3.4vw,46px);font-weight:700;max-width:24ch"><span data-word="1" style="animation-delay:60ms">Des</span> <span data-word="1" style="animation-delay:130ms">modules</span> <span data-word="1" style="animation-delay:200ms">qui</span> <span data-word="1" style="animation-delay:270ms">parlent</span> <span data-word="1" style="animation-delay:340ms">la</span> <span data-word="1" style="animation-delay:410ms">même</span> <span data-word="1" data-shimmer="1" style="animation-delay:480ms,0ms;animation-name:jWord,jShimmer;animation-duration:760ms,6.5s;animation-timing-function:cubic-bezier(0.16,1,0.3,1),linear;animation-iteration-count:1,infinite;animation-fill-mode:backwards,none">langue.</span></h1>
+        <p style="margin-top:5.33px;font-size:18px;color:#5A6B84;max-width:62ch;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 220ms backwards">Modules de fonctions supports et métiers, réunis par un même référentiel de tiers, d'articles et de comptes.</p>
+        <div data-chiprow="1" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 320ms backwards">
+          <span style="display:inline-flex;align-items:center;gap:7px;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Le socle administratif et financier commun à toute structure</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F"><span style="color:#1F9D6B">✓</span>Les métiers spécifiques, branchés sur le même socle</span>
+        </div>
+      </div>
+    </section>
+
+    <section data-showcase="1" onMouseEnter="{{ pauseTabs }}" onMouseLeave="{{ resumeTabs }}" style="max-width:2800px;margin:0 auto;padding:14.4px 24px 0px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px;column-gap:5%;align-items:start">
+      <div style="position:sticky;top:92px">
+        <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6B84">Classer par fonction</span>
+        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">
+          <sc-for list="{{ moduleFamilies }}" as="f" hint-placeholder-count="3">
+            <button onClick="{{ f.select }}" data-module-family="{{ f.active }}" aria-pressed="{{ f.active }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <span style="display:block;margin-top:12px;font-size:13px;color:#5A6B84">Choisissez un module</span>
+        <div data-module-list="1" style="margin-top:5px">
+          <sc-for list="{{ showTabs }}" as="t" hint-placeholder-count="8">
+            <button onClick="{{ t.select }}" data-vtab="{{ t.active }}" data-prog="{{ t.alt }}" style="display:flex;align-items:center;gap:12px"><i><b></b></i><span style="width:34px;height:34px;flex:0 0 34px;border-radius:8px;background:#FFFFFF;border:1px solid #E4E8EF;color:#EF4600;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ic-{{ t.slug }}"></use></svg></span><span style="min-width:0"><span style="display:block;font-size:16px;font-weight:600;color:#10306F">{{ t.label }}</span><span style="display:block;margin-top:1px;font-size:13.5px;color:#5A6B84">{{ t.family }}</span></span></button>
+          </sc-for>
+        </div>
+      </div>
+      <div data-panel="{{ show.alt }}" style="grid-column:span 2;min-width:0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#EF4600">{{ show.family }}</span>
+        <div style="margin-top:4px;display:flex;align-items:center;gap:14px">
+          <span style="width:48px;height:48px;flex:0 0 48px;border-radius:12px;background:#F4F6F9;color:#EF4600;display:flex;align-items:center;justify-content:center">
+            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ic-{{ show.slug }}"></use></svg>
+          </span>
+          <h2 style="font-size:clamp(26px,2.8vw,36px);font-weight:600;line-height:1.15">{{ show.title }}</h2>
+        </div>
+        <p style="margin-top:4.67px;font-size:17px;line-height:1.6;color:#5A6B84;max-width:60ch">{{ show.long }}</p>
+        <div style="margin-top:6.67px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+          <sc-for list="{{ show.chips }}" as="c" hint-placeholder-count="4">
+            <span data-prow="1" style="display:flex;align-items:center;gap:10px;font-size:15.5px;animation-delay:{{ c.delay }}"><span style="width:20px;height:20px;border-radius:999px;background:rgba(31,157,107,0.12);color:#1F9D6B;display:flex;align-items:center;justify-content:center;font-size:12px">✓</span>{{ c.label }}</span>
+          </sc-for>
+        </div>
+        <div style="margin-top:9.33px;background:#F4F6F9;border:1px solid #E4E8EF;border-radius:18px;padding:18px;box-shadow:0 1px 2px rgba(16,48,111,0.04),0 34px 60px -44px rgba(16,48,111,0.7)">
+          <div style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-size:13px;color:#5A6B84">{{ show.screenRight }}</span>
+              <span data-live="1" style="width:8px;height:8px;border-radius:999px;background:#1F9D6B;display:block"></span>
+            </div>
+            <div style="margin-top:4.67px;font-family:'IBM Plex Mono',monospace;font-size:13px">
+              <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:12px;color:#5A6B84;padding-bottom:8px;border-bottom:1px solid #E4E8EF"><span>{{ show.colA }}</span><span>{{ show.colB }}</span><span>{{ show.colC }}</span></div>
+              <sc-for list="{{ show.rows }}" as="r" hint-placeholder-count="4">
+                <div data-prow="1" style="display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:12px;padding:9px 0;border-bottom:1px solid #F4F6F9;animation-delay:{{ r.delay }}"><span>{{ r.a }}</span><span>{{ r.b }}</span><span>{{ r.c }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <button onClick="{{ show.open }}" data-cta="1" style="margin-top:8px;background:#EF4600;color:#FFFFFF;border:0;border-radius:8px;padding:13px 20px;font-size:16px;font-weight:500">Ouvrir la fiche complète</button>
+      </div>
+    </section>
+
+    <section style="max-width:2800px;margin:0 auto;padding:17.6px 24px">
+      <h2 data-reveal="1" style="font-size:clamp(28px,3vw,40px);font-weight:600;max-width:24ch">Les modules en un coup d'œil.</h2>
+      <p data-reveal="1" style="margin-top:5.33px;font-size:16px;color:#5A6B84;max-width:60ch">Touchez une case pour ouvrir sa fiche : icône, fonction et description.</p>
+      <div data-module-gallery="1" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;column-gap:5%;padding-right:8px">
+        <sc-for list="{{ modules }}" as="m" hint-placeholder-count="8">
+          <button onClick="{{ m.open }}" data-card="1" data-tilt="1" data-reveal="1" data-anim="zoom" style="position:relative;text-align:left;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:14px;padding:22px;min-height:270px;display:flex;flex-direction:column;width:100%;font:inherit;color:inherit">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span data-mark="1" style="width:40px;height:40px;border-radius:10px;background:#F4F6F9;color:#EF4600;display:flex;align-items:center;justify-content:center">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ic-{{ m.slug }}"></use></svg>
+              </span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8E9CB4">{{ m.tag }}</span>
+            </div>
+            <h3 style="margin-top:5.33px;font-size:19px;font-weight:600;line-height:1.25">{{ m.title }}</h3>
+            <p data-hover-hide="1" style="margin-top:2.67px;font-size:15px;line-height:1.55;color:#5A6B84">{{ m.short }}</p>
+            <div style="margin-top:auto;padding-top:16px;position:relative;min-height:38px">
+              <span data-hover-hide="1" style="position:absolute;inset:auto 0 0 0;font-size:13px;color:#5A6B84">{{ m.family }}</span>
+              <div data-hover-reveal="1" style="position:absolute;inset:auto 0 0 0">
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ m.chips }}" as="c" hint-placeholder-count="3">
+                    <span style="font-size:12px;color:#10306F;background:#F4F6F9;border-radius:999px;padding:4px 9px">{{ c.label }}</span>
+                  </sc-for>
+                </div>
+                <span data-row="1" style="margin-top:3.33px;color:#EF4600;font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px">Ouvrir la fiche <span data-arrow="1">→</span></span>
+              </div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+  <div data-page="{{ pageAlt }}">
+    <section data-band="1" style="padding:5.6px 0px 10.4px">
+      <span data-grid-bg="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:340px;height:340px;background:rgba(239,70,0,0.13);top:-110px;right:10%"></span>
+      <div style="position:relative;max-width:2800px;margin:0 auto;padding:0px 24px">
+        <div style="font-size:14px;color:#5A6B84"><button onClick="{{ goModules }}" style="background:none;border:0;padding:0;color:#3B5BDB;font-size:14px">Modules</button> / {{ current.title }}</div>
+        <div style="margin-top:4.67px;display:flex;align-items:center;gap:16px;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 60ms backwards">
+          <span style="width:54px;height:54px;flex:0 0 54px;border-radius:13px;background:#F4F6F9;color:#EF4600;display:flex;align-items:center;justify-content:center">
+            <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ic-{{ current.slug }}"></use></svg>
+          </span>
+          <h1 style="font-size:clamp(30px,3.2vw,46px);font-weight:700;max-width:26ch">{{ current.title }}</h1>
+        </div>
+        <p style="margin-top:6px;font-size:18px;line-height:1.6;color:#5A6B84;max-width:64ch;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 160ms backwards">{{ current.long }}</p>
+        <div style="margin-top:7.33px;display:flex;flex-wrap:wrap;gap:8px;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 240ms backwards">
+          <sc-for list="{{ current.chips }}" as="c" hint-placeholder-count="4">
+            <span style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:999px;padding:7px 13px;font-size:13.5px;color:#10306F">{{ c.label }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+    <section style="max-width:2800px;margin:0 auto;padding:11.2px 24px 14.4px">
+      <div style="background:#F4F6F9;border:1px solid #E4E8EF;border-radius:20px;padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;column-gap:5%">
+        <div style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:18px">
+          <span style="font-size:13px;color:#5A6B84">{{ current.screenLeft }}</span>
+          <div style="margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:2;color:#10306F">
+            <sc-for list="{{ current.tree }}" as="t" hint-placeholder-count="5">
+              <div data-reveal="1" data-anim="slide" style="border-bottom:1px solid #F4F6F9">{{ t.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:18px;grid-column:span 2;min-width:0">
+          <span style="font-size:13px;color:#5A6B84">{{ current.screenRight }}</span>
+          <div style="margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:13px">
+            <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:12px;color:#5A6B84;padding-bottom:8px;border-bottom:1px solid #E4E8EF"><span>{{ current.colA }}</span><span>{{ current.colB }}</span><span>{{ current.colC }}</span></div>
+            <sc-for list="{{ current.rows }}" as="r" hint-placeholder-count="4">
+              <div data-reveal="1" data-anim="slide" style="display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:12px;padding:8px 0;border-bottom:1px solid #F4F6F9"><span>{{ r.a }}</span><span>{{ r.b }}</span><span>{{ r.c }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="margin-top:21.33px;font-size:30px;font-weight:600">Ce que fait le module</h2>
+      <div style="margin-top:9.33px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 48px">
+        <sc-for list="{{ current.features }}" as="f" hint-placeholder-count="6">
+          <div data-reveal="1" data-row="1" style="border-top:1px solid #E4E8EF;padding:20px 14px;margin:0 -14px;border-radius:10px">
+            <h3 style="font-size:18px;font-weight:600">{{ f.title }}</h3>
+            <p style="margin-top:2px;font-size:15px;line-height:1.55;color:#5A6B84">{{ f.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:18.67px;background:#F4F6F9;border-radius:12px;padding:28px">
+        <span style="font-size:15px;font-weight:500">Ce module fonctionne avec</span>
+        <div style="margin-top:4.67px;display:flex;flex-wrap:wrap;gap:10px">
+          <sc-for list="{{ current.related }}" as="r" hint-placeholder-count="4">
+            <button onClick="{{ r.open }}" data-chip="0" style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:999px;padding:8px 14px;font-size:14px;color:#10306F">{{ r.title }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+    </section>
+    <div data-sticky="1">
+      <div style="background:#10306F;color:#FFFFFF">
+        <div style="max-width:2800px;margin:0 auto;padding:9.33px 24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between">
+          <span style="font-size:16px">Voir {{ current.title }} sur vos propres données ?</span>
+          <button onClick="{{ goDemo }}" data-cta="1" data-magnet="1" style="background:#EF4600;color:#FFFFFF;border:0;border-radius:8px;padding:11px 18px;font-size:15px;font-weight:500">Demander une démo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isPricing }}" hint-placeholder-val="{{ false }}">
+  <div data-page="{{ pageAlt }}">
+    <section data-band="1" style="padding:12.8px 0px 11.2px">
+      <span data-grid-bg="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:380px;height:380px;background:rgba(239,70,0,0.14);top:-130px;right:12%"></span>
+      <div style="position:relative;max-width:2800px;margin:0 auto;padding:0px 24px">
+        <h1 style="font-size:clamp(32px,3.4vw,46px);font-weight:700;max-width:24ch"><span data-word="1" style="animation-delay:60ms">Un</span> <span data-word="1" style="animation-delay:130ms">tarif</span> <span data-word="1" style="animation-delay:200ms">par</span> <span data-word="1" style="animation-delay:270ms">taille</span> <span data-word="1" style="animation-delay:340ms">de</span> <span data-word="1" style="animation-delay:410ms">structure,</span> <span data-word="1" data-shimmer="1" style="animation-delay:480ms,0ms;animation-name:jWord,jShimmer;animation-duration:760ms,6.5s;animation-timing-function:cubic-bezier(0.16,1,0.3,1),linear;animation-iteration-count:1,infinite;animation-fill-mode:backwards,none">pas par surprise.</span></h1>
+        <p style="margin-top:5.33px;font-size:18px;color:#5A6B84;max-width:58ch;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 220ms backwards">Hébergement, mises à jour et support inclus. Paiement mensuel ou annuel, en FCFA.</p>
+      </div>
+    </section>
+    <div data-pagepad="1" style="max-width:2800px;margin:0 auto;padding:9.6px 24px 11.2px">
+    <div style="margin-top:0;display:inline-flex;align-items:center;gap:4px;background:#F4F6F9;border-radius:999px;padding:4px">
+      <button onClick="{{ setMonthly }}" data-tab="{{ isMonthly }}" style="border:0;background:none;color:#10306F;border-radius:999px;padding:9px 18px;font-size:14px;transition:all 180ms ease-out">Mensuel</button>
+      <button onClick="{{ setYearly }}" data-tab="{{ isYearly }}" style="border:0;background:none;color:#10306F;border-radius:999px;padding:9px 18px;font-size:14px;transition:all 180ms ease-out">Annuel <span style="color:#EF4600">− 15 %</span></button>
+    </div>
+
+    <div data-plangrid="1" style="margin-top:9.33px">
+      <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+        <div data-rec="{{ p.rec }}" data-plan="1" data-reveal="1" data-anim="zoom" style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:26px;box-shadow:0 1px 2px rgba(16,48,111,0.04),0 18px 40px -34px rgba(16,48,111,0.45)">
+          <div style="height:26px;margin-bottom:3.33px">
+            <sc-if value="{{ p.recommended }}" hint-placeholder-val="{{ false }}">
+              <span style="display:inline-block;background:rgba(239,70,0,0.1);color:#EF4600;font-size:12px;font-weight:500;padding:4px 10px;border-radius:999px">Le plus choisi</span>
+            </sc-if>
+          </div>
+          <h2 style="font-size:20px;font-weight:600;line-height:1.2">{{ p.name }}</h2>
+          <p style="margin-top:2px;min-height:42px;font-size:15px;line-height:1.4;color:#5A6B84">{{ p.for }}</p>
+          <div data-price="{{ p.priceAlt }}" style="margin-top:6.67px;font-family:'Bricolage Grotesque',sans-serif;font-size:34px;font-weight:700;letter-spacing:-0.02em">{{ p.price }}</div>
+          <p style="margin-top:1.33px;min-height:36px;font-size:13px;line-height:1.35;color:#5A6B84">{{ p.unit }}</p>
+          <button onClick="{{ goDemo }}" style="margin-top:6.67px;width:100%;background:#EF4600;color:#FFFFFF;border:0;border-radius:4px;padding:12px;font-size:15px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#C43600">{{ p.cta }}</button>
+          <div style="margin-top:7.33px">
+            <sc-for list="{{ p.features }}" as="f" hint-placeholder-count="6">
+              <div data-reveal="1" data-anim="slide" style="display:flex;gap:10px;padding:7px 0;font-size:15px;line-height:1.45"><span style="color:#1F9D6B">✓</span><span>{{ f.label }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div data-included-block="1">
+      <h2 style="font-size:30px;font-weight:600">Ce qui est inclus</h2>
+      <div style="margin-top:6.67px;overflow-x:auto">
+        <table style="width:100%;min-width:640px;border-collapse:collapse;font-size:15px">
+          <thead>
+            <tr style="text-align:left">
+              <th style="padding:12px 8px;border-bottom:1px solid #10306F;font-weight:500">Module</th>
+              <th style="padding:12px 8px;border-bottom:1px solid #10306F;font-weight:500">Essentielle (Starter)</th>
+              <th style="padding:12px 8px;border-bottom:1px solid #10306F;font-weight:500">Standard (Business)</th>
+              <th style="padding:12px 8px;border-bottom:1px solid #10306F;font-weight:500">Premium (Entreprise)</th>
+              <th style="padding:12px 8px;border-bottom:1px solid #10306F;font-weight:500">Sur-Mesure (Corporate)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ compare }}" as="row" hint-placeholder-count="8">
+              <tr data-trow="1">
+                <td style="padding:12px 8px;border-bottom:1px solid #E4E8EF">{{ row.label }}</td>
+                <td style="padding:12px 8px;border-bottom:1px solid #E4E8EF;color:#1F9D6B">{{ row.a }}</td>
+                <td style="padding:12px 8px;border-bottom:1px solid #E4E8EF;color:#1F9D6B">{{ row.b }}</td>
+                <td style="padding:12px 8px;border-bottom:1px solid #E4E8EF;color:#1F9D6B">{{ row.c }}</td>
+                <td style="padding:12px 8px;border-bottom:1px solid #E4E8EF;color:#1F9D6B">{{ row.d }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:5.33px;font-size:14px;color:#5A6B84">Montants indicatifs hors taxes, en FCFA, à confirmer avant publication.</p>
+    </div>
+    </div>
+
+    <section style="background:#F4F6F9;border-top:1px solid #E4E8EF;padding:16px 0px">
+      <div style="max-width:2800px;margin:0 auto;padding:0px 24px">
+        <div style="max-width:1200px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6B84">Procédure</span>
+          <h2 data-reveal="1" style="margin-top:3.33px;font-size:clamp(28px,3vw,40px);font-weight:600;max-width:22ch">Comment obtenir l'ERP Jil-MS ?</h2>
+          <p data-reveal="1" style="margin-top:4.67px;font-size:17px;line-height:1.6;color:#5A6B84;max-width:62ch">De la première prise de contact à la mise en service de l'ERP, voici comment se déroule un projet. Chaque étape est ajustée à votre périmètre.</p>
+          <div style="margin-top:9.33px;border-top:1px solid #C3CBD8">
+            <sc-for list="{{ pricingFaq }}" as="q" hint-placeholder-count="8">
+              <div data-acc="1">
+                <button onClick="{{ q.toggle }}" data-acc-btn="1" data-faq="1" data-open="{{ q.openAttr }}">
+                  <span>{{ q.question }}</span><span data-sign="1" style="color:#EF4600;font-size:22px;line-height:1">+</span>
+                </button>
+                <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+                  <p style="padding:0 4px 20px;font-size:16px;line-height:1.6;color:#5A6B84;max-width:78ch;animation:jRise 360ms cubic-bezier(0.16,1,0.3,1)">{{ q.answer }}</p>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:10.67px;display:flex;flex-wrap:wrap;gap:18px;align-items:center">
+            <button onClick="{{ goDemo }}" data-cta="1" style="background:#EF4600;color:#FFFFFF;border:0;border-radius:8px;padding:13px 20px;font-size:16px;font-weight:500">Demander une démo</button>
+            <span style="font-size:15px;color:#5A6B84">Ou appelez le <span style="font-family:'IBM Plex Mono',monospace;color:#10306F">+229 95 57 51 51</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isDemo }}" hint-placeholder-val="{{ false }}">
+  <div data-page="{{ pageAlt }}">
+    <section data-band="1" style="padding:11.2px 0px 9.6px">
+      <span data-grid-bg="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:360px;height:360px;background:rgba(239,70,0,0.14);top:-120px;right:14%"></span>
+      <div style="position:relative;max-width:2800px;margin:0 auto;padding:0px 24px">
+        <h1 style="font-size:clamp(30px,3.2vw,46px);font-weight:700;max-width:22ch"><span data-word="1" style="animation-delay:60ms">Voyons</span> <span data-word="1" style="animation-delay:130ms">Jil-MS</span> <span data-word="1" style="animation-delay:200ms">sur</span> <span data-word="1" style="animation-delay:270ms">vos</span> <span data-word="1" data-shimmer="1" style="animation-delay:340ms,0ms;animation-name:jWord,jShimmer;animation-duration:760ms,6.5s;animation-timing-function:cubic-bezier(0.16,1,0.3,1),linear;animation-iteration-count:1,infinite;animation-fill-mode:backwards,none">propres données.</span></h1>
+        <p style="margin-top:5.33px;font-size:18px;color:#5A6B84;max-width:56ch;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 220ms backwards">Votre demande arrive directement chez notre équipe, qui vous rappelle pour convenir d'un créneau.</p>
+      </div>
+    </section>
+    <div data-pagepad="1" style="max-width:2800px;margin:0 auto;padding:11.2px 24px 17.6px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;column-gap:5%;align-items:start">
+    <div>
+      <h2 data-reveal="1" style="font-size:26px;font-weight:600">Comment ça se passe</h2>
+      <div data-tl="1" data-reveal="1" style="margin-top:7.33px"><i></i>
+        <div data-tlstep="1"><i></i><span style="display:block;font-size:16.5px;font-weight:500">Vous remplissez le formulaire</span><span style="display:block;margin-top:1.33px;font-size:15px;color:#5A6B84">Quelques champs, aucun compte à créer.</span></div>
+        <div data-tlstep="1"><i></i><span style="display:block;font-size:16.5px;font-weight:500">Un conseiller vous rappelle sous 24 h ouvrées</span><span style="display:block;margin-top:1.33px;font-size:15px;color:#5A6B84">Pour cadrer vos besoins et fixer un créneau.</span></div>
+        <div data-tlstep="1"><i></i><span style="display:block;font-size:16.5px;font-weight:500">Démonstration de 30 minutes</span><span style="display:block;margin-top:1.33px;font-size:15px;color:#5A6B84">Sur vos modules prioritaires, en visio ou sur place.</span></div>
+        <div data-tlstep="1"><i></i><span style="display:block;font-size:16.5px;font-weight:500">Estimation chiffrée en FCFA</span><span style="display:block;margin-top:1.33px;font-size:15px;color:#5A6B84">Sans engagement de votre part.</span></div>
+      </div>
+      <p style="margin-top:9.33px;font-size:15px;color:#5A6B84">Ou appelez le <span style="color:#10306F;font-family:'IBM Plex Mono',monospace">+229 95 57 51 51</span></p>
+    </div>
+    <div style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:28px">
+      <sc-if value="{{ demoSent }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:jFade 200ms ease-out">
+          <svg data-check="1" width="46" height="46" viewBox="0 0 46 46" aria-hidden="true" style="display:block;margin-bottom:4.67px"><circle cx="23" cy="23" r="21" fill="rgba(31,157,107,0.12)"></circle><path d="M14 23.5 L20.5 30 L32 18" fill="none" stroke="#1F9D6B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <h2 style="font-size:24px;font-weight:600">Demande enregistrée.</h2>
+          <p style="margin-top:4px;font-size:16px;line-height:1.6;color:#5A6B84">Nous vous rappelons sous 24 heures ouvrées.</p>
+          <button onClick="{{ resetDemo }}" style="margin-top:6.67px;background:#FFFFFF;border:1px solid #10306F;border-radius:4px;padding:11px 18px;font-size:15px">Envoyer une autre demande</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ demoOpen }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submitDemo }}">
+        <h2 style="font-size:22px;font-weight:600">Demander une démo</h2>
+        <div style="margin-top:6.67px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;column-gap:22px">
+          <label style="display:block;font-size:14px;color:#10306F">Nom et prénom
+            <input required="required" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit" data-field="1">
+          </label>
+          <label style="display:block;font-size:14px;color:#10306F">Structure
+            <input required="required" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit" data-field="1">
+          </label>
+          <label style="display:block;font-size:14px;color:#10306F">Email professionnel
+            <input type="email" required="required" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit" data-field="1">
+          </label>
+          <label style="display:block;font-size:14px;color:#10306F">Téléphone
+            <input placeholder="+229 …" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit" data-field="1">
+          </label>
+        </div>
+        <label style="display:block;margin-top:5.33px;font-size:14px;color:#10306F">Effectif
+          <select data-field="1" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit;background:#FFFFFF">
+            <option>1 à 9</option><option>10 à 49</option><option>50 à 249</option><option>250 et plus</option>
+          </select>
+        </label>
+        <span style="display:block;margin-top:6px;font-size:14px">Modules qui vous intéressent</span>
+        <div style="margin-top:3.33px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ moduleChips }}" as="c" hint-placeholder-count="8">
+            <button type="button" onClick="{{ c.toggle }}" data-chip="{{ c.active }}" style="border-radius:999px;padding:8px 13px;font-size:14px;border:1px solid #C3CBD8;background:#FFFFFF;color:#10306F">
+              <sc-if value="{{ c.on }}" hint-placeholder-val="{{ false }}"><span style="color:#EF4600">✓ </span></sc-if>{{ c.label }}
+            </button>
+          </sc-for>
+        </div>
+        <label style="display:block;margin-top:6px;font-size:14px;color:#10306F">Votre besoin en quelques mots
+          <textarea rows="4" data-field="1" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit;resize:vertical" data-field="1"></textarea>
+        </label>
+        <button type="submit" style="margin-top:6.67px;background:#EF4600;color:#FFFFFF;border:0;border-radius:4px;padding:13px 20px;font-size:16px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#C43600">Demander une démo</button>
+        <p style="margin-top:4px;font-size:13px;color:#5A6B84">Vos coordonnées servent uniquement à traiter cette demande.</p>
+      </form>
+      </sc-if>
+    </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isHelp }}" hint-placeholder-val="{{ false }}">
+  <div data-page="{{ pageAlt }}">
+    <section data-band="1" style="padding:12.8px 24px">
+      <span data-grid-bg="1" aria-hidden="true"></span>
+      <span data-aura="1" aria-hidden="true" style="width:340px;height:340px;background:rgba(239,70,0,0.14);top:-120px;right:14%"></span>
+      <div style="position:relative;max-width:1640px;margin:0 auto">
+        <h1 style="font-size:clamp(30px,3.2vw,46px);font-weight:700"><span data-word="1" style="animation-delay:60ms">Aide</span> <span data-word="1" style="animation-delay:140ms">et</span> <span data-word="1" data-shimmer="1" style="animation-delay:220ms,0ms;animation-name:jWord,jShimmer;animation-duration:760ms,6.5s;animation-timing-function:cubic-bezier(0.16,1,0.3,1),linear;animation-iteration-count:1,infinite;animation-fill-mode:backwards,none">support</span></h1>
+        <p style="margin-top:4.67px;font-size:18px;color:#5A6B84;animation:jRise 680ms cubic-bezier(0.16,1,0.3,1) 220ms backwards">Documentation par module, réponses courtes, contact direct.</p>
+        <div style="margin-top:8.67px;display:flex;gap:10px;flex-wrap:wrap">
+          <input placeholder="Rechercher dans l'aide" style="flex:1;min-width:220px;padding:14px 16px;border:1px solid #C3CBD8;border-radius:4px;font-size:16px;font-family:inherit;background:#FFFFFF" data-field="1">
+          <button style="background:#10306F;color:#FFFFFF;border:0;border-radius:4px;padding:14px 20px;font-size:15px">Rechercher</button>
+        </div>
+      </div>
+    </section>
+    <section style="max-width:2800px;margin:0 auto;padding:14.4px 24px">
+      <h2 data-reveal="1" style="font-size:clamp(26px,2.8vw,34px);font-weight:600">Parcourir par sujet</h2>
+      <div style="margin-top:9.33px;display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:20px;column-gap:5%">
+        <sc-for list="{{ helpCats }}" as="h" hint-placeholder-count="6">
+          <div data-card="1" data-tilt="1" data-reveal="1" data-anim="zoom" style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:14px;padding:22px">
+            <span data-mark="1" style="width:38px;height:38px;border-radius:9px;background:#F4F6F9;color:#EF4600;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px">{{ h.num }}</span>
+            <h3 style="margin-top:4.67px;font-size:19px;font-weight:600">{{ h.title }}</h3>
+            <div style="margin-top:3.33px;display:grid;gap:4px">
+              <sc-for list="{{ h.articles }}" as="a" hint-placeholder-count="3">
+                <a href="#article" data-row="1" style="display:flex;align-items:center;gap:7px;padding:4px 0;font-size:15px;color:#5A6B84"><span data-arrow="1" style="color:#EF4600">→</span>{{ a.label }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div data-faq-block="1">
+        <h2 data-reveal="1" style="font-size:clamp(26px,2.8vw,34px);font-weight:600">Les questions qui reviennent</h2>
+        <div style="margin-top:6.67px;max-width:1093px;border-top:1px solid #E4E8EF">
+          <sc-for list="{{ faq }}" as="q" hint-placeholder-count="4">
+            <div data-acc="1">
+              <button onClick="{{ q.toggle }}" data-acc-btn="1" data-faq="1" data-open="{{ q.openAttr }}">
+                <span>{{ q.question }}</span><span data-sign="1" style="color:#EF4600;font-size:22px;line-height:1">+</span>
+              </button>
+              <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+                <p style="padding:0 4px 20px;font-size:16px;line-height:1.6;color:#5A6B84;max-width:70ch;animation:jRise 360ms cubic-bezier(0.16,1,0.3,1)">{{ q.answer }}</p>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top:21.33px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;column-gap:5%;align-items:start">
+        <div>
+          <h2 style="font-size:30px;font-weight:600">Écrire au support</h2>
+          <p style="margin-top:4px;font-size:17px;line-height:1.6;color:#5A6B84;max-width:48ch">Réponse sous 4 heures ouvrées pour les clients sous contrat.</p>
+          <div style="margin-top:8px;font-size:16px;line-height:1.9">
+            <div>Téléphone <span style="font-family:'IBM Plex Mono',monospace">+229 95 57 51 51</span></div>
+            <div>Email <a href="mailto:contact@jilmondeconsulting.com">contact@jilmondeconsulting.com</a></div>
+            <div style="color:#5A6B84">Abomey‑Calavi, Agla · Bénin</div>
+          </div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E4E8EF;border-radius:12px;padding:26px">
+          <sc-if value="{{ helpSent }}" hint-placeholder-val="{{ false }}">
+            <div style="animation:jFade 200ms ease-out">
+              <svg data-check="1" width="40" height="40" viewBox="0 0 46 46" aria-hidden="true" style="display:block;margin-bottom:4px"><circle cx="23" cy="23" r="21" fill="rgba(31,157,107,0.12)"></circle><path d="M14 23.5 L20.5 30 L32 18" fill="none" stroke="#1F9D6B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <h3 style="font-size:20px;font-weight:600">Ticket ouvert.</h3>
+              <p style="margin-top:3.33px;font-size:16px;color:#5A6B84">Vous recevez une confirmation par email.</p>
+              <button onClick="{{ resetHelp }}" style="margin-top:6px;background:#FFFFFF;border:1px solid #10306F;border-radius:4px;padding:11px 18px;font-size:15px">Nouvelle demande</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ helpOpen }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitHelp }}">
+            <h3 style="font-size:20px;font-weight:600">Ouvrir un ticket</h3>
+            <label style="display:block;margin-top:5.33px;font-size:14px">Email
+              <input type="email" required="required" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit" data-field="1">
+            </label>
+            <label style="display:block;margin-top:4.67px;font-size:14px">Module concerné
+              <select data-field="1" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit;background:#FFFFFF">
+                <sc-for list="{{ modules }}" as="m" hint-placeholder-count="8"><option>{{ m.title }}</option></sc-for>
+              </select>
+            </label>
+            <label style="display:block;margin-top:4.67px;font-size:14px">Urgence
+              <select data-field="1" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit;background:#FFFFFF">
+                <option>Bloquant</option><option>Gênant</option><option>Question</option>
+              </select>
+            </label>
+            <label style="display:block;margin-top:4.67px;font-size:14px">Décrivez le problème
+              <textarea rows="4" required="required" data-field="1" style="margin-top:2px;width:100%;padding:11px 12px;border:1px solid #C3CBD8;border-radius:8px;font-size:15px;font-family:inherit;resize:vertical"></textarea>
+            </label>
+            <button type="submit" style="margin-top:6px;background:#EF4600;color:#FFFFFF;border:0;border-radius:4px;padding:13px 20px;font-size:16px;font-weight:500;transition:background 150ms ease-out" style-hover="background:#C43600">Envoyer la demande</button>
+          </form>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  </main>
+
+  <footer style="background:#10306F;color:#FFFFFF;padding:64px 0 28px">
+    <div style="max-width:2800px;margin:0 auto;padding:0px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:36px;column-gap:5%">
+      <div>
+        <img src="jilms-logo.png" alt="Jil-MS" width="127" height="44" style="display:block;height:34px;width:auto">
+        <p style="margin-top:4px;font-size:15px;line-height:1.6;color:#C9D2E0;max-width:30ch">Le progiciel de gestion conçu par Jilmonde Consulting.</p>
+      </div>
+      <div>
+        <span style="font-size:14px;color:#8E9CB4">Produit</span>
+        <div style="margin-top:4px;display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+          <button onClick="{{ goModules }}" data-flink="1" style="background:none;border:0;padding:0;color:#FFFFFF;font-size:15px">Modules</button>
+          <button onClick="{{ goPricing }}" data-flink="1" style="background:none;border:0;padding:0;color:#FFFFFF;font-size:15px">Tarification</button>
+          <button onClick="{{ goDemo }}" data-flink="1" style="background:none;border:0;padding:0;color:#FFFFFF;font-size:15px">Demander une démo</button>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:14px;color:#8E9CB4">Assistance</span>
+        <div style="margin-top:4px;display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+          <button onClick="{{ goHelp }}" data-flink="1" style="background:none;border:0;padding:0;color:#FFFFFF;font-size:15px">Centre d'aide</button>
+          <a href="mailto:contact@jilmondeconsulting.com" data-flink="1" style="color:#FFFFFF;font-size:15px">Écrire au support</a>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:14px;color:#8E9CB4">Contact</span>
+        <p style="margin-top:4px;font-size:15px;line-height:1.7;color:#C9D2E0">Abomey‑Calavi, Bénin<br>Ouagadougou, Burkina Faso<br>Dakar, Sénégal<br><span style="font-family:'IBM Plex Mono',monospace">+229 95 57 51 51</span></p>
+      </div>
+    </div>
+    <div style="max-width:2800px;margin:24px auto 0;padding:13.33px 24px 0px;border-top:1px solid rgba(255,255,255,0.16);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:14px;color:#8E9CB4">
+      <span>Jilmonde Consulting SARL — {{ year }}</span>
+      <span style="display:flex;gap:18px"><a href="#legal" style="color:#8E9CB4">Mentions légales</a><a href="#privacy" style="color:#8E9CB4">Confidentialité</a><a href="#security" style="color:#8E9CB4">Sécurité</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;showProof&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
+const MODULES = [
+  { slug: "commerciale", tab: "Commercial", tag: "01", family: "Fonctions supports", title: "Gestion commerciale",
+    short: "Devis, commandes, factures normalisées e‑MeCEF et relances clients.",
+    long: "Du devis au règlement : commandes, livraisons, factures certifiées e‑MeCEF, avoirs, relances et suivi des encours clients.",
+    chips: ["Devis et commandes", "Facturation e‑MeCEF", "Relances", "Encours clients"],
+    screenLeft: "Tiers", screenRight: "Factures du mois",
+    tree: ["Clients", "Prospects", "Fournisseurs", "Tarifs", "Zones"],
+    colA: "Pièce", colB: "Client", colC: "Montant",
+    rows: [["FA‑2026‑0412", "Adjagbé Impr.", "1 250 000"], ["FA‑2026‑0413", "Ganvié Négoce", "480 000"], ["DE‑2026‑0088", "Atlantique Travaux", "3 100 000"], ["AV‑2026‑0009", "Adjagbé Impr.", "-75 000"]],
+    features: [
+      ["Facturation normalisée", "Transmission e‑MeCEF à la DGI et archivage des reçus."],
+      ["Catalogue et tarifs", "Grilles par client, remises, prix par zone de livraison."],
+      ["Encours et relances", "Balance âgée, relances par email et suivi des promesses."],
+      ["Multi‑sites", "Ventes par agence ou dépôt, consolidation automatique."],
+      ["Mobile Money", "Encaissements MTN et Moov rapprochés aux factures."],
+      ["Écritures automatiques", "Chaque pièce validée génère son écriture comptable."]
+    ] },
+  { slug: "comptable", tab: "Comptabilité", tag: "02", family: "Fonctions supports", title: "Gestion comptable et financière",
+    short: "Plan SYSCOHADA, multi‑devises, rapprochement bancaire et états normalisés.",
+    long: "Tenue complète en SYSCOHADA ou SYCEBNL, multi‑devises et multi‑exercices, avec clôture assistée et états financiers normalisés.",
+    chips: ["SYSCOHADA / SYCEBNL", "Multi‑devises", "Rapprochement", "Clôture"],
+    screenLeft: "Plan comptable", screenRight: "Journal des ventes",
+    tree: ["1 Capitaux", "2 Immobilisations", "3 Stocks", "4 Tiers", "7 Produits"],
+    colA: "Compte", colB: "Débit", colC: "Crédit",
+    rows: [["411 Clients", "1 250 000", "—"], ["701 Ventes", "—", "1 059 322"], ["4431 TVA collectée", "—", "190 678"], ["Total", "1 250 000", "1 250 000"]],
+    features: [
+      ["Plan SYSCOHADA et SYCEBNL", "Plan adapté à votre forme juridique dès l'installation."],
+      ["Multi‑devises", "Comptabilité par projet ou programme, écarts de change calculés."],
+      ["Rapprochement bancaire", "Relevés bancaires et Mobile Money rapprochés automatiquement."],
+      ["États normalisés", "Bilan, compte de résultat, TAFIRE, notes annexes."],
+      ["Immobilisations", "Amortissements calculés et écritures de dotation générées."],
+      ["Export expert‑comptable", "Balance et grand livre exportables en un clic."]
+    ] },
+  { slug: "budget", tab: "Budget", tag: "03", family: "Fonctions supports", title: "Gestion du budget et du contrôle interne",
+    short: "Budgets par direction, engagements, disponible en temps réel.",
+    long: "Élaboration, engagement et exécution budgétaires avec contrôle de disponibilité avant chaque dépense.",
+    chips: ["Élaboration", "Engagements", "Disponible", "Contrôle interne"],
+    screenLeft: "Directions", screenRight: "Exécution budgétaire",
+    tree: ["Direction générale", "Finances", "Production", "Commercial", "RH"],
+    colA: "Ligne", colB: "Dotation", colC: "Disponible",
+    rows: [["Fournitures", "12 000 000", "4 350 000"], ["Carburant", "6 000 000", "1 200 000"], ["Formation", "9 500 000", "9 500 000"], ["Maintenance", "3 000 000", "-150 000"]],
+    features: [
+      ["Élaboration guidée", "Cadrage par direction, versions et arbitrages tracés."],
+      ["Contrôle a priori", "Aucune dépense engagée au‑delà du disponible."],
+      ["Engagements", "Réservation des crédits dès le bon de commande."],
+      ["Analytique", "Suivi par projet, programme ou bailleur."],
+      ["Alertes de seuil", "Notification à 80 % et 100 % de consommation."],
+      ["Reporting", "Taux d'exécution par direction et par période."]
+    ] },
+  { slug: "ged", tab: "Courriers", tag: "04", family: "Fonctions supports", title: "Gestion des courriers et documents",
+    short: "Courrier entrant et sortant, imputation, archivage indexé.",
+    long: "Enregistrement du courrier, imputation aux directions, circuits de validation et archivage électronique indexé.",
+    chips: ["Courrier entrant", "Imputation", "Validation", "Archivage"],
+    screenLeft: "Bannettes", screenRight: "Courriers à traiter",
+    tree: ["Arrivée", "Imputés", "En validation", "Traités", "Archives"],
+    colA: "Référence", colB: "Objet", colC: "État",
+    rows: [["CE‑2026‑0231", "Demande de devis", "Imputé"], ["CE‑2026‑0232", "Relance DGI", "À traiter"], ["CS‑2026‑0118", "Réponse marché", "Signé"], ["CE‑2026‑0233", "Facture reçue", "Transmis"]],
+    features: [
+      ["Registre unique", "Numérotation continue du courrier entrant et sortant."],
+      ["Imputation", "Affectation à une direction avec délai de traitement."],
+      ["Circuits de validation", "Visas successifs, historique horodaté."],
+      ["Numérisation", "Pièces jointes indexées et recherche plein texte."],
+      ["Droits d'accès", "Confidentialité par direction et par niveau."],
+      ["Liaison métier", "Un courrier se rattache à une facture ou un marché."]
+    ] },
+  { slug: "rh", tab: "RH et paie", tag: "05", family: "Fonctions supports", title: "Gestion des ressources humaines et paie",
+    short: "Dossiers agents, congés, bulletins, déclarations sociales.",
+    long: "Dossiers du personnel, temps et congés, paie mensuelle et déclarations Ganvié Négoce et fiscales.",
+    chips: ["Dossiers agents", "Congés", "Paie", "Déclarations"],
+    screenLeft: "Effectif", screenRight: "Paie de mars",
+    tree: ["Cadres", "Agents", "Contractuels", "Stagiaires", "Sorties"],
+    colA: "Agent", colB: "Brut", colC: "Net",
+    rows: [["A. Dossou", "450 000", "372 400"], ["M. Kponou", "310 000", "262 100"], ["S. Ndiaye", "620 000", "498 900"], ["Total", "1 380 000", "1 133 400"]],
+    features: [
+      ["Dossier agent", "Contrats, diplômes, sanctions, historique de carrière."],
+      ["Temps et congés", "Demandes, soldes et validation hiérarchique."],
+      ["Paie", "Rubriques paramétrables, rappels et régularisations."],
+      ["Déclarations", "CNSS, ITS et états annuels préremplis."],
+      ["Bulletins", "Diffusion par email ou espace agent."],
+      ["Comptabilisation", "Journal de paie déversé en comptabilité."]
+    ] },
+  { slug: "stocks", tab: "Stocks", tag: "06", family: "Fonctions supports", title: "Gestion des stocks",
+    short: "Multi‑dépôts, valorisation, inventaires et seuils d'alerte.",
+    long: "Entrées, sorties et transferts multi‑dépôts, valorisation CMUP, inventaires tournants et seuils de réapprovisionnement.",
+    chips: ["Multi‑dépôts", "Valorisation CMUP", "Inventaires", "Seuils"],
+    screenLeft: "Dépôts", screenRight: "Mouvements du jour",
+    tree: ["Agla", "Cotonou port", "Ouagadougou", "Dakar", "Retours"],
+    colA: "Article", colB: "Sortie", colC: "Reste",
+    rows: [["Ramettes A4", "40", "118"], ["Reliure", "250", "32"], ["Encre offset", "12", "6"], ["Cartons", "80", "540"]],
+    features: [
+      ["Multi‑dépôts", "Stocks par site, transferts et bons de mouvement."],
+      ["Valorisation", "CMUP ou FIFO, valeur de stock à toute date."],
+      ["Inventaires", "Comptages tournants, écarts justifiés et validés."],
+      ["Seuils d'alerte", "Propositions de réapprovisionnement automatiques."],
+      ["Traçabilité", "Lots, numéros de série et dates de péremption."],
+      ["Lien comptable", "Écritures de variation de stock générées."]
+    ] },
+  { slug: "juridique", tab: "Juridique", tag: "07", family: "Fonctions métiers", title: "Gestion juridique",
+    short: "Contrats, échéances, contentieux et registre des actes.",
+    long: "Suivi des contrats et de leurs échéances, gestion des dossiers de contentieux et registre des actes de la structure.",
+    chips: ["Contrats", "Échéances", "Contentieux", "Actes"],
+    screenLeft: "Dossiers", screenRight: "Échéances à 30 jours",
+    tree: ["Contrats", "Baux", "Assurances", "Contentieux", "Actes"],
+    colA: "Dossier", colB: "Échéance", colC: "État",
+    rows: [["Bail Agla", "12/04/2026", "À renouveler"], ["Assurance flotte", "30/04/2026", "En cours"], ["Litige fournisseur", "—", "Instruction"], ["Marché ONIP", "15/06/2026", "En cours"]],
+    features: [
+      ["Répertoire des contrats", "Parties, montants, durées et clauses clés."],
+      ["Alertes d'échéance", "Rappels avant renouvellement ou résiliation."],
+      ["Contentieux", "Étapes de procédure, pièces et frais engagés."],
+      ["Registre des actes", "PV, délibérations et décisions archivés."],
+      ["Modèles", "Génération de contrats à partir de gabarits."],
+      ["Lien budgétaire", "Engagements juridiques visibles côté budget."]
+    ] },
+  { slug: "elearning", tab: "E‑Learning", tag: "08", family: "Fonctions métiers", title: "E‑Learning",
+    short: "Parcours de formation, sessions, évaluations et attestations.",
+    long: "Catalogue de cours, parcours par métier, sessions présentielles ou en ligne, évaluations et attestations.",
+    chips: ["Catalogue", "Parcours", "Évaluations", "Attestations"],
+    screenLeft: "Catalogue", screenRight: "Sessions ouvertes",
+    tree: ["Comptabilité", "Commercial", "RH", "Bureautique", "Conformité"],
+    colA: "Session", colB: "Places", colC: "Statut",
+    rows: [["SYSCOHADA niveau 1", "12 / 20", "Ouverte"], ["Facturation e‑MeCEF", "20 / 20", "Complète"], ["Paie et CNSS", "5 / 15", "Ouverte"], ["Stocks avancé", "0 / 15", "À venir"]],
+    features: [
+      ["Catalogue de cours", "Modules vidéo, documents et quiz par métier."],
+      ["Parcours obligatoires", "Affectation par poste et suivi d'avancement."],
+      ["Sessions", "Présentiel ou en ligne, inscriptions et places."],
+      ["Évaluations", "Notes, seuils de réussite et rattrapages."],
+      ["Attestations", "Génération automatique après validation."],
+      ["Lien RH", "Formations rattachées au dossier de l'agent."]
+    ] }
+];
+
+const PLANS = [
+  { name: "Essentielle (Starter)", for: "TPE et jeunes structures", price: "19 700 FCFA", unit: "par mois, jusqu'à 5 utilisateurs\u00A0·\u00A0≈\u00A030\u00A0€",
+    priceYear: "200 940 FCFA", unitYear: "par an, soit 16 745 FCFA par mois\u00A0·\u00A0≈\u00A025,50\u00A0€", cta: "Démarrer maintenant", recommended: false,
+    features: ["Gestion commerciale", "Facturation e‑MeCEF", "Gestion des stocks", "Comptabilité de base", "1 site", "Support par email", "Mises à jour incluses", "Sauvegarde quotidienne"] },
+  { name: "Standard (Business)", for: "PME multi‑sites", price: "32 800 FCFA", unit: "par mois, de 6 à 20 utilisateurs\u00A0·\u00A0≈\u00A050\u00A0€",
+    priceYear: "334 560 FCFA", unitYear: "par an, soit 27 880 FCFA par mois\u00A0·\u00A0≈\u00A042,50\u00A0€", cta: "Démarrer maintenant", recommended: true,
+    features: ["Tout l'Essentiel", "Comptabilité complète SYSCOHADA", "RH et paie", "Budget et contrôle interne", "Multi‑sites et multi‑devises", "Rapprochement Mobile Money", "Support téléphonique", "Formation initiale incluse"] },
+  { name: "Premium (Entreprise)", for: "Grandes structures et secteur public", price: "52 500 FCFA", unit: "par mois, 20 utilisateurs et plus\u00A0·\u00A0≈\u00A080\u00A0€",
+    priceYear: "535 500 FCFA", unitYear: "par an, soit 44 625 FCFA par mois\u00A0·\u00A0≈\u00A068\u00A0€", cta: "Démarrer maintenant", recommended: false,
+    features: ["Tous les modules", "Gestion juridique et GED", "E‑Learning", "Marchés publics", "Hébergement dédié ou sur site", "Reprise de données", "Interlocuteur dédié", "Engagement de service"] },
+  { name: "Sur-Mesure (Corporate)", for: "Grands comptes et organisations", price: "Sur devis", unit: "utilisateurs illimités\u00A0·\u00A0sur devis\u00A0·\u00A0≈\u00A00\u00A0€",
+    priceYear: "Sur devis", unitYear: "utilisateurs illimités\u00A0·\u00A0sur devis\u00A0·\u00A0≈\u00A00\u00A0€", cta: "Parler à un conseiller", recommended: false,
+    features: ["Tout Premium", "Intégrations bancaires et ERP", "SLA et support VIP", "Accompagnement et formation dédiés", "Hébergement dédié ou sur site", "Reprise de données", "Interlocuteur unique", "Engagement de service"] }
+];
+
+const COMPARE = [
+  ["Gestion commerciale", "✓", "✓", "✓", "✓"],
+  ["Gestion des stocks", "✓", "✓", "✓", "✓"],
+  ["Comptable et financière", "Base", "✓", "✓", "✓"],
+  ["Ressources humaines et paie", "—", "✓", "✓", "✓"],
+  ["Budget et contrôle interne", "—", "✓", "✓", "✓"],
+  ["Courriers et documents", "—", "Option", "✓", "✓"],
+  ["Gestion juridique", "—", "Option", "✓", "✓"],
+  ["E‑Learning", "—", "Option", "✓", "✓"],
+  ["Multi‑sites", "—", "✓", "✓", "✓"],
+  ["Marchés publics", "—", "—", "✓", "✓"],
+  ["Hébergement sur site", "—", "—", "✓", "✓"],
+  ["Intégrations bancaires et ERP", "—", "—", "—", "✓"],
+  ["SLA et support VIP", "—", "—", "—", "✓"]
+];
+
+const HELP = [
+  ["Démarrer", ["Créer votre espace .jilms.bj", "Paramétrer votre plan comptable", "Importer vos clients et articles"]],
+  ["Facturation e‑MeCEF", ["Saisir une facture normalisée", "Corriger un reçu rejeté", "Éditer un avoir"]],
+  ["Comptabilité", ["Rapprocher un relevé bancaire", "Clôturer un exercice", "Exporter la balance"]],
+  ["Stocks", ["Lancer un inventaire tournant", "Transférer entre deux dépôts", "Régler un écart de stock"]],
+  ["Paie", ["Préparer la paie du mois", "Déclarer à la CNSS", "Diffuser les bulletins"]],
+  ["Compte et sécurité", ["Gérer les utilisateurs et droits", "Activer la double authentification", "Consulter le journal d'audit"]]
+];
+
+const FAQ = [
+  ["Peut‑on démarrer avec un seul module ?", "Oui. Vous activez les modules dont vous avez besoin et ajoutez les autres plus tard, sans migration."],
+  ["La reprise de nos données est‑elle possible ?", "Oui, à partir d'Excel ou de votre logiciel actuel : tiers, articles, balance d'ouverture et historiques."],
+  ["Jil-MS fonctionne‑t‑il hors connexion ?", "L'application est web. En cas de coupure, la saisie locale est conservée puis synchronisée."],
+  ["Où sont hébergées nos données ?", "Hébergement mutualisé par défaut, dédié ou sur vos serveurs pour l'offre Sur-Mesure."]
+];
+
+const PRICING_FAQ = [
+  ["Comment démarre la procédure ?", "Vous remplissez le formulaire de démonstration ou appelez le +229 95 57 51 51. Un conseiller vous rappelle sous 24 heures ouvrées pour qualifier votre besoin, vos modules et votre nombre d'utilisateurs."],
+  ["Que voit‑on pendant la démonstration ?", "Une démonstration de 30 minutes sur vos propres données ou sur un jeu d'essai, centrée sur les modules prioritaires. Elle se fait en visio ou sur place, sans engagement."],
+  ["Comment reçoit‑on le devis ?", "À l'issue de la démonstration, nous remettons une proposition écrite : modules retenus, utilisateurs, hébergement, reprise de données, formation et support. Les montants sont en FCFA, en mensuel ou en annuel."],
+  ["Quelles informations préparer ?", "Un référent interne, la liste des utilisateurs et de leurs rôles, vos fichiers clients et articles, la balance d'ouverture et un extrait de vos processus actuels. Nous complétons le cadrage avec vous."],
+  ["Comment se passe le paramétrage ?", "Nous configurons votre plan comptable, vos taxes, vos documents, vos circuits de validation et vos droits d'accès. Le paramétrage est testé sur vos données avant la mise en service."],
+  ["La reprise de données est‑elle incluse ?", "Elle est prévue dans les offres Premium et Sur-Mesure, et sur devis pour les autres formules. Nous importons les tiers, articles, soldes d'ouverture et historiques utiles, puis nous contrôlons les totaux avec vous."],
+  ["Comment sont formées les équipes ?", "La formation initiale est prévue selon la formule. Elle est organisée par profil — utilisateurs, validateurs, administrateurs — sur place ou à distance, avec un accompagnement au démarrage."],
+  ["Quand l'ERP est‑il accessible ?", "Après la recette, c'est-à-dire la validation des scénarios clés et des soldes repris, nous planifions la mise en service. Le support et les mises à jour restent inclus selon votre contrat."]
+];
+
+const WHY = [
+  ["Conseil en organisation et solution ERP intégrée",
+   "Nous vous accompagnons dans votre transformation digitale jusqu'au déploiement d'un ERP sur mesure : CRM, ventes, stocks, comptabilité et ressources humaines sur une seule plateforme.",
+   "Demander un audit"],
+  ["L'expertise conseil au service de votre performance",
+   "Audit stratégique et ingénierie logicielle associés pour concevoir une solution adaptée à vos processus métier, et non l'inverse.",
+   "Voir la démo"],
+  ["Une seule équipe, du diagnostic à la solution",
+   "Jilmonde Consulting réunit conseil en organisation et développement logiciel : l'ERP est conçu à partir d'une connaissance approfondie de votre activité.",
+   "Parler à un consultant"]
+];
+
+const QUOTES = [
+  { text: "Nos factures partent certifiées du premier coup, et la comptabilité se remplit toute seule.",
+    author: "Adjoa Kpossou", role: "Directrice, Adjagbé Impressions (exemple)", initials: "AK",
+    metric: "3 jours", metricLabel: "gagnés à chaque clôture mensuelle",
+    modules: ["Gestion commerciale", "Comptable et financière", "Stocks"] },
+  { text: "Quatre dépôts et trois villes suivis depuis le même écran, sans double saisie.",
+    author: "Ibrahim Sawadogo", role: "Responsable logistique, Ganvié Négoce (exemple)", initials: "IS",
+    metric: "− 40 %", metricLabel: "d'écarts d'inventaire en un an",
+    modules: ["Stocks", "Gestion commerciale", "Budget"] },
+  { text: "La paie de 180 agents est bouclée en une matinée, déclarations comprises.",
+    author: "Fatou Diallo", role: "DRH, Atlantique Travaux (exemple)", initials: "FD",
+    metric: "180", metricLabel: "bulletins édités en une matinée",
+    modules: ["RH et paie", "Comptable et financière", "GED"] }
+];
+
+const FAMILIES = ["Tous", "Fonctions supports", "Fonctions métiers"];
+
+const RAIL_A = [
+  ["VENTES", "Ressaisir une facture en comptabilité", "L'écriture part du journal au moment de la validation."],
+  ["DGI", "Recopier les factures pour la déclaration", "Les pièces normalisées sont transmises en temps réel."],
+  ["STOCKS", "Tenir un tableur par dépôt", "Entrées, sorties et transferts dans un seul registre."],
+  ["PAIE", "Recalculer les cotisations chaque mois", "Rubriques paramétrées une fois, appliquées ensuite."],
+  ["BANQUE", "Pointer les relevés ligne à ligne", "Rapprochement automatique, écarts isolés."],
+  ["BUDGET", "Vérifier le disponible par téléphone", "Le contrôle se fait avant l'engagement."]
+];
+
+const RAIL_B = [
+  ["COURRIER", "Chercher un courrier dans un classeur", "Registre indexé et recherche plein texte."],
+  ["MOMO", "Rapprocher les paiements MTN à la main", "Encaissements reliés aux factures concernées."],
+  ["CONGÉS", "Suivre les congés sur un cahier", "Demandes, soldes et validations en ligne."],
+  ["CLÔTURE", "Reconstituer la balance en fin d'année", "Balance et états disponibles à toute date."],
+  ["CONTRATS", "Découvrir une échéance trop tard", "Alertes avant renouvellement ou résiliation."],
+  ["FORMATION", "Relancer les agents un par un", "Parcours affectés par poste, avancement suivi."]
+];
+
+const PARTNERS = [
+  ["Comité National Olympique du Bénin", "img/logo-benin.png"],
+  ["Bibliothèque nationale du Bénin", "img/logo-bnb.png"],
+  ["Office du Baccalauréat", "img/logo-bac.png"],
+  ["Cellule des Voyages Officiels", "img/logo-cvo.png"],
+  ["ONIP", "img/logo-onip.png"],
+  ["Caisse des Dépôts et Consignations du Bénin", "img/logo-cdcb.png"]
+];
+
+class Component extends DCLogic {
+  state = { page: "home", module: "comptable", faqOpen: 0, pricingFaqOpen: 0, chips: {}, demoSent: false, helpSent: false, family: "Tous", moduleFamily: "Tous", quote: 0, period: "month", showTab: 0, tabTick: 0, nav: 0 };
+
+  go(page, module) {
+    this.setState(st => ({ page, module: module || st.module, nav: st.nav + 1 }));
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }
+
+  setModuleFamily(label) {
+    const first = label === "Tous" ? -1 : MODULES.findIndex(m => m.family === label);
+    this.setState(st => ({ moduleFamily: label, showTab: first >= 0 ? first : st.showTab, tabTick: st.tabTick + 1 }));
+  }
+
+  initPresentationVideo() {
+    if (typeof document === "undefined") return;
+    document.querySelectorAll('video[data-presentation]').forEach(v => {
+      if (v.dataset.jilmsInit) return;
+      v.dataset.jilmsInit = "1";
+      v.muted = true;
+      v.defaultMuted = true;
+      v.controls = true;
+      v.loop = true;
+      const play = () => {
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {});
+      };
+      if (v.readyState >= 2) play();
+      else v.addEventListener("loadeddata", play, { once: true });
+    });
+  }
+
+  componentDidMount() {
+    this.observe();
+    this.initPresentationVideo();
+    this.onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = 0;
+        const y = window.scrollY || 0;
+        const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const vh = window.innerHeight;
+        document.querySelectorAll("[data-pxy]").forEach(n => {
+          const f = parseFloat(n.getAttribute("data-pxy")) || 0;
+          const r = n.getBoundingClientRect();
+          n.style.setProperty("--pxy", (((r.top + r.height / 2) - vh / 2) * -f).toFixed(1) + "px");
+        });
+        const h = document.querySelector("[data-header]");
+        if (h) h.setAttribute("data-scrolled", y > 8 ? "1" : "0");
+        const p = document.querySelector("[data-progress]");
+        if (p) p.style.setProperty("--p", Math.min(1, y / max).toFixed(4));
+      });
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onScroll();
+
+    this.reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    this.onMove = ev => {
+      if (this.reduced || this._mraf) return;
+      this._mraf = requestAnimationFrame(() => {
+        this._mraf = 0;
+        const px = (ev.clientX / window.innerWidth - 0.5);
+        const py = (ev.clientY / window.innerHeight - 0.5);
+        document.querySelectorAll("[data-parallax]").forEach(n => {
+          const sy = parseFloat(n.style.getPropertyValue("--pxy")) || 0;
+          n.style.transform = "translate3d(" + (-px * 22).toFixed(1) + "px," + ((-py * 16) + sy).toFixed(1) + "px,0)";
+        });
+        document.querySelectorAll("[data-dark]").forEach(n => {
+          const r = n.getBoundingClientRect();
+          n.style.setProperty("--mx", (ev.clientX - r.left) + "px");
+          n.style.setProperty("--my", (ev.clientY - r.top) + "px");
+        });
+        const t = ev.target && ev.target.closest ? ev.target.closest("[data-tilt]") : null;
+        if (this._tilt && this._tilt !== t) { this._tilt.style.transform = ""; this._tilt = null; }
+        if (t) {
+          const r = t.getBoundingClientRect();
+          const rx = ((ev.clientY - r.top) / r.height - 0.5) * -9;
+          const ry = ((ev.clientX - r.left) / r.width - 0.5) * 11;
+          t.style.transform = "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateY(-6px)";
+          this._tilt = t;
+        }
+      });
+    };
+    window.addEventListener("pointermove", this.onMove, { passive: true });
+
+    this.countUp();
+    this.timer = setInterval(() => {
+      if (this.paused || this.state.page !== "home") return;
+      this.setState(st => ({ quote: (st.quote + 1) % QUOTES.length }));
+    }, 7000);
+    this.tabTimer = setInterval(() => {
+      if (this.tabPaused || this.state.page !== "home") return;
+      this.setState(st => ({ showTab: (st.showTab + 1) % 8, tabTick: st.tabTick + 1 }));
+    }, 7000);
+  }
+
+  componentDidUpdate() { this.observe(); this.countUp(); this.initPresentationVideo(); }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    if (this.timer) clearInterval(this.timer);
+    if (this.tabTimer) clearInterval(this.tabTimer);
+    if (this.onScroll) window.removeEventListener("scroll", this.onScroll);
+    if (this.onMove) window.removeEventListener("pointermove", this.onMove);
+  }
+
+  countUp() {
+    if (typeof document === "undefined") return;
+    document.querySelectorAll("[data-count]:not([data-counted])").forEach(n => {
+      n.setAttribute("data-counted", "1");
+      const to = parseInt(n.getAttribute("data-to") || "0", 10);
+      if (this.reduced) { n.textContent = to.toLocaleString("fr-FR"); return; }
+      const t0 = performance.now(), dur = 1700;
+      const step = now => {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - k, 3);
+        n.textContent = Math.round(to * e).toLocaleString("fr-FR");
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
+  observe() {
+    if (typeof window === "undefined" || !window.IntersectionObserver) return;
+    if (!this._io) {
+      this._io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.setAttribute("data-seen", "1");
+          this._io.unobserve(e.target);
+        });
+      }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
+    }
+    const groups = {};
+    document.querySelectorAll("[data-reveal]").forEach(n => {
+      if (n.dataset.obs) return;
+      n.dataset.obs = "1";
+      const key = n.parentElement ? (n.parentElement.dataset.gk || (n.parentElement.dataset.gk = "g" + Math.random().toString(36).slice(2, 7))) : "root";
+      groups[key] = (groups[key] || 0) + 1;
+      n.style.animationDelay = Math.min((groups[key] - 1) * 80, 480) + "ms";
+      n.setAttribute("data-io", "1");
+      this._io.observe(n);
+    });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const cur = MODULES.find(m => m.slug === s.module) || MODULES[1];
+    const wrap = m => ({
+      tag: m.tag, slug: m.slug, family: m.family, title: m.title, short: m.short, long: m.long,
+      chips: m.chips.map(label => ({ label })),
+      open: () => this.go("detail", m.slug)
+    });
+    const showProof = this.props.showProof !== false;
+    return {
+      navHome: s.page === "home" ? "1" : "0",
+      navModules: s.page === "modules" || s.page === "detail" ? "1" : "0",
+      navPricing: s.page === "pricing" ? "1" : "0",
+      navHelp: s.page === "help" ? "1" : "0",
+      pauseQuotes: () => { this.paused = true; },
+      resumeQuotes: () => { this.paused = false; },
+      pageAlt: s.nav % 2 === 0 ? "0" : "1",
+      railA: [].concat(RAIL_A, RAIL_A).map(r => ({ tag: r[0], title: r[1], text: r[2] })),
+      railB: [].concat(RAIL_B, RAIL_B).map(r => ({ tag: r[0], title: r[1], text: r[2] })),
+      pauseTabs: () => { this.tabPaused = true; },
+      resumeTabs: () => { this.tabPaused = false; },
+      showTabs: MODULES.map((m, i) => ({
+        label: m.tab,
+        slug: m.slug,
+        family: m.family,
+        active: s.showTab === i ? "1" : "0",
+        alt: s.tabTick % 2 === 0 ? "0" : "1",
+        select: () => this.setState({ showTab: i, tabTick: s.tabTick + 1 })
+      })).filter(t => s.moduleFamily === "Tous" || t.family === s.moduleFamily),
+      moduleFamilies: FAMILIES.map(label => ({
+        label,
+        active: s.moduleFamily === label ? "1" : "0",
+        select: () => this.setModuleFamily(label)
+      })),
+      show: (() => {
+        const m = MODULES[s.showTab] || MODULES[0];
+        return {
+          alt: s.tabTick % 2 === 0 ? "0" : "1",
+          family: m.family, title: m.title, long: m.long, slug: m.slug,
+          screenRight: m.screenRight, colA: m.colA, colB: m.colB, colC: m.colC,
+          chips: m.chips.map((label, i) => ({ label, delay: (120 + i * 90) + "ms" })),
+          rows: m.rows.map((r, i) => ({ a: r[0], b: r[1], c: r[2], delay: (160 + i * 90) + "ms" })),
+          open: () => this.go("detail", m.slug)
+        };
+      })(),
+      isHome: s.page === "home", isModules: s.page === "modules", isDetail: s.page === "detail",
+      isPricing: s.page === "pricing", isDemo: s.page === "demo", isHelp: s.page === "help",
+      goHome: () => this.go("home"), goModules: () => this.go("modules"),
+      goPricing: () => this.go("pricing"), goDemo: () => this.go("demo"), goHelp: () => this.go("help"),
+      motionAttr: this.props.heroMotion === false ? "off" : "on",
+      showProof: showProof,
+      modules: MODULES.map(wrap),
+      visibleModules: MODULES.filter(m => s.family === "Tous" || m.family === s.family).map(wrap),
+      families: FAMILIES.map(label => ({
+        label, active: s.family === label ? "1" : "0",
+        select: () => this.setState({ family: label })
+      })),
+      why: WHY.map((w, i) => ({ title: w[0], text: w[1], cta: w[2], num: "0" + (i + 1) })),
+      quote: { ...QUOTES[s.quote], alt: s.quote % 2 === 0 ? "0" : "1", modules: QUOTES[s.quote].modules.map(label => ({ label })) },
+      quoteDots: QUOTES.map((q, i) => ({
+        active: s.quote === i ? "1" : "0",
+        select: () => this.setState({ quote: i })
+      })),
+      prevQuote: () => this.setState({ quote: (s.quote + QUOTES.length - 1) % QUOTES.length }),
+      nextQuote: () => this.setState({ quote: (s.quote + 1) % QUOTES.length }),
+      current: {
+        title: cur.title, long: cur.long, slug: cur.slug,
+        screenLeft: cur.screenLeft, screenRight: cur.screenRight,
+        chips: cur.chips.map(label => ({ label })),
+        colA: cur.colA, colB: cur.colB, colC: cur.colC,
+        tree: cur.tree.map(label => ({ label })),
+        rows: cur.rows.map(r => ({ a: r[0], b: r[1], c: r[2] })),
+        features: cur.features.map(f => ({ title: f[0], text: f[1] })),
+        related: MODULES.filter(m => m.slug !== cur.slug).slice(0, 4).map(m => ({ title: m.title, open: () => this.go("detail", m.slug) }))
+      },
+      faq: FAQ.map((f, i) => ({
+        question: f[0], answer: f[1], open: s.faqOpen === i, openAttr: s.faqOpen === i ? "1" : "0",
+        toggle: () => this.setState({ faqOpen: s.faqOpen === i ? -1 : i })
+      })),
+      pricingFaq: PRICING_FAQ.map((f, i) => ({
+        question: f[0], answer: f[1], open: s.pricingFaqOpen === i, openAttr: s.pricingFaqOpen === i ? "1" : "0",
+        toggle: () => this.setState({ pricingFaqOpen: s.pricingFaqOpen === i ? -1 : i })
+      })),
+      isMonthly: s.period === "year" ? "0" : "1",
+      isYearly: s.period === "year" ? "1" : "0",
+      setMonthly: () => this.setState({ period: "month" }),
+      setYearly: () => this.setState({ period: "year" }),
+      plans: PLANS.map(p => ({
+        ...p,
+        price: s.period === "year" ? p.priceYear : p.price,
+        priceAlt: s.period === "year" ? "1" : "0",
+        unit: s.period === "year" ? p.unitYear : p.unit,
+        rec: p.recommended ? "1" : "0",
+        features: p.features.map(label => ({ label }))
+      })),
+      compare: COMPARE.map(r => ({ label: r[0], a: r[1], b: r[2], c: r[3], d: r[4] })),
+      helpCats: HELP.map((h, i) => ({ title: h[0], num: "0" + (i + 1), articles: h[1].map(label => ({ label })) })),
+      moduleChips: MODULES.map(m => ({
+        label: m.title, on: !!s.chips[m.slug], active: s.chips[m.slug] ? "1" : "0",
+        toggle: () => this.setState({ chips: { ...s.chips, [m.slug]: !s.chips[m.slug] } })
+      })),
+      demoSent: s.demoSent, demoOpen: !s.demoSent,
+      helpSent: s.helpSent, helpOpen: !s.helpSent,
+      submitDemo: e => { e.preventDefault(); this.setState({ demoSent: true }); },
+      resetDemo: () => this.setState({ demoSent: false }),
+      submitHelp: e => { e.preventDefault(); this.setState({ helpSent: true }); },
+      resetHelp: () => this.setState({ helpSent: false }),
+      year: "2026"
+    };
+  }
+}
+</script>
+</body>
+</html>
